@@ -13,30 +13,45 @@
       </div>
 
       <!-- Chat Popup -->
-      <div id="hascowebchat-popup-" class="v-fixed v-right-[20px] v-bottom-[20px] v-w-[400px] v-h-[700px] v-max-h-[min(714px,100%-30px)] v-rounded-md v-overflow-hidden v-z-90 v-flex v-flex-col v-shadow-[0_10px_25px_rgba(0,0,0,0.2)]" v-show="isOpen" :class="{ 'maximize': isMaximize }">
+      <div class="v-fixed v-right-[20px] v-bottom-[20px] v-rounded-md v-overflow-hidden v-z-90 v-flex v-flex-col v-shadow-[0_10px_25px_rgba(0,0,0,0.2)]" v-show="isOpen" :class="{ 'v-max-h-\[calc\(100\%-104px\)\] v-h-\[calc\(100\%-104px\)\] v-w-\[688px\]': isMaximize, 'v-w-[400px] v-h-[700px] v-max-h-[min(714px,100%-30px)]': !isMaximize }">
          <div
             v-if="currentTab === 'messenger'"
-            class="hascowebchat-header__chat"
+            class="v-py-4 v-px-3 v-bg-white v-text-slate-800 v-flex v-items-center v-relative v-flex-row v-border-b v-border-slate-200"
          >
-            <div class="hascowebchat-header-actions_chat">
-               <div class="hascowebchat-header__chat-back" @click="closeChat">
+            <div class="v-flex v-justify-between v-items-center v-flex-1 v-gap-2">
+               <div
+                  class="v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300"
+                  v-if="currentTab !== 'home'"
+                  @click="switchTab('home')"
+               >
                   <svg
-                     data-v-8cc45828=""
-                     viewBox="0 0 384 512"
+                     viewBox="0 0 320 512"
                      fill="currentColor"
                      width="16px"
                      height="16px"
                   >
                      <path
-                        d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"
+                        d="M273 239c9.4 9.4 9.4 24.6 0 33.9L113 433c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l143-143L79 113c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L273 239z"
                      ></path>
                   </svg>
                </div>
-               <div id="maximize_chat" class="hascowebchat-header__chat-back" @click="isMaximize = !isMaximize">
-                  <!-- if maximize show this -->
+               <img
+                  :src="require('@/assets/images/logo.svg')"
+                  alt="Support Profile"
+                  class="v-w-[32px] v-h-[32px]"
+               />
+
+               <div class="v-flex v-grow v-flex-col v-gap-[2px]">
+                  <div class="v-text-sm v-font-semibold">پشتیبانی هوشمند ما</div>
+                  <div class="v-text-xs">
+                     {{ connectionStatus }}
+                  </div>
+               </div>
+            </div>
+            <div class="v-flex v-gap-2">
+            <div class="v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300" @click="isMaximize = !isMaximize">
                   <svg
                      v-if="isMaximize"
-                    
                      viewBox="0 0 512 512"
                      fill="currentColor"
                      width="16px"
@@ -46,10 +61,8 @@
                         d="M489 57c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-135 135L320 72c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 144c0 13.3 10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-86.1 0L489 57zM23 455c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l135-135 0 86.1c0 13.3 10.7 24 24 24s24-10.7 24-24l0-144c0-13.3-10.7-24-24-24L72 272c-13.3 0-24 10.7-24 24s10.7 24 24 24l86.1 0L23 455z"
                      ></path>
                   </svg>
-                  <!-- if not show this -->
                   <svg
                      v-else 
-               
                      viewBox="0 0 512 512"
                      fill="currentColor"
                      width="16px"
@@ -59,41 +72,11 @@
                         d="M295 183c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l135-135 0 86.1c0 13.3 10.7 24 24 24s24-10.7 24-24l0-144c0-13.3-10.7-24-24-24L344 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l86.1 0L295 183zM217 329c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L48 430.1 48 344c0-13.3-10.7-24-24-24s-24 10.7-24 24L0 488c0 13.3 10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-86.1 0L217 329z"
                      />
                   </svg>
-               </div>
             </div>
-            <div class="hascowebchat-header__chat-info">
-               <div
-                  class="hascowebchat-header__chat-back"
-                  v-if="currentTab !== 'home'"
-                  @click="switchTab('home')"
-               >
-                  <svg
-                     data-v-8cc45828=""
-                     viewBox="0 0 320 512"
-                     fill="currentColor"
-                     width="16px"
-                     height="16px"
-                  >
-                     <path
-                        data-v-8cc45828=""
-                        d="M273 239c9.4 9.4 9.4 24.6 0 33.9L113 433c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l143-143L79 113c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L273 239z"
-                     ></path>
-                  </svg>
-               </div>
-               <div class="hascowebchat-profile">
-                  <img
-                     :src="require('@/assets/images/logo.svg')"
-                     alt="Support Profile"
-                  />
-               </div>
-
-               <div class="hascowebchat-support-text__chat">
-                  <div class="hascowebchat-title__chat">پشتیبانی هوشمند ما</div>
-                  <div class="hascowebchat-status__chat">
-                     {{ connectionStatus }}
-                  </div>
-               </div>
+            <div class="v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300" @click="closeChat">
+               <svg viewBox="0 0 384 512" fill="currentColor" width="18px" height="18px"><path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"></path></svg>
             </div>
+         </div>
          </div>
          <div v-if="currentTab === 'home'" class="v-py-4 v-px-3 v-bg-[#1a237e] v-text-white v-flex v-items-center v-relative v-flex-row">
             <div class="v-flex v-justify-between v-items-center v-flex-1 v-gap-2">
@@ -186,18 +169,18 @@
          <!-- Messenger Tab Content (Current Chat Interface) -->
          <div
             v-if="currentTab === 'messenger'"
-            class="hascowebchat-body"
+            class="v-relative v-flex v-flex-col v-h-full v-justify-between v-bg-white v-py-2 v-px-3 v-overflow-auto"
             ref="chatBody"
          >
-            <div id="hascowebchat-messages">
+            <div class="v-grow">
                <div
                   v-for="(message, index) in messages"
                   :key="index"
                   :class="[
-                     'hascowebchat-message',
+                     'v-max-w-[80%] v-rounded-xl v-mb-2 v-text-sm v-py-2 v-px-3',
                      message.isUser
-                        ? 'hascowebchat-user-message'
-                        : 'hascowebchat-bot-message',
+                        ? 'v-bg-[#1a237e] v-text-white v-rounded-br-sm v-justify-self-start'
+                        : 'v-bg-slate-100 v-text-slate-800 v-rounded-bl-sm v-justify-self-end',
                   ]"
                >
                   <div v-html="message.content"></div>
@@ -209,6 +192,20 @@
                   style="font-style: italic; opacity: 0.8"
                >
                   در حال تایپ...
+               </div>
+            </div>
+             <!-- Default Questions - Only show in messenger tab -->
+            <div
+               class="v-flex v-flex-col v-gap-2"
+               v-if="showDefaultQuestions && currentTab === 'messenger'"
+            >
+               <div
+                  v-for="(question, index) in defaultQuestions"
+                  :key="index"
+                  class="v-border v-border-slate-200 v-rounded-full v-py-2 v-px-3 v-text-sm v-cursor-pointer v-w-fit v-hover:bg-slate-100 v-transition-colors v-duration-300"
+                  @click="selectDefaultQuestion(question)"
+               >
+                  {{ question }}
                </div>
             </div>
          </div>
@@ -346,49 +343,15 @@
                   {{ selectedQuestion.answer }}
                </div>
             </div>
+
          </div>
 
-         <!-- Default Questions - Only show in messenger tab -->
-         <div
-            class="hascowebchat-default-questions"
-            v-if="showDefaultQuestions && currentTab === 'messenger'"
-         >
-            <div
-               v-for="(question, index) in defaultQuestions"
-               :key="index"
-               class="default-question"
-               @click="selectDefaultQuestion(question)"
-            >
-               {{ question }}
+         <div class="v-py-2 v-px-3 v-bg-white v-border-t v-border-slate-200" v-if="currentTab === 'messenger'">
+            <div class="v-flex v-items-center v-bg-white v-rounded-full v-border v-border-slate-200">
+               <input type="text" v-model="inputMessage" @keyup.enter="sendMessage" placeholder="اینجا تایپ کنید ..." class="v-flex-1 v-border-0 v-outline-0 v-bg-transparent v-text-sm v-py-2 v-px-3 v-rounded-full">
+               <svg viewBox="0 0 512 512" fill="currentColor" width="20px" height="20px" class="v-ml-3 v-text-[#1a237e] v-rotate-180 v-cursor-pointer" @click="sendMessage"><path d="M133.9 232L65.8 95.9 383.4 232l-249.5 0zm0 48l249.5 0L65.8 416.1l68-136.1zM44.6 34.6C32.3 29.3 17.9 32.3 8.7 42S-2.6 66.3 3.4 78.3L92.2 256 3.4 433.7c-6 12-3.9 26.5 5.3 36.3s23.5 12.7 35.9 7.5l448-192c11.8-5 19.4-16.6 19.4-29.4s-7.6-24.4-19.4-29.4l-448-192z"></path></svg>
             </div>
-         </div>
-
-         <div class="hascowebchat-footer" v-if="currentTab === 'messenger'">
-            <div class="hascowebchat-input-wrapper">
-               <!-- Send button -->
-               <div id="hascowebchat-submit" @click="sendMessage">
-                  <svg
-                     viewBox="0 0 512 512"
-                     fill="currentColor"
-                     width="20px"
-                     height="20px"
-                     transform="rotate(-180 0 0)"
-                  >
-                     <path
-                        d="M133.9 232L65.8 95.9 383.4 232l-249.5 0zm0 48l249.5 0L65.8 416.1l68-136.1zM44.6 34.6C32.3 29.3 17.9 32.3 8.7 42S-2.6 66.3 3.4 78.3L92.2 256 3.4 433.7c-6 12-3.9 26.5 5.3 36.3s23.5 12.7 35.9 7.5l448-192c11.8-5 19.4-16.6 19.4-29.4s-7.6-24.4-19.4-29.4l-448-192z"
-                     ></path>
-                  </svg>
-               </div>
-
-               <input
-                  type="text"
-                  id="hascowebchat-input"
-                  v-model="inputMessage"
-                  @keyup.enter="sendMessage"
-                  placeholder="اینجا تایپ کنید ..."
-               />
-            </div>
-            <div class="hascowebchat-powered-by">ساخته شده با وفا</div>
+            <div class="v-text-center v-text-xs v-text-slate-600 v-pt-2">ساخته شده با وفا</div>
          </div>
 
          <!-- Bottom Navigation Bar - Only show on home section -->
@@ -1300,6 +1263,13 @@ export default {
    --v-ring-offset-shadow: 0 0 #0000;
    --v-gradient-to-position: ;
    --v-gradient-from-position: ;
+   --v-translate-x: 0;
+   --v-translate-y: 0;
+   --v-rotate: 0;
+   --v-skew-x: 0;
+   --v-skew-y: 0;
+   --v-scale-x: 1;
+   --v-scale-y: 1;
 }
 
 *,
@@ -1330,6 +1300,11 @@ button {
 
 .v-w-full {
    width: 100%;
+}
+
+.v-w-fit {
+   width: -moz-fit-content;
+   width: fit-content;
 }
 
 .v-h-\[700px\] {
@@ -1408,6 +1383,10 @@ button {
    overflow: hidden;
 }
 
+.v-overflow-auto {
+   overflow: auto;
+}
+
 .v-text-slate-800 {
    --v-text-opacity: 1;
    color: rgb(30 41 59 / var(--v-text-opacity, 1));
@@ -1419,6 +1398,38 @@ button {
 
 .v-rounded-lg {
    border-radius: 0.5rem;
+}
+
+.v-rounded-xl {
+   border-radius: 0.75rem;
+}
+
+.v-rounded-bl-sm {
+   border-bottom-left-radius: 0.125rem;
+}
+
+.v-rounded-br-sm {
+   border-bottom-right-radius: 0.125rem;
+}
+
+.v-rounded-full {
+   border-radius: 9999px;
+}
+
+.v-justify-self-end {
+   justify-self: end;
+}
+
+.v-justify-self-start {
+   justify-self: start;
+}
+
+.v-max-w-\[80\%\] {
+   max-width: 80%;
+}
+
+.v-mb-2 {
+   margin-bottom: 0.5rem;
 }
 
 .v-shadow-\[0_10px_25px_rgba\(0\2c 0\2c 0\2c 0\.2\)\] {
@@ -1505,13 +1516,34 @@ button {
    padding-bottom: 0.5rem;
 }
 
+.v-text-slate-600 {
+   --v-text-opacity: 1;
+   color: rgb(71 85 105 / var(--v-text-opacity, 1));
+}
+
+.v-text-center {
+   text-align: center;
+}
+
+.v-pt-2 {
+   padding-top: 0.5rem;
+}
+
 .v-text-white {
    --v-text-opacity: 1;
    color: rgb(255 255 255 / var(--v-text-opacity, 1));
 }
 
+.v-border {
+   border-width: 1px;
+}
+
 .v-border-t {
    border-top-width: 1px;
+}
+
+.v-border-b {
+   border-bottom-width: 1px;
 }
 
 .v-border-slate-200 {
@@ -1569,6 +1601,11 @@ button {
    white-space: nowrap;
 }
 
+.v-rotate-180 {
+    --v-rotate: 180deg;
+    transform: translate(var(--v-translate-x), var(--v-translate-y)) rotate(var(--v-rotate)) skewX(var(--v-skew-x)) skewY(var(--v-skew-y)) scaleX(var(--v-scale-x)) scaleY(var(--v-scale-y));
+}
+
 .v-transition-colors {
    transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;
    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
@@ -1590,6 +1627,10 @@ button {
    background-color: rgb(241 245 249 / var(--v-bg-opacity, 1));
 }
 
+.v-hover\:bg-\[\#2222220f\]:hover {
+   background-color: #2222220f;
+}
+
 .v-outline-0 {
    outline-width: 0px;
 }
@@ -1600,6 +1641,18 @@ button {
 
 .v-border-0 {
    border-width: 0px;
+}
+
+.v-max-h-\[calc\(100\%-104px\)\] {
+   max-height: calc(100% - 104px);
+}
+
+.v-h-\[calc\(100\%-104px\)\] {
+   height: calc(100% - 104px);
+}
+
+.v-w-\[688px\] {
+   width: 688px;
 }
 
 .v-z-90 {
