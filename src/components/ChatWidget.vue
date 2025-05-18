@@ -1,19 +1,18 @@
 <template>
-   <div class="hascoweb-chat-wrapper">
+   <div class="v-fixed v-flex v-flex-col v-gap-2 v-right-[20px] v-bottom-[20px]">
       <!-- Chat Button -->
 
-      <div class="hascowebchat-default-question" @click="startConversationWithDefaultQuestion">منو امروز بهم نشون بده؟</div>
+      <div class="v-border v-border-slate-200 v-rounded-lg v-rounded-br-sm v-py-2 v-px-3 v-text-sm v-cursor-pointer v-w-fit v-hover:bg-slate-100 v-transition-colors v-duration-300" @click="startConversationWithDefaultQuestion">منو امروز بهم نشون بده؟</div>
       <div
-         id="hascowebchat-button"
-         class="v-z-70"
+         class="v-flex v-bg-[#1a237e] v-items-center v-justify-center v-rounded-full v-h-[60px] v-w-[60px] v-z-70 no-shake v-overflow-hidden v-cursor-pointer"
          @click="toggleChat"
          :class="{ 'no-shake': hasInteracted }"
       >
-         <img :src="require('@/assets/images/logo.svg')" alt="Chat" />
+         <img :src="require('@/assets/images/logo.svg')" alt="Chat" class="v-h-[36px]"/>
       </div>
 
       <!-- Chat Popup -->
-      <div class="v-fixed v-right-[20px] v-bottom-[20px] v-rounded-md v-overflow-hidden v-z-90 v-flex v-flex-col v-shadow-[0_10px_25px_rgba(0,0,0,0.2)]" v-show="isOpen" :class="{ 'v-max-h-\[calc\(100\%-104px\)\] v-h-\[calc\(100\%-104px\)\] v-w-\[688px\]': isMaximize, 'v-w-[400px] v-h-[700px] v-max-h-[min(714px,100%-30px)]': !isMaximize }">
+      <div class="v-fixed v-transition-all v-duration-300 v-right-[20px] v-bottom-[20px] v-rounded-md v-overflow-hidden v-z-90 v-flex v-flex-col v-shadow-[0_10px_25px_rgba(0,0,0,0.2)]" v-show="isOpen" :class="{ 'v-max-h-\[calc\(100\%-104px\)\] v-h-\[calc\(100\%-104px\)\] v-w-\[688px\]': isMaximize, 'v-w-[400px] v-h-[700px] v-max-h-[min(714px,100%-30px)]': !isMaximize, 'v-right-0 v-bottom-0 v-top-0 v-rounded-none v-h-full v-max-h-100vh v-w-full': isMobile }">
          <div
             v-if="currentTab === 'messenger'"
             class="v-py-4 v-px-3 v-bg-white v-text-slate-800 v-flex v-items-center v-relative v-flex-row v-border-b v-border-slate-200"
@@ -49,7 +48,7 @@
                </div>
             </div>
             <div class="v-flex v-gap-2">
-            <div class="v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300" @click="isMaximize = !isMaximize">
+            <div v-if="!isMobile" class="v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300" @click="isMaximize = !isMaximize">
                   <svg
                      v-if="isMaximize"
                      viewBox="0 0 512 512"
@@ -465,6 +464,7 @@ export default {
          isOpen: false,
          hasInteracted: false,
          isMaximize: false,
+         isMobile: false,
          inputMessage: "",
          messages: [],
          socket: null,
@@ -560,11 +560,16 @@ export default {
          });
       }
    },
+   created() {
+    this.checkMobile();
+    window.addEventListener('resize', this.checkMobile); // Add event listener for resize
+  },
    beforeUnmount() {
       document.removeEventListener("click", this.resetShakeTimer);
       document.removeEventListener("mousemove", this.resetShakeTimer);
       document.removeEventListener("keypress", this.resetShakeTimer);
       document.removeEventListener("scroll", this.resetShakeTimer);
+      window.removeEventListener('resize', this.checkMobile); // Clean up event listener
 
       // Disconnect socket
       if (this.socket) {
@@ -602,6 +607,11 @@ export default {
          } catch (error) {
             console.error("Error loading knowledge base data:", error);
          }
+      },
+
+      // Define threshold for mobile (768px or smaller)
+      checkMobile() {
+         this.isMobile = window.innerWidth <= 768;
       },
 
       // Get question by ID
@@ -694,6 +704,7 @@ export default {
 
       switchTab(tab) {
          this.currentTab = tab;
+         this.isMaximize = false;
          // If we switch to messenger tab, make sure messages are scrolled to bottom
          if (tab === "messenger") {
             this.$nextTick(() => {
@@ -886,6 +897,7 @@ export default {
       },
       closeChat() {
          this.isOpen = false;
+         this.isMaximize = false;
       },
       sendMessage() {
          if (this.inputMessage.trim() === "") return;
@@ -1266,16 +1278,28 @@ button {
    bottom: 20px;
 }
 
+.v-right-0 {
+   right: 0;
+}
+
 .v-bottom-0 {
    bottom: 0;
 }
 
-.v-h-full {
-   height: 100%;
+.v-top-0 {
+   top: 0;
 }
 
-.v-w-full {
-   width: 100%;
+.v-max-h-\[calc\(100\%-104px\)\] {
+   max-height: calc(100% - 104px);
+}
+
+.v-h-\[calc\(100\%-104px\)\] {
+   height: calc(100% - 104px);
+}
+
+.v-w-\[688px\] {
+   width: 688px;
 }
 
 .v-w-fit {
@@ -1307,6 +1331,10 @@ button {
    height: 60px;
 }
 
+.v-w-\[60px\] {
+   width: 60px;
+}
+
 .v-cursor-pointer {
    cursor: pointer;
 }
@@ -1317,6 +1345,18 @@ button {
 
 .v-w-\[400px\] {
    width: 400px;
+}
+
+.v-w-full {
+   width: 100%;
+}
+
+.v-h-full {
+   height: 100%;
+}
+
+.v-max-h-100vh {
+   max-height: 100vh;
 }
 
 .v-flex {
@@ -1394,6 +1434,10 @@ button {
 
 .v-rounded-full {
    border-radius: 9999px;
+}
+
+.v-rounded-none {
+   border-radius: 0px;
 }
 
 .v-justify-self-end {
@@ -1645,18 +1689,6 @@ button {
    border-width: 0px;
 }
 
-.v-max-h-\[calc\(100\%-104px\)\] {
-   max-height: calc(100% - 104px);
-}
-
-.v-h-\[calc\(100\%-104px\)\] {
-   height: calc(100% - 104px);
-}
-
-.v-w-\[688px\] {
-   width: 688px;
-}
-
 .v-z-90 {
    z-index: 90;
 }
@@ -1665,25 +1697,9 @@ button {
    z-index: 70;
 }
 
-/* Media Queries for Mobile */
-@media (max-width: 480px) {
-   #hascowebchat-popup {
-      width: 100%;
-        height: 100vh;
-        right: 50%;
-        transform: translateX(50%);
-        bottom: 0;
-        border-radius: 0;
-        max-height: calc(100vh - 73px);
-   }
-
-   #maximize_chat {
-      display: none;
-   }
-
-   #hascowebchat-button {
-      right: 15px;
-      bottom: 15px;
+@media (min-width: 768px) {
+   .md\:p-0 {
+      padding: 0px;
    }
 }
 </style>
