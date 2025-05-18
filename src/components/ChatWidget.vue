@@ -5,6 +5,7 @@
       <div class="hascowebchat-default-question" @click="startConversationWithDefaultQuestion">منو امروز بهم نشون بده؟</div>
       <div
          id="hascowebchat-button"
+         class="v-z-70"
          @click="toggleChat"
          :class="{ 'no-shake': hasInteracted }"
       >
@@ -12,7 +13,7 @@
       </div>
 
       <!-- Chat Popup -->
-      <div id="hascowebchat-popup" v-show="isOpen" :class="{ 'maximize': isMaximize }">
+      <div id="hascowebchat-popup-" class="v-fixed v-right-[20px] v-bottom-[20px] v-w-[400px] v-h-[700px] v-max-h-[min(714px,100%-30px)] v-rounded-md v-overflow-hidden v-z-90 v-flex v-flex-col v-shadow-[0_10px_25px_rgba(0,0,0,0.2)]" v-show="isOpen" :class="{ 'maximize': isMaximize }">
          <div
             v-if="currentTab === 'messenger'"
             class="hascowebchat-header__chat"
@@ -94,22 +95,18 @@
                </div>
             </div>
          </div>
-         <div v-if="currentTab === 'home'" class="hascowebchat-header">
-            <div class="hascowebchat-profile">
-               <img
-                  :src="require('@/assets/images/logo.svg')"
-                  alt="Support Profile"
-               />
+         <div v-if="currentTab === 'home'" class="v-py-4 v-px-3 v-bg-[#1a237e] v-text-white v-flex v-items-center v-relative v-flex-row">
+            <div class="v-flex v-justify-between v-items-center v-flex-1 v-gap-2">
+               <img :src="require('@/assets/images/logo.svg')" alt="Support Profile" class="v-w-[32px] v-h-[32px]">
+               <div class="v-flex v-grow v-flex-col v-gap-[2px]">
+                  <div class="v-text-sm v-font-semibold">پشتیبانی هوشمند وفا</div>
+                  <div class="v-text-xs">{{ connectionStatus }}</div>
+               </div>
             </div>
-
-            <div class="hascowebchat-support-text">
-               <div class="hascowebchat-title">پشتیبانی هوشمند ما</div>
-               <div class="hascowebchat-status">{{ connectionStatus }}</div>
-            </div>
-
-            <div class="hascowebchat-header-actions">
-               <div class="hascowebchat-header__chat-back" @click="closeChat">
-                  <svg viewBox="0 0 384 512" fill="white" width="16px" height="16px"><path data-v-a39e48b2="" d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"></path></svg></div>
+            <div class="v-flex v-gap-2">
+               <div class="v-p-2 v-rounded-lg v-cursor-pointer v-text-white v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#22222240] v-transition-colors v-duration-300" @click="closeChat">
+                  <svg viewBox="0 0 384 512" fill="currentColor" width="16px" height="16px"><path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"></path></svg>
+               </div>
             </div>
          </div>
          <div v-if="currentTab === 'knowledge'" class="hascowebchat-header__chat">
@@ -151,90 +148,37 @@
             </div>
          </div>
          <!-- Home Tab Content -->
-         <div v-if="currentTab === 'home'" class="hascowebchat-tab-content">
-            <div class="px-3">
+         <div v-if="currentTab === 'home'" class="v-relative v-flex v-flex-col v-h-full v-justify-between v-bg-gradient-to-b v-from-[#1a237e] v-to-white">
+            <div class="v-px-3">
                <!-- Welcome Text -->
-               <div class="welcome-text">به رستوان ما خوش آمدید</div>
+               <div class="v-text-lg v-mb-4 v-text-white">به رستوان ما خوش آمدید</div>
 
                <!-- Featured Questions -->
-               <div class="featured-questions">
+               <div class="v-p-2 v-rounded-lg v-border-1 v-border-slate-200 v-bg-white v-flex v-flex-col v-gap-[2px]">
                   <!-- Search Bar -->
-                  <div class="home-search-container" @click="focusOnSearch">
-                     <div class="knowledge-search home-search">
-                        <div class="knowledge-search-icon">
-                           <svg
-                              viewBox="0 0 512 512"
-                              fill="currentColor"
-                              width="16px"
-                              height="16px"
-                           >
-                              <path
-                                 d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-                              ></path>
-                           </svg>
-                        </div>
-                        <input
-                           type="text"
-                           v-model="knowledgeSearchQuery"
-                           ref="homeSearchInput"
-                           @focus="showKnowledgeSearch"
-                           placeholder="جست و جو کنید"
-                           class="knowledge-search-input"
-                        />
-                     </div>
+                  <div class="v-flex v-items-center v-justify-between v-rounded-lg v-mb-[6px] v-bg-slate-100" @click="focusOnSearch">
+                     <input type="text" v-model="knowledgeSearchQuery" ref="homeSearchInput" @focus="showKnowledgeSearch" placeholder="جست و جو کنید" class="v-flex-1 v-border-0 v-outline-0 v-bg-transparent v-text-sm v-py-2 v-px-3">
+                     <svg viewBox="0 0 512 512" fill="currentColor" width="16px" height="16px" class="v-ml-3"><path d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"></path></svg>
                   </div>
                   <div
                      v-for="question in featuredQuestions"
                      :key="question.id"
-                     class="featured-question-item"
+                     class="v-flex v-items-center v-justify-between v-py-2 v-px-3 v-bg-white v-cursor-pointer v-rounded-lg v-hover:bg-slate-100"
                      @click="navigateToQuestion(question.id)"
                   >
-                     <div class="featured-question-text">
+                     <div class="v-flex-1 v-text-sm v-text-slate-800 v-overflow-hidden v-whitespace-nowrap v-truncate">
                         {{ question.question }}
                      </div>
-                     <div class="featured-question-chevron">
-                        <svg
-                           viewBox="0 0 320 512"
-                           fill="currentColor"
-                           width="14px"
-                           height="14px"
-                        >
-                           <path
-                              d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"
-                           ></path>
-                        </svg>
-                     </div>
+                     <svg viewBox="0 0 320 512" fill="currentColor" width="14px" height="14px"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"></path></svg>
                   </div>
                </div>
             </div>
-            <div class="px-3">
+            <div class="v-px-3 v-pb-4">
                <!-- Start Chat Button -->
-               <div class="start-chat-button" @click="switchTab('messenger')">
-                  <div class="start-chat-icon">
-                     <svg
-                        viewBox="0 0 512 512"
-                        fill="currentColor"
-                        width="24px"
-                        height="24px"
-                     >
-                        <path
-                           d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm165.8 21.7c-7.6 8.1-20.2 8.5-28.3 .9s-8.5-20.2-.9-28.3c14.5-15.5 35.2-22.3 54.6-22.3s40.1 6.8 54.6 22.3c7.6 8.1 7.1 20.7-.9 28.3s-20.7 7.1-28.3-.9c-5.5-5.8-14.8-9.7-25.4-9.7s-19.9 3.8-25.4 9.7z"
-                        ></path>
-                     </svg>
-                  </div>
-                  <div class="start-chat-text">شروع گفتگو</div>
-                  <div class="back-arrow">
-                     <svg
-                        viewBox="0 0 320 512"
-                        fill="currentColor"
-                        width="16px"
-                        height="16px"
-                     >
-                        <path
-                           d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"
-                        ></path>
-                     </svg>
-                  </div>
+               <div class="v-bg-[#1a237e] v-text-white v-text-md v-rounded-lg v-py-3 v-px-6 v-flex v-items-center v-justify-between v-w-full v-cursor-pointer v-transition-colors v-duration-300" @click="switchTab('messenger')">
+                  <svg viewBox="0 0 512 512" fill="currentColor" width="24px" height="24px"><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm165.8 21.7c-7.6 8.1-20.2 8.5-28.3 .9s-8.5-20.2-.9-28.3c14.5-15.5 35.2-22.3 54.6-22.3s40.1 6.8 54.6 22.3c7.6 8.1 7.1 20.7-.9 28.3s-20.7 7.1-28.3-.9c-5.5-5.8-14.8-9.7-25.4-9.7s-19.9 3.8-25.4 9.7z"></path></svg>
+                  <div class="v-text-md v-font-bold">شروع گفتگو</div>
+                  <svg viewBox="0 0 320 512" fill="currentColor" width="16px" height="16px"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"></path></svg>
                </div>
             </div>
          </div>
@@ -449,25 +393,15 @@
 
          <!-- Bottom Navigation Bar - Only show on home section -->
          <div
-            class="hascowebchat-bottom-nav"
+            class="v-flex v-justify-around v-items-center v-gap-2 v-bg-white v-py-2 v-h-[60px] v-border-t v-border-slate-200"
             v-if="currentTab === 'home' || currentTab === 'knowledge'"
          >
             <div
-               class="nav-item"
+               class="v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2 v-transition-all v-duration-300"
                @click="switchTab('home')"
-               :class="{ active: currentTab === 'home' }"
+               :class="{ active: currentTab === 'home', 'v-text-[#1a237e]': currentTab === 'home', 'v-text-slate-800': currentTab !== 'home' }"
             >
-               <svg
-                  v-if="currentTab === 'home'"
-                  viewBox="0 0 576 512"
-                  fill="currentColor"
-                  width="20px"
-                  height="20px"
-               >
-                  <path
-                     d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c.2 35.5-28.5 64.3-64 64.3H128.1c-35.3 0-64-28.7-64-64V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"
-                  ></path>
-               </svg>
+               <svg v-if="currentTab === 'home'" viewBox="0 0 576 512" fill="currentColor" width="20px" height="20px"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c.2 35.5-28.5 64.3-64 64.3H128.1c-35.3 0-64-28.7-64-64V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"></path></svg>
                <svg
                   v-else
                   viewBox="0 0 576 512"
@@ -479,12 +413,12 @@
                      d="M303.5 5.7c-9-7.6-22.1-7.6-31.1 0l-264 224c-10.1 8.6-11.3 23.7-2.8 33.8s23.7 11.3 33.8 2.8L64 245.5 64 432c0 44.2 35.8 80 80 80l288 0c44.2 0 80-35.8 80-80l0-186.5 24.5 20.8c10.1 8.6 25.3 7.3 33.8-2.8s7.3-25.3-2.8-33.8l-264-224zM464 204.8L464 432c0 17.7-14.3 32-32 32l-288 0c-17.7 0-32-14.3-32-32l0-227.2L288 55.5 464 204.8z"
                   ></path>
                </svg>
-               <div class="nav-label">خانه</div>
+               <div class="v-text-xs">خانه</div>
             </div>
             <div
-               class="nav-item"
+               class="v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2 v-transition-all v-duration-300"
                @click="switchTab('messenger')"
-               :class="{ active: currentTab === 'messenger' }"
+               :class="{ active: currentTab === 'messenger', 'v-text-[#1a237e]': currentTab === 'messenger', 'v-text-slate-800': currentTab !== 'messenger' }"
             >
                <svg
                   v-if="currentTab === 'messenger'"
@@ -508,12 +442,12 @@
                      d="M208 416c0-26.5-21.5-48-48-48l-96 0c-8.8 0-16-7.2-16-16L48 64c0-8.8 7.2-16 16-16l384 0c8.8 0 16 7.2 16 16l0 288c0 8.8-7.2 16-16 16l-138.7 0c-10.4 0-20.5 3.4-28.8 9.6L208 432l0-16zm-.2 76.2l.2-.2 101.3-76L448 416c35.3 0 64-28.7 64-64l0-288c0-35.3-28.7-64-64-64L64 0C28.7 0 0 28.7 0 64L0 352c0 35.3 28.7 64 64 64l48 0 48 0 0 48 0 4 0 .3 0 6.4 0 21.3c0 6.1 3.4 11.6 8.8 14.3s11.9 2.1 16.8-1.5L202.7 496l5.1-3.8zM152 144c-13.3 0-24 10.7-24 24s10.7 24 24 24l208 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-208 0zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24l112 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-112 0z"
                   ></path>
                </svg>
-               <div class="nav-label">پیام رسان</div>
+               <div class="v-text-xs">پیام رسان</div>
             </div>
             <div
-               class="nav-item"
+               class="v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2 v-transition-all v-duration-300"
                @click="switchTab('knowledge')"
-               :class="{ active: currentTab === 'knowledge' }"
+               :class="{ active: currentTab === 'knowledge', 'v-text-[#1a237e]': currentTab === 'knowledge', 'v-text-slate-800': currentTab !== 'knowledge' }"
             >
                <svg
                   v-if="currentTab === 'knowledge'"
@@ -537,7 +471,7 @@
                      d="M64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80zM0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm137.8 69.3c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L248 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM192 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"
                   ></path>
                </svg>
-               <div class="nav-label">پایگاه دانش</div>
+               <div class="v-text-xs">پایگاه دانش</div>
             </div>
          </div>
       </div>
@@ -1358,6 +1292,16 @@ export default {
    --onix-number: "ss02";
 }
 
+*, ::before, ::after {
+   box-sizing: border-box;
+   border-width: 0;
+   border-style: solid;
+   --v-ring-shadow: 0 0 #0000;
+   --v-ring-offset-shadow: 0 0 #0000;
+   --v-gradient-to-position: ;
+   --v-gradient-from-position: ;
+}
+
 *,
 body,
 input,
@@ -1366,6 +1310,304 @@ button {
    font-family: 'IRANSans-XV' !important;
    font-weight: var(--onix-font-weight);
    font-feature-settings: var(--onix-number);
+}
+
+.v-fixed {
+   position: fixed;
+}
+
+.v-right-\[20px\] {
+   right: 20px;
+}
+
+.v-bottom-\[20px\] {
+   bottom: 20px;
+}
+
+.v-h-full {
+   height: 100%;
+}
+
+.v-w-full {
+   width: 100%;
+}
+
+.v-h-\[700px\] {
+   height: 700px;
+}
+
+.v-h-\[32px\] {
+   height: 32px;
+}
+
+.v-w-\[32px\] {
+   width: 32px;
+}
+
+.v-h-\[36px\] {
+   height: 36px;
+}
+
+.v-w-\[36px\] {
+   width: 36px;
+}
+
+.v-h-\[60px\] {
+   height: 60px;
+}
+
+.v-cursor-pointer {
+   cursor: pointer;
+}
+
+.v-max-h-\[min\(714px\2c 100\%-30px\)\] {
+   max-height: min(714px, 100% - 30px);
+}
+
+.v-w-\[400px\] {
+   width: 400px;
+}
+
+.v-flex {
+   display: flex;
+}
+
+.v-flex-1 {
+   flex: 1 1 0%;
+}
+
+.v-flex-col {
+   flex-direction: column;
+}
+
+.v-flex-row {
+   flex-direction: row;
+}
+
+.v-items-center {
+   align-items: center;
+}
+
+.v-justify-center {
+   justify-content: center;
+}
+
+.v-justify-between {
+   justify-content: space-between;
+}
+
+.v-justify-around {
+   justify-content: space-around;
+}
+
+.v-grow {
+   flex-grow: 1;
+}
+
+.v-overflow-hidden {
+   overflow: hidden;
+}
+
+.v-text-slate-800 {
+   --v-text-opacity: 1;
+   color: rgb(30 41 59 / var(--v-text-opacity, 1));
+}
+
+.v-rounded-md {
+   border-radius: 0.375rem;
+}
+
+.v-rounded-lg {
+   border-radius: 0.5rem;
+}
+
+.v-shadow-\[0_10px_25px_rgba\(0\2c 0\2c 0\2c 0\.2\)\] {
+   --v-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+   --v-shadow-colored: 0 10px 25px var(--v-shadow-color);
+   box-shadow: var(--v-ring-offset-shadow, 0 0 #0000), var(--v-ring-shadow, 0 0 #0000), var(--v-shadow);
+}
+
+.v-relative {
+   position: relative;
+}
+
+.v-bg-\[\#1a237e\] {
+   --v-bg-opacity: 1;
+   background-color: rgb(26 35 126 / var(--v-bg-opacity, 1));
+}
+
+.v-text-\[\#1a237e\] {
+   --v-text-opacity: 1;
+   color: rgb(26 35 126 / var(--v-text-opacity, 1));
+}
+
+.v-bg-gradient-to-b {
+   background-image: linear-gradient(to bottom, var(--v-gradient-stops));
+}
+
+.v-bg-white {
+   --v-bg-opacity: 1;
+   background-color: rgb(255 255 255 / var(--v-bg-opacity, 1));
+}
+
+.v-from-\[\#1a237e\] {
+   --v-gradient-from: #1a237e var(--v-gradient-from-position);
+   --v-gradient-to: rgb(26 35 126 / 0) var(--v-gradient-to-position);
+   --v-gradient-stops: var(--v-gradient-from), var(--v-gradient-to);
+}
+
+.v-to-white {
+   --v-gradient-to: #fff var(--v-gradient-to-position);
+}
+
+.v-mb-4 {
+   margin-bottom: 1rem;
+}
+
+.v-mb-\[6px\] {
+   margin-bottom: 6px;
+}
+
+.v-ml-3 {
+   margin-left: 0.75rem;
+}
+
+.v-px-3 {
+   padding-left: 0.75rem;
+   padding-right: 0.75rem;
+}
+
+.v-py-3 {
+   padding-top: 0.75rem;
+   padding-bottom: 0.75rem;
+}
+
+.v-px-6 {
+   padding-left: 1.5rem;
+   padding-right: 1.5rem;
+}
+
+.v-pb-4 {
+   padding-bottom: 1rem;
+}
+
+.v-p-2 {
+   padding: 0.5rem;
+}
+
+.v-py-4 {
+   padding-top: 1rem;
+   padding-bottom: 1rem;
+}
+
+.v-py-2 {
+   padding-top: 0.5rem;
+   padding-bottom: 0.5rem;
+}
+
+.v-text-white {
+   --v-text-opacity: 1;
+   color: rgb(255 255 255 / var(--v-text-opacity, 1));
+}
+
+.v-border-t {
+   border-top-width: 1px;
+}
+
+.v-border-slate-200 {
+   --v-border-opacity: 1;
+   border-color: rgb(226 232 240 / var(--v-border-opacity, 1));
+}
+
+.v-bg-slate-100 {
+   --v-bg-opacity: 1;
+   background-color: rgb(241 245 249 / var(--v-bg-opacity, 1));
+}
+
+.v-gap-2 {
+   gap: 0.5rem;
+}
+
+.v-gap-\[2px\] {
+   gap: 2px;
+}
+
+.v-font-semibold {
+   font-weight: 600;
+}
+
+.v-text-sm {
+   font-size: 0.875rem;
+   line-height: 1.25rem;
+}
+
+.v-text-md {
+   font-size: 1rem;
+}
+
+.v-text-lg {
+   font-size: 1.125rem;
+   line-height: 1.75rem;
+}
+
+.v-text-xs {
+   font-size: 0.75rem;
+   line-height: 1rem;
+}
+
+.v-font-bold {
+    font-weight: 700;
+}
+
+.v-truncate {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+}
+
+.v-whitespace-nowrap {
+   white-space: nowrap;
+}
+
+.v-transition-colors {
+   transition-property: color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;
+   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;
+   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+   transition-duration: 150ms;
+}
+
+.v-duration-300 {
+   transition-duration: 300ms;
+}
+
+.v-hover\:bg-\[\#22222240\]:hover {
+   background-color: #22222240;
+}
+
+.v-hover\:bg-slate-100:hover {
+   --v-bg-opacity: 1;
+   background-color: rgb(241 245 249 / var(--v-bg-opacity, 1));
+}
+
+.v-outline-0 {
+   outline-width: 0px;
+}
+
+.v-bg-transparent {
+   background-color: transparent;
+}
+
+.v-border-0 {
+   border-width: 0px;
+}
+
+.v-z-90 {
+   z-index: 90;
+}
+
+.v-z-70 {
+   z-index: 70;
 }
 
 /* Home Section Styles */
@@ -1445,7 +1687,6 @@ button {
    justify-content: center;
    cursor: pointer;
    transition: transform 0.3s;
-   z-index: 9999;
    animation: shake 1s;
    animation-iteration-count: 3;
    animation-delay: 2s;
