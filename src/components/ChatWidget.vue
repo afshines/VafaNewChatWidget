@@ -204,7 +204,7 @@
          >
 
          <!-- Knowledge Base Search -->
-          <div class="v-py-2 v-px-3 v-border-b v-border-slate-200">
+          <div class="v-py-2 v-px-3 v-border-b v-border-slate-200 v-bg-white">
             <div class="v-flex v-items-center v-justify-between v-rounded-lg v-bg-slate-100">
                
                <input
@@ -276,16 +276,16 @@
             <!-- Questions View -->
             <div
                v-if="knowledgeView === 'questions'"
-               class="knowledge-questions-container"
+               class="v-bg-white v-flex v-flex-col v-grow v-overflow-auto"
             >
-               <div class="knowledge-category-info">
-                  <div class="knowledge-category-title">
+               <div class="v-py-2 v-px-3 v-border-b v-border-slate-200 v-gap-1 v-flex v-flex-col">
+                  <div class="v-text-sm v-text-slate-800 v-font-semibold">
                      {{ selectedCategory.title }}
                   </div>
-                  <div class="knowledge-category-description">
+                  <div class="v-text-sm v-text-slate-800">
                      {{ selectedCategory.description }}
                   </div>
-                  <div class="knowledge-questions-count_chat">
+                  <div class="v-text-sm v-text-slate-600">
                   {{ filteredQuestions.length }} پرسش
                </div>
                </div>
@@ -293,28 +293,25 @@
                <div
                   v-for="question in filteredQuestions"
                   :key="question.id"
-                  class="knowledge-question-item"
+                  class="v-flex v-items-center v-justify-between v-py-3 v-px-3 v-border-b v-border-slate-200 v-cursor-pointer v-gap-2 v-hover:bg-slate-100 v-transition-colors v-duration-300"
                   @click="selectQuestion(question)"
                >
-                  <div class="knowledge-question-title">
+                  <div class="v-text-sm v-text-slate-800">
                      {{ question.question }}
                   </div>
-                  <div class="knowledge-question-arrow">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 320 512" fill="currentColor"><path d="M15 239c-9.4 9.4-9.4 24.6 0 33.9L207 465c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L65.9 256 241 81c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L15 239z"></path>
-                     </svg>
-                  </div>
+                  <svg data-v-8cc45828="" xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 320 512" fill="currentColor"><path data-v-8cc45828="" d="M15 239c-9.4 9.4-9.4 24.6 0 33.9L207 465c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L65.9 256 241 81c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L15 239z"></path></svg>
                </div>
             </div>
 
             <!-- Answer View -->
             <div
                v-if="knowledgeView === 'answer'"
-               class="knowledge-answer-container"
+               class="v-bg-white v-flex v-flex-col v-grow v-overflow-auto"
             >
-               <div class="knowledge-question-header">
+               <div class="v-py-2 v-px-3 v-border-b v-border-slate-200 v-text-sm v-text-slate-800 v-font-semibold">
                   {{ selectedQuestion.question }}
                </div>
-               <div class="knowledge-answer-content">
+               <div class="v-py-2 v-px-3 v-text-sm v-text-slate-800">
                   {{ selectedQuestion.answer }}
                </div>
             </div>
@@ -335,9 +332,9 @@
             v-if="currentTab === 'home' || currentTab === 'knowledge'"
          >
             <div
-               class="v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2 v-transition-all v-duration-300"
+               class="v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2"
                @click="switchTab('home')"
-               :class="{ active: currentTab === 'home', 'v-text-[#1a237e]': currentTab === 'home', 'v-text-slate-800': currentTab !== 'home' }"
+               :class="{ active: currentTab === 'home', 'v-text-[#1a237e] v-font-semibold': currentTab === 'home', 'v-text-slate-800': currentTab !== 'home' }"
             >
                <svg v-if="currentTab === 'home'" viewBox="0 0 576 512" fill="currentColor" width="20px" height="20px"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c.2 35.5-28.5 64.3-64 64.3H128.1c-35.3 0-64-28.7-64-64V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"></path></svg>
                <svg
@@ -354,9 +351,9 @@
                <div class="v-text-xs">خانه</div>
             </div>
             <div
-               class="v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2 v-transition-all v-duration-300"
+               class="v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2"
                @click="switchTab('messenger')"
-               :class="{ active: currentTab === 'messenger', 'v-text-[#1a237e]': currentTab === 'messenger', 'v-text-slate-800': currentTab !== 'messenger' }"
+               :class="{ active: currentTab === 'messenger', 'v-text-[#1a237e] v-font-semibold': currentTab === 'messenger', 'v-text-slate-800': currentTab !== 'messenger' }"
             >
                <svg
                   v-if="currentTab === 'messenger'"
@@ -383,9 +380,9 @@
                <div class="v-text-xs">پیام رسان</div>
             </div>
             <div
-               class="v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2 v-transition-all v-duration-300"
+               class="v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2"
                @click="switchTab('knowledge')"
-               :class="{ active: currentTab === 'knowledge', 'v-text-[#1a237e]': currentTab === 'knowledge', 'v-text-slate-800': currentTab !== 'knowledge' }"
+               :class="{ active: currentTab === 'knowledge', 'v-text-[#1a237e] v-font-semibold': currentTab === 'knowledge', 'v-text-slate-800': currentTab !== 'knowledge' }"
             >
                <svg
                   v-if="currentTab === 'knowledge'"
@@ -1660,737 +1657,12 @@ button {
    width: 688px;
 }
 
-
-
 .v-z-90 {
    z-index: 90;
 }
 
 .v-z-70 {
    z-index: 70;
-}
-
-/* Home Section Styles */
-.welcome-text {
-   font-family: "IRANSans-XV" !important;
-   font-weight: 400 !important;
-   font-feature-settings: "ss02" !important;
-   text-align: right;
-   font-size: 18px;
-   margin-bottom: 16px;
-   font-weight: bold;
-   color: #fff;
-   background: transparent;
-}
-
-.home-search {
-   background-color: #fff;
-}
-
-.featured-questions {
-   padding: 8px;
-   border: 1px solid rgba(226, 227, 222, 0.9);
-   background: #fff;
-   border-radius: 8px;
-   display: flex;
-   flex-direction: column;
-   gap: 2px;
-}
-
-.featured-question-item {
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   padding: 8px 12px;
-   background-color: #fff;
-   border-radius: 8px;
-   cursor: pointer;
-   direction: rtl;
-}
-
-.featured-question-item:hover {
-   background: rgba(0, 0, 0, 0.1);
-}
-
-.featured-question-text {
-   flex: 1;
-   font-size: 14px;
-   color: #212121;
-   text-align: right;
-   white-space: nowrap;
-   overflow: hidden;
-   text-overflow: ellipsis;
-}
-
-.featured-question-chevron {
-   min-width: 16px;
-   display: flex;
-   align-items: end;
-}
-
-.featured-question-chevron svg {
-   color: #333;
-}
-
-/* Chat Widget Styles */
-#hascowebchat-button {
-   position: fixed;
-   right: 20px;
-   bottom: 20px;
-   width: 60px;
-   height: 60px;
-   background-color: #ffffff;
-   border-radius: 50%;
-   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   cursor: pointer;
-   transition: transform 0.3s;
-   animation: shake 1s;
-   animation-iteration-count: 3;
-   animation-delay: 2s;
-}
-
-#hascowebchat-button.no-shake {
-   animation: none;
-}
-
-#hascowebchat-button:hover {
-   transform: scale(1.1);
-}
-
-#hascowebchat-button img {
-   width: 35px;
-   height: 35px;
-}
-
-#hascowebchat-popup {
-   position: fixed;
-   right: 20px;
-   bottom: 20px;
-   width: 400px;
-   height: 700px;
-   max-height: min(714px, 100% - calc(15px + 15px));
-   border-radius: 8px;
-   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-   overflow: hidden;
-   z-index: 999998;
-   display: flex;
-   flex-direction: column;
-   transition: width 200ms, height 200ms, max-height 200ms,
-      transform 300ms cubic-bezier(0, 1.2, 1, 1), opacity 83ms ease-out;
-}
-
-#hascowebchat-popup.maximize {
-   max-height: calc(100% - 104px);
-   height: calc(100% - 104px);
-   width: 688px;
-}
-
-.hascowebchat-header-actions_chat {
-   display: flex;
-   gap: 8px;
-}
-
-.hascowebchat-header__chat {
-   padding: 16px 12px;
-   background: #fff;
-   color: white;
-   border-bottom: 1px solid #eee;
-   display: flex;
-   align-items: center;
-   gap: 8px;
-   justify-content: space-between;
-   position: relative;
-}
-
-.hascowebchat-header__chat-info {
-   display: flex;
-   align-items: center;
-   gap: 8px;
-   flex-flow: row-reverse;
-}
-
-.hascowebchat-header__chat-back {
-   padding: 8px;
-   border-radius: 10px;
-   cursor: pointer;
-   color: rgb(34, 34, 34);
-   background: transparent;
-   min-width: 36px;
-   min-height: 36px;
-   display: flex;
-   transition: color 0.2s, background-color 0.2s, box-shadow 0.2s ease-in-out;
-   justify-content: center;
-   align-items: center;
-}
-
-.hascowebchat-header__chat-back:hover {
-   background: rgba(34, 34, 34, 0.06);
-}
-
-.hascowebchat-support-text__chat {
-   flex-grow: 1;
-   display: flex;
-   gap: 4px;
-   flex-direction: column;
-}
-
-.hascowebchat-title__chat {
-   font-size: 14px;
-   font-weight: bold;
-   direction: rtl;
-   text-align: right;
-   line-height: 18px;
-   color: rgb(34, 34, 34);
-}
-
-.hascowebchat-status__chat {
-   font-size: 12px;
-   direction: rtl;
-   text-align: right;
-   line-height: 14px;
-   color: rgba(34, 34, 34, 0.7);
-}
-
-.hascowebchat-header {
-   padding: 16px 12px;
-   background: #1a237e;
-   color: white;
-   display: flex;
-   align-items: center;
-   position: relative;
-   flex-direction: row-reverse;
-}
-
-.hascowebchat-profile img {
-   width: 32px;
-   height: 32px;
-}
-
-.hascowebchat-support-text {
-   flex-grow: 1;
-   display: flex;
-   gap: 2px;
-   flex-direction: column;
-}
-
-.hascowebchat-title {
-   font-size: 14px;
-   font-weight: bold;
-   direction: rtl;
-   text-align: right;
-   padding-right: 16px;
-}
-
-.hascowebchat-status {
-   font-size: 12px;
-   direction: rtl;
-   text-align: right;
-   padding-right: 16px;
-}
-
-.hascowebchat-header-actions {
-   display: flex;
-   position: absolute;
-   top: 16px;
-   left: 12px;
-   gap: 8px;
-}
-
-.hascowebchat-back,
-.hascowebchat-close {
-   cursor: pointer;
-   display: flex;
-}
-
-.hascowebchat-back:hover,
-.hascowebchat-close:hover {
-   opacity: 1;
-}
-
-.hascowebchat-back img,
-.hascowebchat-close img {
-   width: 100%;
-   height: 100%;
-}
-
-.hascowebchat-body {
-   flex-grow: 1;
-   padding: 12px;
-   overflow-y: auto;
-   background-color: #fff;
-}
-
-#hascowebchat-messages {
-   display: flex;
-   flex-direction: column;
-}
-
-.hascowebchat-message {
-   max-width: 80%;
-   padding: 10px 12px;
-   border-radius: 15px;
-   margin-bottom: 10px;
-   word-wrap: break-word;
-   font-size: 14px;
-   line-height: 1.5;
-}
-
-.hascowebchat-bot-message {
-   align-self: flex-start;
-   background-color: #f5f5f5;
-   border-bottom-left-radius: 5px;
-   text-align: right;
-   direction: rtl;
-   color: #212121;
-}
-
-.hascowebchat-user-message {
-   align-self: flex-end;
-   background-color: rgb(20, 93, 238);
-   color: white;
-   border-bottom-right-radius: 5px;
-   text-align: right;
-   direction: rtl;
-}
-
-.hascowebchat-message.hascowebchat-error {
-   background-color: #ffebee;
-   color: #d32f2f;
-}
-
-.hascowebchat-image-container {
-   max-width: 100%;
-   overflow: hidden;
-}
-
-.hascowebchat-image-container img,
-.message-image {
-   max-width: 100%;
-   height: auto;
-   border-radius: 5px;
-   margin: 5px 0;
-   display: block;
-}
-
-.message-image-container {
-   width: 100%;
-   margin: 8px 0;
-   display: block;
-   text-align: center;
-}
-
-.hascowebchat-footer {
-   padding: 8px 12px;
-   background-color: #fff;
-   border-top: 1px solid rgb(229, 229, 229);
-   flex-shrink: 0;
-}
-
-.hascowebchat-input-wrapper {
-   display: flex;
-   align-items: center;
-   background-color: #ffff;
-   border-radius: 25px;
-   padding: 8px 12px;
-   border: 1px solid rgb(229, 229, 229);
-}
-
-#hascowebchat-input {
-   flex-grow: 1;
-   border: none;
-   outline: none;
-   background: transparent;
-   padding: 0;
-   font-size: 14px;
-   direction: rtl;
-   height: 30px;
-}
-
-#hascowebchat-image-upload {
-   margin-right: 10px;
-   cursor: pointer;
-   width: 30px;
-   height: 30px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   background-color: #607d8b;
-   border-radius: 50%;
-   transition: background-color 0.3s;
-}
-
-#hascowebchat-image-upload:hover {
-   background-color: #455a64;
-}
-
-#hascowebchat-submit {
-   cursor: pointer;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   color: rgb(20, 93, 238);
-   transition: background-color 0.3s;
-}
-
-.hascowebchat-default-question {
-    position: fixed;
-    right: 15px;
-    bottom: 90px;
-    background-color: #fff;
-    border: 1px solid rgb(229, 229, 229);
-    border-radius: 18px;
-    padding: 8px 12px;
-    margin: 0;
-    font-size: 14px;
-    cursor: pointer;
-    width: -moz-fit-content;
-    width: fit-content;
-    text-align: right;
-
-}
-
-/* Default Questions Styles */
-.hascowebchat-default-questions {
-   padding: 16px 12px;
-   background-color: #fff;
-   display: flex;
-   flex-direction: column;
-   gap: 8px;
-   align-items: end;
-}
-
-.default-question {
-   background-color: #fff;
-   border: 1px solid rgb(229, 229, 229);
-   border-radius: 18px;
-   padding: 8px 12px;
-   margin: 0;
-   font-size: 14px;
-   cursor: pointer;
-   width: fit-content;
-   text-align: right;
-   transition: background-color 0.2s;
-}
-
-.default-question:hover {
-   background-color: #f0f0f0;
-}
-
-.hascowebchat-tab-content {
-   overflow-y: auto;
-   position: relative;
-   height: 100%;
-   justify-content: space-between;
-   display: flex;
-   flex-direction: column;
-   background: linear-gradient(to bottom, #1a237e, rgb(255 255 255));
-}
-
-.empty-tab-message {
-   font-size: 16px;
-   color: #666;
-   text-align: center;
-   direction: rtl;
-   margin-bottom: 30px;
-}
-
-/* Start Chat Button Styles */
-.start-chat-button {
-   background-color: #1a237e;
-   color: #fff;
-   border-radius: 8px;
-   padding: 12px 24px;
-   margin: 0 auto 16px;
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   width: 100%;
-   cursor: pointer;
-   transition: background-color 0.3s;
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-   direction: rtl;
-}
-
-.start-chat-button:hover {
-   background-color: rgb(12, 71, 194);
-}
-
-.start-chat-icon {
-   display: flex;
-   align-items: center;
-   justify-content: center;
-}
-
-.w-36 {
-   width: 36px;
-}
-
-.start-chat-icon img {
-   width: 24px;
-   height: 24px;
-}
-
-.start-chat-text {
-   font-size: 16px;
-   font-weight: bold;
-}
-
-.back-arrow {
-   display: flex;
-}
-
-/* Knowledge Base Styles */
-.knowledge-base-content {
-   flex-direction: column;
-   align-items: stretch;
-   justify-content: flex-start;
-   padding: 0;
-   text-align: right;
-   direction: rtl;
-   background: #fff;
-   overflow: hidden;
-   height: 100%;
-}
-
-.knowledge-header {
-   background-color: #b7b7b7;
-   color: white;
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   padding: 7px;
-   position: relative;
-}
-.knowledge-back {
-   transform: rotate(180deg);
-}
-.knowledge-back,
-.knowledge-close {
-   width: 24px;
-   height: 24px;
-   cursor: pointer;
-}
-
-.knowledge-title {
-   font-size: 18px;
-   font-weight: bold;
-   flex-grow: 1;
-   text-align: center;
-}
-
-.knowledge-search {
-   display: flex;
-   align-items: center;
-   border-radius: 8px;
-   margin: 0;
-   padding: 8px 12px;
-   background: rgba(0, 0, 0, 0.1);
-   margin-bottom: 6px;
-}
-
-.search__knowledge-base {
-   border-bottom: 1px solid #eee;
-}
-
-.search__knowledge {
-   display: flex;
-    align-items: center;
-    border-radius: 8px;
-    margin: 8px 12px;
-    padding: 8px 12px;
-    background: rgba(0, 0, 0, 0.1);
-}
-
-.knowledge-search-icon {
-   display: flex;
-}
-
-.knowledge-search-input {
-   flex-grow: 1;
-   border: none;
-   outline: none;
-   background: transparent;
-   direction: rtl;
-   font-size: 14px;
-   padding: 0;
-}
-
-.knowledge-categories-container-bottom {
-   position: absolute;
-    bottom: 0px;
-    pointer-events: none;
-    height: 36px;
-    background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgb(255, 255, 255) 100%);
-    width: 100%;
-}
-
-.knowledge-categories-container,
-.knowledge-questions-container,
-.knowledge-answer-container {
-   display: flex;
-   flex-direction: column;
-   flex-grow: 1;
-   overflow-y: auto;
-   max-height: 100%;
-}
-
-.knowledge-questions-count_chat {
-   font-size: 14px;
-   color: rgb(115, 115, 115);
-}
-
-.knowledge-categories-count,
-.knowledge-questions-count {
-   font-size: 16px;
-    padding: 8px 12px;
-    border-bottom: 1px solid #eee;
-    font-weight: 600;
-    line-height: 24px;
-    color: rgb(28, 28, 28);
-}
-
-.knowledge-category-item,
-.knowledge-question-item {
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   padding: 12px;
-   border-bottom: 1px solid #eee;
-   cursor: pointer;
-   transition: background-color 0.2s;
-}
-
-.knowledge-category-item:hover,
-.knowledge-question-item:hover {
-   background-color: #f5f5f5;
-}
-
-.knowledge-category-details {
-   flex-grow: 1;
-}
-
-.knowledge-category-title {
-   font-weight: bold;
-    margin-bottom: 4px;
-    font-size: 14px;
-    color: rgb(28, 28, 28);
-}
-
-.knowledge-category-description {
-   font-size: 14px;
-    line-height: 21px;
-    margin-bottom: 4px;
-    word-break: break-word;
-    color: rgb(28, 28, 28);
-}
-
-.knowledge-category-arrow,
-.knowledge-question-arrow {
-   width: 24px;
-   height: 24px;
-   margin-right: 10px;
-}
-
-.knowledge-category-info {
-   padding: 12px;
-   border-bottom: 1px solid #eee;
-}
-
-.knowledge-question-title {
-   flex-grow: 1;
-   font-size: 14px;
-   color: rgb(28, 28, 28);
-}
-
-.knowledge-question-header {
-   padding: 12px;
-    border-bottom: 1px solid #eee;
-    font-weight: bold;
-    font-size: 14px;
-    color: rgb(28, 28, 28);
-}
-
-.m-2 {
-   margin: 8px;
-}
-
-.knowledge-answer-content {
-   padding: 12px;
-   font-size: 14px;
-    line-height: 21px;
-    margin-bottom: 4px;
-    word-break: break-word;
-    color: rgb(28, 28, 28);
-}
-
-.hascowebchat-powered-by {
-   text-align: center;
-   font-size: 12px;
-   color: #888;
-   padding: 8px 0 0 0;
-}
-/* Animation */
-@keyframes shake {
-   0%,
-   100% {
-      transform: translateY(0);
-   }
-
-   10%,
-   30%,
-   50%,
-   70%,
-   90% {
-      transform: translateY(-5px);
-   }
-
-   20%,
-   40%,
-   60%,
-   80% {
-      transform: translateY(5px);
-   }
-}
-
-/* Bottom Navigation Styles */
-.hascowebchat-bottom-nav {
-   display: flex;
-   justify-content: space-around;
-   align-items: center;
-   background-color: white;
-   border-top: 1px solid rgb(229, 229, 229);
-   padding: 8px 0;
-   height: 60px;
-   flex-direction: row-reverse;
-   flex-shrink: 0;
-}
-
-.nav-item {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-   cursor: pointer;
-   flex: 1;
-   transition: all 0.3s ease;
-   gap: 4px;
-   color: #212121;
-}
-
-.nav-item.active {
-   color: #1a237e;
-}
-
-.nav-item.active .nav-label {
-   font-weight: 700;
-}
-
-.nav-label {
-   font-size: 12px;
-   text-align: center;
 }
 
 /* Media Queries for Mobile */
