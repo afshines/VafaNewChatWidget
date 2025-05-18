@@ -92,42 +92,29 @@
                </div>
             </div>
          </div>
-         <div v-if="currentTab === 'knowledge'" class="hascowebchat-header__chat">
-            <div class="hascowebchat-header-actions_chat">
-               <div class="hascowebchat-header__chat-back" @click="closeChat">
-                  <svg
-                     data-v-8cc45828=""
-                     viewBox="0 0 384 512"
-                     fill="currentColor"
-                     width="16px"
-                     height="16px"
-                  >
-                     <path
-                        d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"
-                     ></path>
-                  </svg>
-               </div>
-            </div>
-            <div class="hascowebchat-title__chat">پایگاه دانش</div>
-            <div class="w-36">
-               <div
-                  v-if="knowledgeView !== 'categories'"
-                     class="hascowebchat-header__chat-back"
-                     @click="goBackKnowledge"
+         <div v-if="currentTab === 'knowledge'" class="v-py-4 v-px-3 v-bg-white v-text-slate-800 v-flex v-items-center v-relative v-flex-row v-border-b v-border-slate-200">
+            <div
+               v-if="knowledgeView !== 'categories'"
+                  class="v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300"
+                  @click="goBackKnowledge"
+            >
+               <svg
+                  data-v-8cc45828=""
+                  viewBox="0 0 320 512"
+                  fill="currentColor"
+                  width="16px"
+                  height="16px"
                >
-                  <svg
+                  <path
                      data-v-8cc45828=""
-                     viewBox="0 0 320 512"
-                     fill="currentColor"
-                     width="16px"
-                     height="16px"
-                  >
-                     <path
-                        data-v-8cc45828=""
-                        d="M273 239c9.4 9.4 9.4 24.6 0 33.9L113 433c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l143-143L79 113c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L273 239z"
-                     ></path>
-                  </svg>
-               </div>
+                     d="M273 239c9.4 9.4 9.4 24.6 0 33.9L113 433c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l143-143L79 113c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L273 239z"
+                  ></path>
+               </svg>
+            </div>
+            <div v-else class="v-p-2 v-rounded-lg v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center"></div>
+            <div class="v-text-sm v-text-center v-font-semibold v-flex-1">پایگاه دانش</div>
+            <div class="v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300" @click="closeChat">
+               <svg viewBox="0 0 384 512" fill="currentColor" width="16px" height="16px"><path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"></path></svg>
             </div>
          </div>
          <!-- Home Tab Content -->
@@ -213,32 +200,21 @@
          <!-- Knowledge Base Tab Content -->
          <div
             v-if="currentTab === 'knowledge'"
-            class="hascowebchat-tab-content knowledge-base-content"
+            class="v-relative v-flex v-h-full v-overflow-hidden v-p-0 v-justify-start v-flex-col v-items-stretch"
          >
 
          <!-- Knowledge Base Search -->
-          <div class="search__knowledge-base">
-            <div class="search__knowledge">
+          <div class="v-py-2 v-px-3 v-border-b v-border-slate-200">
+            <div class="v-flex v-items-center v-justify-between v-rounded-lg v-bg-slate-100">
                
                <input
                   type="text"
                   v-model="knowledgeSearchQuery"
                   @input="searchKnowledgeBase"
                   placeholder="جست و جو کنید"
-                  class="knowledge-search-input"
+                  class="v-flex-1 v-border-0 v-outline-0 v-bg-transparent v-text-sm v-py-2 v-px-3"
                />
-               <div class="knowledge-search-icon">
-                  <svg
-                              viewBox="0 0 512 512"
-                              fill="currentColor"
-                              width="16px"
-                              height="16px"
-                           >
-                              <path
-                                 d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"
-                              ></path>
-                           </svg>
-               </div>
+               <svg viewBox="0 0 512 512" fill="currentColor" width="16px" height="16px" class="v-ml-3"><path d="M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z"></path></svg>
             </div>
             </div>
            
@@ -266,37 +242,36 @@
             <!-- Categories View -->
             <div
                v-if="knowledgeView === 'categories'"
-               class="knowledge-categories-container"
+               class="v-relative v-flex v-flex-col v-h-full v-bg-white v-overflow-auto"
             >
-               <div class="knowledge-categories-count">
-                  {{ filteredCategories.length }} دسته بندی
+               <div class="v-py-2 v-px-3 v-border-b v-border-slate-200">
+                  <div class="v-text-md v-text-slate-800 v-font-semibold">
+                     {{ filteredCategories.length }} دسته بندی
+                  </div>
                </div>
 
                <div
                   v-for="category in filteredCategories"
                   :key="category.id"
-                  class="knowledge-category-item"
+                  class="v-flex v-items-center v-justify-between v-border-b v-border-slate-200 v-cursor-pointer v-px-3 v-py-2 v-gap-2 v-hover:bg-slate-100 v-transition-colors v-duration-300"
                   @click="selectCategory(category)"
                >
-                  <div class="knowledge-category-details">
-                     <div class="knowledge-category-title">
+                  <div class="v-flex-1 v-flex v-flex-col v-gap-1">
+                     <div class="v-text-sm v-text-slate-800 v-font-semibold">
                         {{ category.title }}
                      </div>
-                     <div class="knowledge-category-description">
+                     <div class="v-text-sm v-text-slate-800">
                         {{ category.description }}
                      </div>
-                     <div class="knowledge-questions-count_chat">
+                     <div class="v-text-sm v-text-slate-600">
                         {{ category.questions.length }} پرسش
                      </div>
                   </div>
-                  <div class="knowledge-category-arrow">
-                     <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 320 512" fill="currentColor"><path d="M15 239c-9.4 9.4-9.4 24.6 0 33.9L207 465c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L65.9 256 241 81c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L15 239z"></path>
-                     </svg>
-                  </div>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 320 512" fill="currentColor"><path d="M15 239c-9.4 9.4-9.4 24.6 0 33.9L207 465c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L65.9 256 241 81c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L15 239z"></path></svg>
                </div>
             </div>
 
-            <div class="knowledge-categories-container-bottom"></div>
+            <div class="v-absolute v-pointer-events-none v-h-[36px] v-bottom-0 v-w-full v-bg-gradient-to-b v-from-transparent v-to-white"></div>
 
             <!-- Questions View -->
             <div
@@ -1294,6 +1269,10 @@ button {
    bottom: 20px;
 }
 
+.v-bottom-0 {
+   bottom: 0;
+}
+
 .v-h-full {
    height: 100%;
 }
@@ -1361,6 +1340,10 @@ button {
 
 .v-items-center {
    align-items: center;
+}
+
+.v-items-stretch {
+   align-items: stretch;
 }
 
 .v-justify-center {
@@ -1442,6 +1425,14 @@ button {
    position: relative;
 }
 
+.v-absolute {
+   position: absolute;
+}
+
+.v-pointer-events-none {
+   pointer-events: none;
+}
+
 .v-bg-\[\#1a237e\] {
    --v-bg-opacity: 1;
    background-color: rgb(26 35 126 / var(--v-bg-opacity, 1));
@@ -1464,6 +1455,12 @@ button {
 .v-from-\[\#1a237e\] {
    --v-gradient-from: #1a237e var(--v-gradient-from-position);
    --v-gradient-to: rgb(26 35 126 / 0) var(--v-gradient-to-position);
+   --v-gradient-stops: var(--v-gradient-from), var(--v-gradient-to);
+}
+
+.v-from-transparent {
+  --v-gradient-from: transparent var(--v-gradient-from-position);
+   --v-gradient-to: rgb(0 0 0 0) var(--v-gradient-to-position);
    --v-gradient-stops: var(--v-gradient-from), var(--v-gradient-to);
 }
 
@@ -1504,6 +1501,10 @@ button {
 
 .v-p-2 {
    padding: 0.5rem;
+}
+
+.v-p-0 {
+   padding: 0px;
 }
 
 .v-py-4 {
@@ -1558,6 +1559,10 @@ button {
 
 .v-gap-2 {
    gap: 0.5rem;
+}
+
+.v-gap-1 {
+   gap: 0.25rem;
 }
 
 .v-gap-\[2px\] {
@@ -1654,6 +1659,8 @@ button {
 .v-w-\[688px\] {
    width: 688px;
 }
+
+
 
 .v-z-90 {
    z-index: 90;
