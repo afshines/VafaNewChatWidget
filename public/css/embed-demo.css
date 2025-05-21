@@ -1,0 +1,22 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+pre {
+  background-color: #f4f4f4;
+  padding: 16px;
+  border-radius: 4px;
+  overflow: auto;
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+/* Style for the widget container */
+#vafa-chat-container {
+  direction: rtl;
+}

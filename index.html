@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vafa Chat Widget Development</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .content {
+      max-width: 800px;
+      width: 100%;
+    }
+    .button {
+      display: inline-block;
+      background-color: #1a237e;
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-top: 20px;
+    }
+    #vafa-chat-container {
+      direction: rtl;
+      height: 600px;
+      width: 100%;
+      margin-top: 30px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Vafa Chat Widget Development</h1>
+    <p>This is the development environment for the Vafa Chat Widget</p>
+    <a href="public/embed-demo.html" class="button">View Embedding Demo</a>
+  </div>
+
+  <div class="content">
+    <h2>Development Preview</h2>
+    <p>Below is a preview of the chat widget with a test token. You can modify the code in the src directory to see changes reflected here.</p>
+    
+    <div id="vafa-chat-container"></div>
+  </div>
+
+  <script type="module">
+    import { createApp } from 'vue'
+    import ChatWidget from './src/components/ChatWidget.vue'
+    
+    // Mount the widget for development
+    const app = createApp(ChatWidget, {
+      token: 'asst_1uXRHU9HBoXYSBXPKK7wIChh',
+      welcomeTitle: 'به هاسکووب خوش آمدید',
+      initialMessage: 'سلام! چطور میتونم کمکتون کنم؟',
+      defaultQuestion: 'هاسکووب چیست؟',
+      apiBaseUrl: 'https://api.vafaai.com'
+    })
+    
+    app.mount('#vafa-chat-container')
+  </script>
+</body>
+</html>

@@ -1,38 +1,34 @@
 {
-  "name": "menu",
+  "name": "vafa-chat-widget",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "type": "module",
+  "files": ["dist"],
+  "main": "./dist/vafa-chat-widget.umd.js",
+  "module": "./dist/vafa-chat-widget.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vafa-chat-widget.es.js",
+      "require": "./dist/vafa-chat-widget.umd.js"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\""
+    "dev": "vite",
+    "build": "LIBRARY_BUILD=true vite build",
+    "build:app": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "axios": "^1.4.0",
-    "core-js": "^3.8.3",
-    "mitt": "^3.0.0",
-    "sass-loader": "^13.2.0",
     "socket.io-client": "^4.8.1",
-    "vue": "^3.2.45",
-    "vue-i18n": "^9.1.0",
-    "vue-parallaxy": "^1.1.1",
-    "vue-router": "^4.1.6",
-    "vue3-persian-datetime-picker": "^1.2.2",
-    "vue3-smooth-scroll": "^0.8.1"
+    "vue": "^3.2.45"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
-    "@intlify/vue-i18n-loader": "^3.0.0",
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-plugin-router": "~5.0.0",
-    "@vue/cli-service": "~5.0.0",
-    "@vue/compiler-sfc": "^3.2.45",
-    "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.0.3",
-    "vue-cli-plugin-i18n": "~2.3.1"
+    "@vitejs/plugin-vue": "^4.2.3",
+    "eslint": "^8.42.0",
+    "eslint-plugin-vue": "^9.14.1",
+    "vite": "^4.4.0"
   },
   "eslintConfig": {
     "root": true,
@@ -43,9 +39,6 @@
       "plugin:vue/vue3-essential",
       "eslint:recommended"
     ],
-    "parserOptions": {
-      "parser": "@babel/eslint-parser"
-    },
     "rules": {
       "vue/multi-word-component-names": "off"
     }

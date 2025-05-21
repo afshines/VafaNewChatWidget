@@ -1,0 +1,13 @@
+/* Base styles for the Vafa Chat Widget */
+/* This will be imported into the build and can be used standalone */
+
+/* These styles will be prefixed with 'v-' to avoid conflicts */
+/* Reset some base styles */
+#vafa-chat-container * {
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+/* Import the styles from the widget component */
+/* Note: The widget already has comprehensive styling in the ChatWidget.vue component */
+/* This file can be used for additional global styles */

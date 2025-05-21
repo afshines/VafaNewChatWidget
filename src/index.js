@@ -1,3 +1,4 @@
+// Entry point for the widget when used as a library
 import { createApp } from 'vue'
 import ChatWidget from './components/ChatWidget.vue'
 
