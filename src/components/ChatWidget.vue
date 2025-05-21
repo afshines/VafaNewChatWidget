@@ -8,7 +8,7 @@
          @click="toggleChat"
          :class="{ 'no-shake': hasInteracted }"
       >
-         <img :src="require('@/assets/images/logo.svg')" alt="Chat" class="v-h-[36px]"/>
+         <img :src="require('@/assets/images/logo.svg')" alt="Chat" class="v-h-[32px]"/>
       </div>
 
       <!-- Chat Popup -->
@@ -77,7 +77,7 @@
             </div>
          </div>
          </div>
-         <div v-if="currentTab === 'home'" class="v-py-4 v-px-3 v-bg-[#1a237e] v-text-white v-flex v-items-center v-relative v-flex-row">
+         <div v-if="currentTab === 'home'" class="v-py-4 v-px-3 v-bg-[#1a237e] v-text-white v-flex v-items-center v-relative v-flex-row v-mb-4 v-mt-4 v-my-3 v-rounded-lg">
             <div class="v-flex v-justify-between v-items-center v-flex-1 v-gap-2">
                <img :src="require('@/assets/images/logo.svg')" alt="Support Profile" class="v-w-[32px] v-h-[32px]">
                <div class="v-flex v-grow v-flex-col v-gap-[2px]">
@@ -117,13 +117,10 @@
             </div>
          </div>
          <!-- Home Tab Content -->
-         <div v-if="currentTab === 'home'" class="v-relative v-flex v-flex-col v-h-full v-justify-between v-bg-gradient-to-b v-from-[#1a237e] v-to-white">
+         <div v-if="currentTab === 'home'" class="v-relative v-flex v-flex-col v-h-full v-justify-between v-bg-white">
             <div class="v-px-3">
-               <!-- Welcome Text -->
-               <div class="v-text-lg v-mb-4 v-text-white">به رستوان ما خوش آمدید</div>
-
                <!-- Featured Questions -->
-               <div class="v-p-2 v-rounded-lg v-border-1 v-border-slate-200 v-bg-white v-flex v-flex-col v-gap-[2px]">
+               <div class="v-p-2 v-rounded-lg v-border v-border-slate-200 v-bg-white v-flex v-flex-col v-gap-[2px]">
                   <!-- Search Bar -->
                   <div class="v-flex v-items-center v-justify-between v-rounded-lg v-mb-[6px] v-bg-slate-100" @click="focusOnSearch">
                      <input type="text" v-model="knowledgeSearchQuery" ref="homeSearchInput" @focus="showKnowledgeSearch" placeholder="جست و جو کنید" class="v-flex-1 v-border-0 v-outline-0 v-bg-transparent v-text-sm v-py-2 v-px-3">
@@ -1507,6 +1504,15 @@ button {
 
 .v-to-white {
    --v-gradient-to: #fff var(--v-gradient-to-position);
+}
+
+.v-my-3 {
+   margin-left: 0.75rem;
+   margin-right: 0.75rem;
+}
+
+.v-mt-4 {
+   margin-top: 1rem;
 }
 
 .v-mb-4 {
