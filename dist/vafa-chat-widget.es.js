@@ -2510,7 +2510,7 @@ const wt = (s, e) => {
       ],
       knowledgeView: "categories",
       // categories, questions, answer
-      knowledgeViewTitle: "پایگاه دانش",
+      knowledgeViewTitle: "راهنما",
       knowledgeSearchQuery: "",
       selectedCategory: null,
       selectedQuestion: null
@@ -2635,16 +2635,16 @@ const wt = (s, e) => {
     },
     // Go back in knowledge base navigation
     goBackKnowledge() {
-      this.knowledgeView === "questions" ? (this.knowledgeView = "categories", this.knowledgeViewTitle = "پایگاه دانش") : this.knowledgeView === "answer" && (this.knowledgeView = "questions", this.knowledgeViewTitle = this.selectedCategory.title);
+      this.knowledgeView === "questions" ? (this.knowledgeView = "categories", this.knowledgeViewTitle = "راهنما") : this.knowledgeView === "answer" && (this.knowledgeView = "questions", this.knowledgeViewTitle = this.selectedCategory.title);
     },
     // Reset to main categories view
     resetToCategories() {
-      this.knowledgeView = "categories", this.knowledgeViewTitle = "پایگاه دانش";
+      this.knowledgeView = "categories", this.knowledgeViewTitle = "راهنما";
     },
     switchTab(s) {
       this.currentTab = s, this.isMaximize = !1, s === "messenger" && this.$nextTick(() => {
         this.scrollToBottom();
-      }), s === "knowledge" && (this.knowledgeView = "categories", this.knowledgeViewTitle = "پایگاه دانش", this.knowledgeSearchQuery = "");
+      }), s === "knowledge" && (this.knowledgeView = "categories", this.knowledgeViewTitle = "راهنما", this.knowledgeSearchQuery = "");
     },
     selectDefaultQuestion(s) {
       this.inputMessage = s, this.sendMessage(), this.showDefaultQuestions = !1;
@@ -2882,88 +2882,88 @@ const wt = (s, e) => {
   fill: "currentColor",
   width: "16px",
   height: "16px"
-}, Bt = {
+}, Bt = { class: "v-bg-white v-pb-4 v-pt-4 v-py-3" }, At = {
+  key: 0,
+  class: "v-py-4 v-px-3 v-bg-[#1a237e] v-text-white v-flex v-items-center v-relative v-flex-row v-rounded-lg"
+}, Ot = { class: "v-flex v-justify-between v-items-center v-flex-1 v-gap-2" }, Mt = { class: "v-flex v-grow v-flex-col v-gap-[2px]" }, Rt = { class: "v-text-xs" }, It = { class: "v-flex v-gap-2" }, qt = {
   key: 1,
-  class: "v-py-4 v-px-3 v-bg-[#1a237e] v-text-white v-flex v-items-center v-relative v-flex-row v-mb-4 v-mt-4 v-my-3 v-rounded-lg"
-}, At = { class: "v-flex v-justify-between v-items-center v-flex-1 v-gap-2" }, Ot = { class: "v-flex v-grow v-flex-col v-gap-[2px]" }, Mt = { class: "v-text-xs" }, Rt = { class: "v-flex v-gap-2" }, It = {
-  key: 2,
   class: "v-py-4 v-px-3 v-bg-white v-text-slate-800 v-flex v-items-center v-relative v-flex-row v-border-b v-border-slate-200"
-}, qt = {
+}, Nt = {
   key: 1,
   class: "v-p-2 v-rounded-lg v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center"
-}, Nt = {
-  key: 3,
+}, Dt = {
+  key: 2,
   class: "v-relative v-flex v-flex-col v-h-full v-justify-between v-bg-white"
-}, Dt = { class: "v-px-3" }, Pt = { class: "v-p-2 v-rounded-lg v-border v-border-slate-200 v-bg-white v-flex v-flex-col v-gap-[2px]" }, Ut = ["onClick"], zt = { class: "v-flex-1 v-text-sm v-text-slate-800 v-overflow-hidden v-whitespace-nowrap v-truncate" }, Vt = { class: "v-px-3 v-pb-4" }, Qt = {
-  key: 4,
+}, Pt = { class: "v-px-3" }, Ut = { class: "v-p-2 v-rounded-lg v-border v-border-slate-200 v-bg-white v-flex v-flex-col v-gap-[2px]" }, zt = ["onClick"], Vt = { class: "v-flex-1 v-text-sm v-text-slate-800 v-overflow-hidden v-whitespace-nowrap v-truncate" }, Qt = { class: "v-px-3 v-pb-4" }, Ft = {
+  key: 3,
   class: "v-relative v-flex v-flex-col v-h-full v-justify-between v-bg-white v-py-2 v-px-3 v-overflow-auto",
   ref: "chatBody"
-}, Ft = { class: "v-grow" }, Kt = ["innerHTML"], Ht = {
+}, Kt = { class: "v-grow" }, Ht = ["innerHTML"], Wt = {
   key: 0,
   class: "hascowebchat-message hascowebchat-bot-message",
   style: { "font-style": "italic", opacity: "0.8" }
-}, Wt = {
+}, jt = {
   key: 0,
   class: "v-flex v-flex-col v-gap-2"
-}, jt = ["onClick"], Yt = {
-  key: 5,
+}, Yt = ["onClick"], Jt = {
+  key: 4,
   class: "v-relative v-flex v-h-full v-overflow-hidden v-p-0 v-justify-start v-flex-col v-items-stretch"
-}, Jt = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-bg-white" }, Xt = { class: "v-flex v-items-center v-justify-between v-rounded-lg v-bg-slate-100" }, Gt = {
+}, Xt = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-bg-white" }, Gt = { class: "v-flex v-items-center v-justify-between v-rounded-lg v-bg-slate-100" }, Zt = {
   key: 0,
   class: "v-relative v-flex v-flex-col v-h-full v-bg-white v-overflow-auto"
-}, Zt = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200" }, $t = { class: "v-text-md v-text-slate-800 v-font-semibold" }, es = ["onClick"], ts = { class: "v-flex-1 v-flex v-flex-col v-gap-1" }, ss = { class: "v-text-sm v-text-slate-800 v-font-semibold" }, is = { class: "v-text-sm v-text-slate-800" }, ns = { class: "v-text-sm v-text-slate-600" }, rs = {
+}, $t = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200" }, es = { class: "v-text-md v-text-slate-800 v-font-semibold" }, ts = ["onClick"], ss = { class: "v-flex-1 v-flex v-flex-col v-gap-1" }, is = { class: "v-text-sm v-text-slate-800 v-font-semibold" }, ns = { class: "v-text-sm v-text-slate-800" }, rs = { class: "v-text-sm v-text-slate-600" }, os = {
   key: 1,
   class: "v-bg-white v-flex v-flex-col v-grow v-overflow-auto"
-}, os = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-gap-1 v-flex v-flex-col" }, as = { class: "v-text-sm v-text-slate-800 v-font-semibold" }, cs = { class: "v-text-sm v-text-slate-800" }, ls = { class: "v-text-sm v-text-slate-600" }, hs = ["onClick"], us = { class: "v-text-sm v-text-slate-800" }, ds = {
+}, as = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-gap-1 v-flex v-flex-col" }, cs = { class: "v-text-sm v-text-slate-800 v-font-semibold" }, ls = { class: "v-text-sm v-text-slate-800" }, hs = { class: "v-text-sm v-text-slate-600" }, us = ["onClick"], ds = { class: "v-text-sm v-text-slate-800" }, fs = {
   key: 2,
   class: "v-bg-white v-flex v-flex-col v-grow v-overflow-auto"
-}, fs = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-text-sm v-text-slate-800 v-font-semibold" }, ps = { class: "v-py-2 v-px-3 v-text-sm v-text-slate-800" }, vs = {
-  key: 6,
+}, ps = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-text-sm v-text-slate-800 v-font-semibold" }, vs = { class: "v-py-2 v-px-3 v-text-sm v-text-slate-800" }, gs = {
+  key: 5,
   class: "v-py-2 v-px-3 v-bg-white v-border-t v-border-slate-200"
-}, gs = { class: "v-flex v-items-center v-bg-white v-rounded-full v-border v-border-slate-200" }, ms = {
-  key: 7,
+}, ms = { class: "v-flex v-items-center v-bg-white v-rounded-full v-border v-border-slate-200" }, ys = {
+  key: 6,
   class: "v-flex v-justify-around v-items-center v-gap-2 v-bg-white v-py-2 v-h-[60px] v-border-t v-border-slate-200"
-}, ys = {
-  key: 0,
-  viewBox: "0 0 576 512",
-  fill: "currentColor",
-  width: "20px",
-  height: "20px"
 }, ws = {
-  key: 1,
+  key: 0,
   viewBox: "0 0 576 512",
   fill: "currentColor",
   width: "20px",
   height: "20px"
 }, xs = {
-  key: 0,
-  viewBox: "0 0 512 512",
+  key: 1,
+  viewBox: "0 0 576 512",
   fill: "currentColor",
   width: "20px",
   height: "20px"
 }, bs = {
-  key: 1,
+  key: 0,
   viewBox: "0 0 512 512",
   fill: "currentColor",
   width: "20px",
   height: "20px"
 }, ks = {
+  key: 1,
+  viewBox: "0 0 512 512",
+  fill: "currentColor",
+  width: "20px",
+  height: "20px"
+}, _s = {
   key: 0,
   viewBox: "0 0 448 512",
   fill: "currentColor",
   width: "20px",
   height: "20px"
-}, _s = {
+}, Ts = {
   key: 1,
   viewBox: "0 0 448 512",
   fill: "currentColor",
   width: "20px",
   height: "20px"
 };
-function Ts(s, e, t, i, n, r) {
+function Ss(s, e, t, i, n, r) {
   return l(), h("div", bt, [
     a("div", {
-      class: "v-border v-border-slate-200 v-rounded-lg v-rounded-br-sm v-py-2 v-px-3 v-text-sm v-cursor-pointer v-w-fit v-hover:bg-slate-100 v-transition-colors v-duration-300",
+      class: "v-border v-border-slate-200 v-rounded-lg v-rounded-br-sm v-py-2 v-px-3 v-text-sm v-cursor-pointer v-w-fit v-hover:bg-slate-100 v-bg-slate-50 v-transition-colors v-duration-300",
       onClick: e[0] || (e[0] = (...o) => r.startConversationWithDefaultQuestion && r.startConversationWithDefaultQuestion(...o))
     }, p(t.defaultQuestion), 1),
     a("div", {
@@ -3032,35 +3032,37 @@ function Ts(s, e, t, i, n, r) {
           ]))
         ])
       ])) : v("", !0),
-      n.currentTab === "home" ? (l(), h("div", Bt, [
-        a("div", At, [
-          e[28] || (e[28] = a("img", {
-            src: "https://vafaai.com/widget/images/logo.svg",
-            alt: "Support Profile",
-            class: "v-w-[32px] v-h-[32px]"
-          }, null, -1)),
+      a("div", Bt, [
+        n.currentTab === "home" ? (l(), h("div", At, [
           a("div", Ot, [
-            e[27] || (e[27] = a("div", { class: "v-text-sm v-font-semibold" }, "پشتیبانی هوشمند وفا", -1)),
-            a("div", Mt, p(n.connectionStatus), 1)
+            e[28] || (e[28] = a("img", {
+              src: "https://vafaai.com/widget/images/logo.svg",
+              alt: "Support Profile",
+              class: "v-w-[32px] v-h-[32px]"
+            }, null, -1)),
+            a("div", Mt, [
+              e[27] || (e[27] = a("div", { class: "v-text-sm v-font-semibold" }, "پشتیبانی هوشمند وفا", -1)),
+              a("div", Rt, p(n.connectionStatus), 1)
+            ])
+          ]),
+          a("div", It, [
+            a("div", {
+              class: "v-p-2 v-rounded-lg v-cursor-pointer v-text-white v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#22222240] v-transition-colors v-duration-300",
+              onClick: e[5] || (e[5] = (...o) => r.closeChat && r.closeChat(...o))
+            }, e[29] || (e[29] = [
+              a("svg", {
+                viewBox: "0 0 384 512",
+                fill: "currentColor",
+                width: "16px",
+                height: "16px"
+              }, [
+                a("path", { d: "M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z" })
+              ], -1)
+            ]))
           ])
-        ]),
-        a("div", Rt, [
-          a("div", {
-            class: "v-p-2 v-rounded-lg v-cursor-pointer v-text-white v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#22222240] v-transition-colors v-duration-300",
-            onClick: e[5] || (e[5] = (...o) => r.closeChat && r.closeChat(...o))
-          }, e[29] || (e[29] = [
-            a("svg", {
-              viewBox: "0 0 384 512",
-              fill: "currentColor",
-              width: "16px",
-              height: "16px"
-            }, [
-              a("path", { d: "M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z" })
-            ], -1)
-          ]))
-        ])
-      ])) : v("", !0),
-      n.currentTab === "knowledge" ? (l(), h("div", It, [
+        ])) : v("", !0)
+      ]),
+      n.currentTab === "knowledge" ? (l(), h("div", qt, [
         n.knowledgeView !== "categories" ? (l(), h("div", {
           key: 0,
           class: "v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300",
@@ -3078,8 +3080,8 @@ function Ts(s, e, t, i, n, r) {
               d: "M273 239c9.4 9.4 9.4 24.6 0 33.9L113 433c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l143-143L79 113c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L273 239z"
             })
           ], -1)
-        ]))) : (l(), h("div", qt)),
-        e[32] || (e[32] = a("div", { class: "v-text-sm v-text-center v-font-semibold v-flex-1" }, "پایگاه دانش", -1)),
+        ]))) : (l(), h("div", Nt)),
+        e[32] || (e[32] = a("div", { class: "v-text-sm v-text-center v-font-semibold v-flex-1" }, "راهنما", -1)),
         a("div", {
           class: "v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300",
           onClick: e[7] || (e[7] = (...o) => r.closeChat && r.closeChat(...o))
@@ -3094,9 +3096,9 @@ function Ts(s, e, t, i, n, r) {
           ], -1)
         ]))
       ])) : v("", !0),
-      n.currentTab === "home" ? (l(), h("div", Nt, [
-        a("div", Dt, [
-          a("div", Pt, [
+      n.currentTab === "home" ? (l(), h("div", Dt, [
+        a("div", Pt, [
+          a("div", Ut, [
             a("div", {
               class: "v-flex v-items-center v-justify-between v-rounded-lg v-mb-[6px] v-bg-slate-100",
               onClick: e[10] || (e[10] = (...o) => r.focusOnSearch && r.focusOnSearch(...o))
@@ -3126,7 +3128,7 @@ function Ts(s, e, t, i, n, r) {
               class: "v-flex v-items-center v-justify-between v-py-2 v-px-3 v-bg-white v-cursor-pointer v-rounded-lg v-hover:bg-slate-100",
               onClick: (c) => r.navigateToQuestion(o.id)
             }, [
-              a("div", zt, p(o.question), 1),
+              a("div", Vt, p(o.question), 1),
               e[34] || (e[34] = a("svg", {
                 viewBox: "0 0 320 512",
                 fill: "currentColor",
@@ -3135,20 +3137,20 @@ function Ts(s, e, t, i, n, r) {
               }, [
                 a("path", { d: "M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" })
               ], -1))
-            ], 8, Ut))), 128))
+            ], 8, zt))), 128))
           ])
         ]),
-        a("div", Vt, [
+        a("div", Qt, [
           a("div", {
             class: "v-bg-[#1a237e] v-text-white v-text-md v-rounded-lg v-py-3 v-px-6 v-flex v-items-center v-justify-between v-w-full v-cursor-pointer v-transition-colors v-duration-300",
             onClick: e[11] || (e[11] = (o) => r.switchTab("messenger"))
           }, e[35] || (e[35] = [
-            xe('<svg viewBox="0 0 512 512" fill="currentColor" width="24px" height="24px" data-v-870bf34a><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm165.8 21.7c-7.6 8.1-20.2 8.5-28.3 .9s-8.5-20.2-.9-28.3c14.5-15.5 35.2-22.3 54.6-22.3s40.1 6.8 54.6 22.3c7.6 8.1 7.1 20.7-.9 28.3s-20.7 7.1-28.3-.9c-5.5-5.8-14.8-9.7-25.4-9.7s-19.9 3.8-25.4 9.7z" data-v-870bf34a></path></svg><div class="v-text-md v-font-bold" data-v-870bf34a>شروع گفتگو</div><svg viewBox="0 0 320 512" fill="currentColor" width="16px" height="16px" data-v-870bf34a><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" data-v-870bf34a></path></svg>', 3)
+            xe('<svg viewBox="0 0 512 512" fill="currentColor" width="24px" height="24px" data-v-e65a4a6a><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm165.8 21.7c-7.6 8.1-20.2 8.5-28.3 .9s-8.5-20.2-.9-28.3c14.5-15.5 35.2-22.3 54.6-22.3s40.1 6.8 54.6 22.3c7.6 8.1 7.1 20.7-.9 28.3s-20.7 7.1-28.3-.9c-5.5-5.8-14.8-9.7-25.4-9.7s-19.9 3.8-25.4 9.7z" data-v-e65a4a6a></path></svg><div class="v-text-md v-font-bold" data-v-e65a4a6a>شروع گفتگو</div><svg viewBox="0 0 320 512" fill="currentColor" width="16px" height="16px" data-v-e65a4a6a><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" data-v-e65a4a6a></path></svg>', 3)
           ]))
         ])
       ])) : v("", !0),
-      n.currentTab === "messenger" ? (l(), h("div", Qt, [
-        a("div", Ft, [
+      n.currentTab === "messenger" ? (l(), h("div", Ft, [
+        a("div", Kt, [
           (l(!0), h(E, null, L(n.messages, (o, c) => (l(), h("div", {
             key: c,
             class: T([
@@ -3159,21 +3161,21 @@ function Ts(s, e, t, i, n, r) {
           }, [
             a("div", {
               innerHTML: o.content
-            }, null, 8, Kt)
+            }, null, 8, Ht)
           ], 2))), 128)),
-          n.isThinking ? (l(), h("div", Ht, " در حال تایپ... ")) : v("", !0)
+          n.isThinking ? (l(), h("div", Wt, " در حال تایپ... ")) : v("", !0)
         ]),
-        n.showDefaultQuestions && n.currentTab === "messenger" && n.messages.length <= 2 ? (l(), h("div", Wt, [
+        n.showDefaultQuestions && n.currentTab === "messenger" && n.messages.length <= 2 ? (l(), h("div", jt, [
           (l(!0), h(E, null, L(n.defaultQuestions, (o, c) => (l(), h("div", {
             key: c,
             class: "v-border v-border-slate-200 v-rounded-full v-py-2 v-px-3 v-text-sm v-cursor-pointer v-w-fit v-hover:bg-slate-100 v-transition-colors v-duration-300",
             onClick: (d) => r.selectDefaultQuestion(o)
-          }, p(o), 9, jt))), 128))
+          }, p(o), 9, Yt))), 128))
         ])) : v("", !0)
       ], 512)) : v("", !0),
-      n.currentTab === "knowledge" ? (l(), h("div", Yt, [
-        a("div", Jt, [
-          a("div", Xt, [
+      n.currentTab === "knowledge" ? (l(), h("div", Jt, [
+        a("div", Xt, [
+          a("div", Gt, [
             O(a("input", {
               type: "text",
               "onUpdate:modelValue": e[12] || (e[12] = (o) => n.knowledgeSearchQuery = o),
@@ -3194,19 +3196,19 @@ function Ts(s, e, t, i, n, r) {
             ], -1))
           ])
         ]),
-        n.knowledgeView === "categories" ? (l(), h("div", Gt, [
-          a("div", Zt, [
-            a("div", $t, p(r.filteredCategories.length) + " دسته بندی ", 1)
+        n.knowledgeView === "categories" ? (l(), h("div", Zt, [
+          a("div", $t, [
+            a("div", es, p(r.filteredCategories.length) + " دسته بندی ", 1)
           ]),
           (l(!0), h(E, null, L(r.filteredCategories, (o) => (l(), h("div", {
             key: o.id,
             class: "v-flex v-items-center v-justify-between v-border-b v-border-slate-200 v-cursor-pointer v-px-3 v-py-2 v-gap-2 v-hover:bg-slate-100 v-transition-colors v-duration-300",
             onClick: (c) => r.selectCategory(o)
           }, [
-            a("div", ts, [
-              a("div", ss, p(o.title), 1),
-              a("div", is, p(o.description), 1),
-              a("div", ns, p(o.questions.length) + " پرسش ", 1)
+            a("div", ss, [
+              a("div", is, p(o.title), 1),
+              a("div", ns, p(o.description), 1),
+              a("div", rs, p(o.questions.length) + " پرسش ", 1)
             ]),
             e[37] || (e[37] = a("svg", {
               xmlns: "http://www.w3.org/2000/svg",
@@ -3217,21 +3219,21 @@ function Ts(s, e, t, i, n, r) {
             }, [
               a("path", { d: "M15 239c-9.4 9.4-9.4 24.6 0 33.9L207 465c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L65.9 256 241 81c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L15 239z" })
             ], -1))
-          ], 8, es))), 128))
+          ], 8, ts))), 128))
         ])) : v("", !0),
         e[39] || (e[39] = a("div", { class: "v-absolute v-pointer-events-none v-h-[36px] v-bottom-0 v-w-full v-bg-gradient-to-b v-from-transparent v-to-white" }, null, -1)),
-        n.knowledgeView === "questions" ? (l(), h("div", rs, [
-          a("div", os, [
-            a("div", as, p(n.selectedCategory.title), 1),
-            a("div", cs, p(n.selectedCategory.description), 1),
-            a("div", ls, p(r.filteredQuestions.length) + " پرسش ", 1)
+        n.knowledgeView === "questions" ? (l(), h("div", os, [
+          a("div", as, [
+            a("div", cs, p(n.selectedCategory.title), 1),
+            a("div", ls, p(n.selectedCategory.description), 1),
+            a("div", hs, p(r.filteredQuestions.length) + " پرسش ", 1)
           ]),
           (l(!0), h(E, null, L(r.filteredQuestions, (o) => (l(), h("div", {
             key: o.id,
             class: "v-flex v-items-center v-justify-between v-py-3 v-px-3 v-border-b v-border-slate-200 v-cursor-pointer v-gap-2 v-hover:bg-slate-100 v-transition-colors v-duration-300",
             onClick: (c) => r.selectQuestion(o)
           }, [
-            a("div", us, p(o.question), 1),
+            a("div", ds, p(o.question), 1),
             e[38] || (e[38] = a("svg", {
               "data-v-8cc45828": "",
               xmlns: "http://www.w3.org/2000/svg",
@@ -3245,15 +3247,15 @@ function Ts(s, e, t, i, n, r) {
                 d: "M15 239c-9.4 9.4-9.4 24.6 0 33.9L207 465c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L65.9 256 241 81c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L15 239z"
               })
             ], -1))
-          ], 8, hs))), 128))
+          ], 8, us))), 128))
         ])) : v("", !0),
-        n.knowledgeView === "answer" ? (l(), h("div", ds, [
-          a("div", fs, p(n.selectedQuestion.question), 1),
-          a("div", ps, p(n.selectedQuestion.answer), 1)
+        n.knowledgeView === "answer" ? (l(), h("div", fs, [
+          a("div", ps, p(n.selectedQuestion.question), 1),
+          a("div", vs, p(n.selectedQuestion.answer), 1)
         ])) : v("", !0)
       ])) : v("", !0),
-      n.currentTab === "messenger" ? (l(), h("div", vs, [
-        a("div", gs, [
+      n.currentTab === "messenger" ? (l(), h("div", gs, [
+        a("div", ms, [
           O(a("input", {
             type: "text",
             "onUpdate:modelValue": e[14] || (e[14] = (o) => n.inputMessage = o),
@@ -3276,14 +3278,14 @@ function Ts(s, e, t, i, n, r) {
         ]),
         e[41] || (e[41] = a("div", { class: "v-text-center v-text-xs v-text-slate-600 v-pt-2" }, "ساخته شده با وفا", -1))
       ])) : v("", !0),
-      n.currentTab === "home" || n.currentTab === "knowledge" ? (l(), h("div", ms, [
+      n.currentTab === "home" || n.currentTab === "knowledge" ? (l(), h("div", ys, [
         a("div", {
           class: T(["v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2", { active: n.currentTab === "home", "v-text-[#1a237e] v-font-semibold": n.currentTab === "home", "v-text-slate-800": n.currentTab !== "home" }]),
           onClick: e[17] || (e[17] = (o) => r.switchTab("home"))
         }, [
-          n.currentTab === "home" ? (l(), h("svg", ys, e[42] || (e[42] = [
+          n.currentTab === "home" ? (l(), h("svg", ws, e[42] || (e[42] = [
             a("path", { d: "M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c.2 35.5-28.5 64.3-64 64.3H128.1c-35.3 0-64-28.7-64-64V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" }, null, -1)
-          ]))) : (l(), h("svg", ws, e[43] || (e[43] = [
+          ]))) : (l(), h("svg", xs, e[43] || (e[43] = [
             a("path", { d: "M303.5 5.7c-9-7.6-22.1-7.6-31.1 0l-264 224c-10.1 8.6-11.3 23.7-2.8 33.8s23.7 11.3 33.8 2.8L64 245.5 64 432c0 44.2 35.8 80 80 80l288 0c44.2 0 80-35.8 80-80l0-186.5 24.5 20.8c10.1 8.6 25.3 7.3 33.8-2.8s7.3-25.3-2.8-33.8l-264-224zM464 204.8L464 432c0 17.7-14.3 32-32 32l-288 0c-17.7 0-32-14.3-32-32l0-227.2L288 55.5 464 204.8z" }, null, -1)
           ]))),
           e[44] || (e[44] = a("div", { class: "v-text-xs" }, "خانه", -1))
@@ -3292,9 +3294,9 @@ function Ts(s, e, t, i, n, r) {
           class: T(["v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2", { active: n.currentTab === "messenger", "v-text-[#1a237e] v-font-semibold": n.currentTab === "messenger", "v-text-slate-800": n.currentTab !== "messenger" }]),
           onClick: e[18] || (e[18] = (o) => r.switchTab("messenger"))
         }, [
-          n.currentTab === "messenger" ? (l(), h("svg", xs, e[45] || (e[45] = [
+          n.currentTab === "messenger" ? (l(), h("svg", bs, e[45] || (e[45] = [
             a("path", { d: "M0 64C0 28.7 28.7 0 64 0L448 0c35.3 0 64 28.7 64 64l0 288c0 35.3-28.7 64-64 64l-138.7 0L185.6 508.8c-4.8 3.6-11.3 4.2-16.8 1.5s-8.8-8.2-8.8-14.3l0-80-96 0c-35.3 0-64-28.7-64-64L0 64zm152 80c-13.3 0-24 10.7-24 24s10.7 24 24 24l208 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-208 0zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24l112 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-112 0z" }, null, -1)
-          ]))) : (l(), h("svg", bs, e[46] || (e[46] = [
+          ]))) : (l(), h("svg", ks, e[46] || (e[46] = [
             a("path", { d: "M208 416c0-26.5-21.5-48-48-48l-96 0c-8.8 0-16-7.2-16-16L48 64c0-8.8 7.2-16 16-16l384 0c8.8 0 16 7.2 16 16l0 288c0 8.8-7.2 16-16 16l-138.7 0c-10.4 0-20.5 3.4-28.8 9.6L208 432l0-16zm-.2 76.2l.2-.2 101.3-76L448 416c35.3 0 64-28.7 64-64l0-288c0-35.3-28.7-64-64-64L64 0C28.7 0 0 28.7 0 64L0 352c0 35.3 28.7 64 64 64l48 0 48 0 0 48 0 4 0 .3 0 6.4 0 21.3c0 6.1 3.4 11.6 8.8 14.3s11.9 2.1 16.8-1.5L202.7 496l5.1-3.8zM152 144c-13.3 0-24 10.7-24 24s10.7 24 24 24l208 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-208 0zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24l112 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-112 0z" }, null, -1)
           ]))),
           e[47] || (e[47] = a("div", { class: "v-text-xs" }, "پیام رسان", -1))
@@ -3303,12 +3305,12 @@ function Ts(s, e, t, i, n, r) {
           class: T(["v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2", { active: n.currentTab === "knowledge", "v-text-[#1a237e] v-font-semibold": n.currentTab === "knowledge", "v-text-slate-800": n.currentTab !== "knowledge" }]),
           onClick: e[19] || (e[19] = (o) => r.switchTab("knowledge"))
         }, [
-          n.currentTab === "knowledge" ? (l(), h("svg", ks, e[48] || (e[48] = [
+          n.currentTab === "knowledge" ? (l(), h("svg", _s, e[48] || (e[48] = [
             a("path", { d: "M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm73.8 133.3c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L248 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM192 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" }, null, -1)
-          ]))) : (l(), h("svg", _s, e[49] || (e[49] = [
+          ]))) : (l(), h("svg", Ts, e[49] || (e[49] = [
             a("path", { d: "M64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80zM0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm137.8 69.3c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L248 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM192 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" }, null, -1)
           ]))),
-          e[50] || (e[50] = a("div", { class: "v-text-xs" }, "پایگاه دانش", -1))
+          e[50] || (e[50] = a("div", { class: "v-text-xs" }, "راهنما", -1))
         ], 2)
       ])) : v("", !0)
     ], 2), [
@@ -3316,8 +3318,8 @@ function Ts(s, e, t, i, n, r) {
     ])
   ]);
 }
-const we = /* @__PURE__ */ wt(xt, [["render", Ts], ["__scopeId", "data-v-870bf34a"]]);
-function Ss(s, e = {}) {
+const we = /* @__PURE__ */ wt(xt, [["render", Ss], ["__scopeId", "data-v-e65a4a6a"]]);
+function Cs(s, e = {}) {
   const t = document.querySelector(s);
   if (!t) {
     console.error(`Container with selector ${s} not found`);
@@ -3326,13 +3328,13 @@ function Ss(s, e = {}) {
   const i = _e(we, e);
   return i.mount(t), i;
 }
-const Cs = {
+const Es = {
   ChatWidget: we,
-  init: Ss
+  init: Cs
 };
-typeof window < "u" && (window.VafaChatWidget = Cs);
+typeof window < "u" && (window.VafaChatWidget = Es);
 export {
   we as ChatWidget,
-  Cs as default,
-  Ss as init
+  Es as default,
+  Cs as init
 };

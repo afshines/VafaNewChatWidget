@@ -81,8 +81,8 @@ export default {
   <!-- Include Vafa Chat Widget from your server -->
   <script>
     // Determine if we're in the dist folder or the public folder
-    const isProduction = window.location.pathname.includes('/dist/');
-    const basePath = isProduction ? '' : '../dist/';
+    const isProduction = window.location.pathname.includes('/');
+    const basePath = isProduction ? '' : '../';
     
     // Dynamically create script element
     const script = document.createElement('script');

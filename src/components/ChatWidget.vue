@@ -2,7 +2,7 @@
     <div class="v-fixed v-flex v-flex-col v-gap-2 v-right-[20px] v-bottom-[20px]">
        <!-- Chat Button -->
  
-       <div class="v-border v-border-slate-200 v-rounded-lg v-rounded-br-sm v-py-2 v-px-3 v-text-sm v-cursor-pointer v-w-fit v-hover:bg-slate-100 v-transition-colors v-duration-300" @click="startConversationWithDefaultQuestion">{{ defaultQuestion }}</div>
+       <div class="v-border v-border-slate-200 v-rounded-lg v-rounded-br-sm v-py-2 v-px-3 v-text-sm v-cursor-pointer v-w-fit v-hover:bg-slate-100 v-bg-slate-50 v-transition-colors v-duration-300" @click="startConversationWithDefaultQuestion">{{ defaultQuestion }}</div>
        <div
           class="v-flex v-bg-[#1a237e] v-items-center v-justify-center v-rounded-full v-h-[60px] v-w-[60px] v-z-70 no-shake v-overflow-hidden v-cursor-pointer"
           @click="toggleChat"
