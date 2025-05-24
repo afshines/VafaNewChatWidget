@@ -215,19 +215,19 @@ f.prototype.listeners = function(s) {
 f.prototype.hasListeners = function(s) {
   return !!this.listeners(s).length;
 };
-const P = (() => typeof Promise == "function" && typeof Promise.resolve == "function" ? (e) => Promise.resolve().then(e) : (e, t) => t(e, 0))(), m = (() => typeof self < "u" ? self : typeof window < "u" ? window : Function("return this")())(), Re = "arraybuffer";
+const U = (() => typeof Promise == "function" && typeof Promise.resolve == "function" ? (e) => Promise.resolve().then(e) : (e, t) => t(e, 0))(), m = (() => typeof self < "u" ? self : typeof window < "u" ? window : Function("return this")())(), Re = "arraybuffer";
 function de(s, ...e) {
   return e.reduce((t, i) => (s.hasOwnProperty(i) && (t[i] = s[i]), t), {});
 }
-const Ie = m.setTimeout, qe = m.clearTimeout;
-function U(s, e) {
-  e.useNativeTimers ? (s.setTimeoutFn = Ie.bind(m), s.clearTimeoutFn = qe.bind(m)) : (s.setTimeoutFn = m.setTimeout.bind(m), s.clearTimeoutFn = m.clearTimeout.bind(m));
+const Ie = m.setTimeout, Ne = m.clearTimeout;
+function P(s, e) {
+  e.useNativeTimers ? (s.setTimeoutFn = Ie.bind(m), s.clearTimeoutFn = Ne.bind(m)) : (s.setTimeoutFn = m.setTimeout.bind(m), s.clearTimeoutFn = m.clearTimeout.bind(m));
 }
-const Ne = 1.33;
-function De(s) {
-  return typeof s == "string" ? Pe(s) : Math.ceil((s.byteLength || s.size) * Ne);
+const De = 1.33;
+function qe(s) {
+  return typeof s == "string" ? Ue(s) : Math.ceil((s.byteLength || s.size) * De);
 }
-function Pe(s) {
+function Ue(s) {
   let e = 0, t = 0;
   for (let i = 0, n = s.length; i < n; i++)
     e = s.charCodeAt(i), e < 128 ? t += 1 : e < 2048 ? t += 2 : e < 55296 || e >= 57344 ? t += 3 : (i++, t += 4);
@@ -236,7 +236,7 @@ function Pe(s) {
 function fe() {
   return Date.now().toString(36).substring(3) + Math.random().toString(36).substring(2, 5);
 }
-function Ue(s) {
+function Pe(s) {
   let e = "";
   for (let t in s)
     s.hasOwnProperty(t) && (e.length && (e += "&"), e += encodeURIComponent(t) + "=" + encodeURIComponent(s[t]));
@@ -263,7 +263,7 @@ class Z extends f {
    * @protected
    */
   constructor(e) {
-    super(), this.writable = !1, U(this, e), this.opts = e, this.query = e.query, this.socket = e.socket, this.supportsBinary = !e.forceBase64;
+    super(), this.writable = !1, P(this, e), this.opts = e, this.query = e.query, this.socket = e.socket, this.supportsBinary = !e.forceBase64;
   }
   /**
    * Emits an error.
@@ -349,7 +349,7 @@ class Z extends f {
     return this.opts.port && (this.opts.secure && +(this.opts.port !== 443) || !this.opts.secure && Number(this.opts.port) !== 80) ? ":" + this.opts.port : "";
   }
   _query(e) {
-    const t = Ue(e);
+    const t = Pe(e);
     return t.length ? "?" + t : "";
   }
 }
@@ -503,7 +503,7 @@ class w extends f {
    * @package
    */
   constructor(e, t, i) {
-    super(), this.createRequest = e, U(this, i), this._opts = i, this._method = i.method || "GET", this._uri = t, this._data = i.data !== void 0 ? i.data : null, this._create();
+    super(), this.createRequest = e, P(this, i), this._opts = i, this._method = i.method || "GET", this._uri = t, this._data = i.data !== void 0 ? i.data : null, this._create();
   }
   /**
    * Creates the XHR object and sends the request.
@@ -672,7 +672,7 @@ class Ye extends Z {
           this.doWrite(i, r);
         } catch {
         }
-        n && P(() => {
+        n && U(() => {
           this.writable = !0, this.emitReserved("drain");
         }, this.setTimeoutFn);
       });
@@ -736,7 +736,7 @@ class Xe extends Z {
     for (let t = 0; t < e.length; t++) {
       const i = e[t], n = t === e.length - 1;
       this._writer.write(i).then(() => {
-        n && P(() => {
+        n && U(() => {
           this.writable = !0, this.emitReserved("drain");
         }, this.setTimeoutFn);
       });
@@ -787,9 +787,9 @@ function tt(s, e) {
     n && (t[n] = r);
   }), t;
 }
-const W = typeof addEventListener == "function" && typeof removeEventListener == "function", q = [];
+const W = typeof addEventListener == "function" && typeof removeEventListener == "function", N = [];
 W && addEventListener("offline", () => {
-  q.forEach((s) => s());
+  N.forEach((s) => s());
 }, !1);
 class _ extends f {
   /**
@@ -804,7 +804,7 @@ class _ extends f {
       t.hostname = i.host, t.secure = i.protocol === "https" || i.protocol === "wss", t.port = i.port, i.query && (t.query = i.query);
     } else
       t.host && (t.hostname = H(t.host).host);
-    U(this, t), this.secure = t.secure != null ? t.secure : typeof location < "u" && location.protocol === "https:", t.hostname && !t.port && (t.port = this.secure ? "443" : "80"), this.hostname = t.hostname || (typeof location < "u" ? location.hostname : "localhost"), this.port = t.port || (typeof location < "u" && location.port ? location.port : this.secure ? "443" : "80"), this.transports = [], this._transportsByName = {}, t.transports.forEach((i) => {
+    P(this, t), this.secure = t.secure != null ? t.secure : typeof location < "u" && location.protocol === "https:", t.hostname && !t.port && (t.port = this.secure ? "443" : "80"), this.hostname = t.hostname || (typeof location < "u" ? location.hostname : "localhost"), this.port = t.port || (typeof location < "u" && location.port ? location.port : this.secure ? "443" : "80"), this.transports = [], this._transportsByName = {}, t.transports.forEach((i) => {
       const n = i.prototype.name;
       this.transports.push(n), this._transportsByName[n] = i;
     }), this.opts = Object.assign({
@@ -827,7 +827,7 @@ class _ extends f {
       this._onClose("transport close", {
         description: "network connection lost"
       });
-    }, q.push(this._offlineEventListener))), this.opts.withCredentials && (this._cookieJar = void 0), this._open();
+    }, N.push(this._offlineEventListener))), this.opts.withCredentials && (this._cookieJar = void 0), this._open();
   }
   /**
    * Creates transport of the given type.
@@ -956,7 +956,7 @@ class _ extends f {
     let t = 1;
     for (let i = 0; i < this.writeBuffer.length; i++) {
       const n = this.writeBuffer[i].data;
-      if (n && (t += De(n)), i > 0 && t > this._maxPayload)
+      if (n && (t += qe(n)), i > 0 && t > this._maxPayload)
         return this.writeBuffer.slice(0, i);
       t += 2;
     }
@@ -976,7 +976,7 @@ class _ extends f {
     if (!this._pingTimeoutTime)
       return !0;
     const e = Date.now() > this._pingTimeoutTime;
-    return e && (this._pingTimeoutTime = 0, P(() => {
+    return e && (this._pingTimeoutTime = 0, U(() => {
       this._onClose("ping timeout");
     }, this.setTimeoutFn)), e;
   }
@@ -1055,8 +1055,8 @@ class _ extends f {
   _onClose(e, t) {
     if (this.readyState === "opening" || this.readyState === "open" || this.readyState === "closing") {
       if (this.clearTimeoutFn(this._pingTimeoutTimer), this.transport.removeAllListeners("close"), this.transport.close(), this.transport.removeAllListeners(), W && (this._beforeunloadEventListener && removeEventListener("beforeunload", this._beforeunloadEventListener, !1), this._offlineEventListener)) {
-        const i = q.indexOf(this._offlineEventListener);
-        i !== -1 && q.splice(i, 1);
+        const i = N.indexOf(this._offlineEventListener);
+        i !== -1 && N.splice(i, 1);
       }
       this.readyState = "closed", this.id = null, this.emitReserved("close", e, t), this.writeBuffer = [], this._prevBufferLen = 0;
     }
@@ -1151,21 +1151,21 @@ const rt = typeof ArrayBuffer == "function", ot = (s) => typeof ArrayBuffer.isVi
 function $(s) {
   return rt && (s instanceof ArrayBuffer || ot(s)) || at && s instanceof Blob || ct && s instanceof File;
 }
-function N(s, e) {
+function D(s, e) {
   if (!s || typeof s != "object")
     return !1;
   if (Array.isArray(s)) {
     for (let t = 0, i = s.length; t < i; t++)
-      if (N(s[t]))
+      if (D(s[t]))
         return !0;
     return !1;
   }
   if ($(s))
     return !0;
   if (s.toJSON && typeof s.toJSON == "function" && arguments.length === 1)
-    return N(s.toJSON(), !0);
+    return D(s.toJSON(), !0);
   for (const t in s)
-    if (Object.prototype.hasOwnProperty.call(s, t) && N(s[t]))
+    if (Object.prototype.hasOwnProperty.call(s, t) && D(s[t]))
       return !0;
   return !1;
 }
@@ -1239,7 +1239,7 @@ class ft {
    * @param {Object} obj - packet object
    */
   encode(e) {
-    return (e.type === u.EVENT || e.type === u.ACK) && N(e) ? this.encodeAsBinary({
+    return (e.type === u.EVENT || e.type === u.ACK) && D(e) ? this.encodeAsBinary({
       type: e.type === u.EVENT ? u.BINARY_EVENT : u.BINARY_ACK,
       nsp: e.nsp,
       data: e.data,
@@ -2045,7 +2045,7 @@ S.prototype.setJitter = function(s) {
 class J extends f {
   constructor(e, t) {
     var i;
-    super(), this.nsps = {}, this.subs = [], e && typeof e == "object" && (t = e, e = void 0), t = t || {}, t.path = t.path || "/socket.io", this.opts = t, U(this, t), this.reconnection(t.reconnection !== !1), this.reconnectionAttempts(t.reconnectionAttempts || 1 / 0), this.reconnectionDelay(t.reconnectionDelay || 1e3), this.reconnectionDelayMax(t.reconnectionDelayMax || 5e3), this.randomizationFactor((i = t.randomizationFactor) !== null && i !== void 0 ? i : 0.5), this.backoff = new S({
+    super(), this.nsps = {}, this.subs = [], e && typeof e == "object" && (t = e, e = void 0), t = t || {}, t.path = t.path || "/socket.io", this.opts = t, P(this, t), this.reconnection(t.reconnection !== !1), this.reconnectionAttempts(t.reconnectionAttempts || 1 / 0), this.reconnectionDelay(t.reconnectionDelay || 1e3), this.reconnectionDelayMax(t.reconnectionDelayMax || 5e3), this.randomizationFactor((i = t.randomizationFactor) !== null && i !== void 0 ? i : 0.5), this.backoff = new S({
       min: this.reconnectionDelay(),
       max: this.reconnectionDelayMax(),
       jitter: this.randomizationFactor()
@@ -2163,7 +2163,7 @@ class J extends f {
    * @private
    */
   ondecoded(e) {
-    P(() => {
+    U(() => {
       this.emitReserved("packet", e);
     }, this.setTimeoutFn);
   }
@@ -2281,135 +2281,24 @@ class J extends f {
   }
 }
 const B = {};
-function D(s, e) {
+function q(s, e) {
   typeof s == "object" && (e = s, s = void 0), e = e || {};
   const t = nt(s, e.path || "/socket.io"), i = t.source, n = t.id, r = t.path, o = B[n] && r in B[n].nsps, c = e.forceNew || e["force new connection"] || e.multiplex === !1 || o;
   let d;
   return c ? d = new J(i, e) : (B[n] || (B[n] = new J(i, e)), d = B[n]), t.query && !e.query && (e.query = t.queryKey), d.socket(t.path, e);
 }
-Object.assign(D, {
+Object.assign(q, {
   Manager: J,
   Socket: ye,
-  io: D,
-  connect: D
+  io: q,
+  connect: q
 });
-const mt = [
-  {
-    id: 1,
-    title: "حسابداری",
-    description: "اگر در زمینه مالی، دریافت فاکتور، خرید و ارتقا پکیج مشکلی دارید، میتوانید از این بخش استفاده کنید.",
-    questionsCount: 5,
-    questions: [
-      {
-        id: 101,
-        question: "برای دریافت فاکتور رسمی چه اطلاعاتی نیاز خواهد بود؟",
-        answer: "برای دریافت فایل فاکتور رسمی باید آدرس سایت: -آدرس ایمیل: - پکیج : نوع / ماهانه/ سالانه - شماره فاکتور: - تاریخ خرید را ارسال نمایید."
-      },
-      {
-        id: 102,
-        question: "نحوه واریز و خرید وفا به چند روش انجام می شود ؟",
-        answer: "پرداخت از طریق درگاه بانکی، کارت به کارت، و پرداخت اعتباری برای مشتریان دائمی امکان‌پذیر است."
-      },
-      {
-        id: 103,
-        question: "شماره حساب وفا جهت واریز ریالی",
-        answer: "شماره کارت: 6037-9975-9874-1234 به نام شرکت وفا سامانه هوشمند"
-      },
-      {
-        id: 104,
-        question: "امکان ارتقا پکیج بعد از خرید وجود دارد؟",
-        answer: "بله، شما می‌توانید در هر زمان پکیج خود را به نسخه‌های بالاتر ارتقا دهید و فقط مابه‌التفاوت را پرداخت کنید."
-      },
-      {
-        id: 105,
-        question: "چطور می توانم فاکتور رسمی دریافت کنم؟",
-        answer: "برای دریافت فاکتور رسمی، درخواست خود را به همراه اطلاعات خرید به پشتیبانی ارسال کنید یا از طریق پنل کاربری بخش 'فاکتورها' اقدام نمایید."
-      }
-    ]
-  },
-  {
-    id: 2,
-    title: "عمومی",
-    description: "اگر درباره تنظیمات عمومی وفا سوالی دارید، از این بخش استفاده کنید.",
-    questionsCount: 3,
-    questions: [
-      {
-        id: 201,
-        question: "چگونه می‌توانم رنگ و ظاهر چت‌بات را تغییر دهم؟",
-        answer: "از طریق پنل مدیریت، به بخش تنظیمات ظاهری مراجعه کنید. در آنجا می‌توانید رنگ‌ها، فونت‌ها و ظاهر چت‌بات را سفارشی کنید."
-      },
-      {
-        id: 202,
-        question: "آیا امکان استفاده از وفا در چند وب‌سایت مختلف وجود دارد؟",
-        answer: "بله، با خرید پکیج‌های تجاری می‌توانید چت‌بات را در چندین دامنه مختلف پیاده‌سازی کنید. محدودیت تعداد دامنه بسته به نوع پکیج متفاوت است."
-      },
-      {
-        id: 203,
-        question: "چگونه می‌توانم پاسخ‌های پیش‌فرض را تغییر دهم؟",
-        answer: "در پنل مدیریت، بخش 'پاسخ‌های خودکار' را انتخاب کنید. در این قسمت می‌توانید پاسخ‌های پیش‌فرض را ویرایش کرده یا پاسخ‌های جدید اضافه کنید."
-      }
-    ]
-  },
-  {
-    id: 3,
-    title: "نصب و راه اندازی",
-    description: "درباره نصب و راه اندازی وفا مشکلی دارید؟ برای تسریع عملیات از این بخش استفاده کنید.",
-    questionsCount: 4,
-    questions: [
-      {
-        id: 301,
-        question: "نحوه نصب وفا در وردپرس چگونه است؟",
-        answer: "افزونه وفا را از پنل وردپرس > افزونه‌ها > افزودن > جستجوی 'وفا' نصب کنید. سپس کد API دریافتی را در تنظیمات افزونه وارد کنید."
-      },
-      {
-        id: 302,
-        question: "آیا برای نصب نیاز به دانش برنامه‌نویسی دارم؟",
-        answer: "خیر، نصب وفا بسیار ساده است و نیازی به دانش برنامه‌نویسی ندارد. کافیست کد اسکریپت را در قالب سایت خود قرار دهید."
-      },
-      {
-        id: 303,
-        question: "وفا با کدام سیستم‌های مدیریت محتوا سازگار است؟",
-        answer: "وفا با اکثر سیستم‌های مدیریت محتوا از جمله وردپرس، جوملا، دروپال، پرستاشاپ، مجنتو و ووکامرس سازگار است."
-      },
-      {
-        id: 304,
-        question: "چقدر طول می‌کشد تا وفا روی سایت من فعال شود؟",
-        answer: "پس از نصب کد، وفا معمولاً بلافاصله روی سایت شما فعال می‌شود. در موارد نادر ممکن است تا 15 دقیقه زمان نیاز باشد."
-      }
-    ]
-  },
-  {
-    id: 4,
-    title: "راه حل‌های وفا",
-    description: "وفا به عنوان یک نرم افزار پشتیبانی مشتریان می‌تواند به شما در موارد زیر کمک کند.",
-    questionsCount: 3,
-    questions: [
-      {
-        id: 401,
-        question: "آیا وفا می‌تواند به افزایش فروش کمک کند؟",
-        answer: "بله، وفا با پشتیبانی 24/7، پاسخگویی سریع به سوالات مشتریان و ارائه پیشنهادات هوشمند می‌تواند به افزایش نرخ تبدیل و فروش شما کمک کند."
-      },
-      {
-        id: 402,
-        question: "وفا چه مزیتی نسبت به سایر چت‌بات‌ها دارد؟",
-        answer: "وفا با استفاده از هوش مصنوعی پیشرفته، پشتیبانی از زبان فارسی، رابط کاربری آسان و قابلیت سفارشی‌سازی بالا، مزیت‌های منحصر به فردی نسبت به سایر چت‌بات‌ها دارد."
-      },
-      {
-        id: 403,
-        question: "آیا می‌توانم گزارش عملکرد وفا را دریافت کنم؟",
-        answer: "بله، وفا گزارش‌های دقیقی از تعداد گفتگوها، رضایت کاربران، سوالات متداول و زمان پاسخگویی ارائه می‌دهد که به بهبود استراتژی‌های پشتیبانی کمک می‌کند."
-      }
-    ]
-  }
-], yt = {
-  categories: mt
-};
-const wt = (s, e) => {
+const mt = (s, e) => {
   const t = s.__vccOpts || s;
   for (const [i, n] of e)
     t[i] = n;
   return t;
-}, xt = {
+}, yt = {
   name: "ChatWidget",
   props: {
     token: {
@@ -2496,18 +2385,8 @@ const wt = (s, e) => {
       knowledgeData: [],
       allQuestions: [],
       // Flat list of all questions for easier access
-      featuredQuestions: [
-        {
-          id: 101,
-          question: "برای دریافت فاکتور رسمی چه اطلاعاتی نیاز خواهد بود؟"
-        },
-        {
-          id: 303,
-          question: "وفا با کدام زبان های برنامه نویسی سازگار است؟"
-        },
-        { id: 301, question: "چطور می توانم در وفا ثبت نام کنم؟" },
-        { id: 401, question: "وفا راه حلی برای افزایش فروش" }
-      ],
+      featuredQuestions: [],
+      // Will be loaded from API based on inHome flag
       knowledgeView: "categories",
       // categories, questions, answer
       knowledgeViewTitle: "راهنما",
@@ -2538,21 +2417,44 @@ const wt = (s, e) => {
     document.removeEventListener("click", this.resetShakeTimer), document.removeEventListener("mousemove", this.resetShakeTimer), document.removeEventListener("keypress", this.resetShakeTimer), document.removeEventListener("scroll", this.resetShakeTimer), window.removeEventListener("resize", this.checkMobile), this.socket && (this.socket.disconnect(), this.socket.removeAllListeners()), this.shakeTimer && clearTimeout(this.shakeTimer), this.messageTimeout && clearTimeout(this.messageTimeout);
   },
   methods: {
-    // Load knowledge base data from JSON file
-    loadKnowledgeBaseData() {
+    // Load knowledge base data from API
+    async loadKnowledgeBaseData() {
       try {
-        const s = yt;
-        this.knowledgeData = s.categories, this.allQuestions = [], this.knowledgeData.forEach((e) => {
-          e.questions.forEach((t) => {
+        if (!this.assistantId) {
+          console.warn("No assistantId provided, cannot load knowledge base"), this.knowledgeData = [], this.allQuestions = [], this.featuredQuestions = [];
+          return;
+        }
+        const s = await fetch(`${this.apiBaseUrl}/public/kb/${this.assistantId}`);
+        if (!s.ok)
+          throw new Error(`Failed to fetch knowledge base: ${s.status}`);
+        const e = await s.json();
+        e.success && e.data && e.data.categories ? (this.knowledgeData = e.data.categories, this.allQuestions = [], this.knowledgeData.forEach((t) => {
+          t.questions.forEach((i) => {
             this.allQuestions.push({
-              ...t,
-              categoryId: e.id,
-              categoryTitle: e.title
+              ...i,
+              categoryId: t.id,
+              categoryTitle: t.title
             });
           });
-        });
+        }), this.loadFeaturedQuestions(), console.log(`Loaded knowledge base with ${this.knowledgeData.length} categories and ${this.allQuestions.length} questions`)) : (console.warn("Knowledge base data not found or empty"), this.knowledgeData = [], this.allQuestions = [], this.featuredQuestions = []);
       } catch (s) {
-        console.error("Error loading knowledge base data:", s);
+        console.error("Error loading knowledge base data:", s), this.knowledgeData = [], this.allQuestions = [], this.featuredQuestions = [];
+      }
+    },
+    // Load featured questions from API (questions with inHome=true)
+    async loadFeaturedQuestions() {
+      try {
+        if (!this.assistantId) {
+          console.warn("No assistantId provided, cannot load featured questions"), this.featuredQuestions = [];
+          return;
+        }
+        const s = await fetch(`${this.apiBaseUrl}/public/kb/${this.assistantId}/featured`);
+        if (!s.ok)
+          throw new Error(`Failed to fetch featured questions: ${s.status}`);
+        const e = await s.json();
+        e.success && e.data && e.data.featuredQuestions ? (this.featuredQuestions = e.data.featuredQuestions, console.log(`Loaded ${this.featuredQuestions.length} featured questions`)) : (console.warn("Featured questions not found or empty"), this.featuredQuestions = []);
+      } catch (s) {
+        console.error("Error loading featured questions:", s), this.featuredQuestions = [];
       }
     },
     loadMessagesFromLocalStorage() {
@@ -2661,7 +2563,7 @@ const wt = (s, e) => {
           transports: ["websocket", "polling"]
           // Prefer websocket for better streaming
         };
-        this.token && (s.auth = { token: this.token }, console.log("Using token for authentication")), console.log("Connecting to socket server:", this.socketUrl), this.socket = D(this.socketUrl, s), this.socket.on("connect", () => {
+        this.token && (s.auth = { token: this.token }, console.log("Using token for authentication")), console.log("Connecting to socket server:", this.socketUrl), this.socket = q(this.socketUrl, s), this.socket.on("connect", () => {
           console.log("Connected to socket server, socket id:", this.socket.id), this.connectionStatus = "متصل شد", this.connectionColor = "green", this.sessionData.id && (console.log("Reregistering existing session:", this.sessionData.id), this.socket.emit("register_session", {
             sessionId: this.sessionData.id,
             userId: this.userId
@@ -2867,107 +2769,107 @@ const wt = (s, e) => {
       this.setShakeTimer();
     }
   }
-}, bt = { class: "v-fixed v-flex v-flex-col v-gap-2 v-right-[20px] v-bottom-[20px]" }, kt = {
+}, wt = { class: "v-fixed v-flex v-flex-col v-gap-2 v-right-[20px] v-bottom-[20px]" }, xt = {
   key: 0,
   class: "v-py-4 v-px-3 v-bg-white v-text-slate-800 v-flex v-items-center v-relative v-flex-row v-border-b v-border-slate-200"
-}, _t = { class: "v-flex v-justify-between v-items-center v-flex-1 v-gap-2" }, Tt = { class: "v-flex v-grow v-flex-col v-gap-[2px]" }, St = { class: "v-text-xs" }, Ct = { class: "v-flex v-gap-2" }, Et = {
+}, bt = { class: "v-flex v-justify-between v-items-center v-flex-1 v-gap-2" }, kt = { class: "v-flex v-grow v-flex-col v-gap-[2px]" }, _t = { class: "v-text-xs" }, Tt = { class: "v-flex v-gap-2" }, St = {
   key: 0,
   viewBox: "0 0 512 512",
   fill: "currentColor",
   width: "16px",
   height: "16px"
-}, Lt = {
+}, Ct = {
   key: 1,
   viewBox: "0 0 512 512",
   fill: "currentColor",
   width: "16px",
   height: "16px"
-}, Bt = { class: "v-bg-white v-pb-4 v-pt-4 v-py-3" }, At = {
-  key: 0,
+}, Et = {
+  key: 1,
   class: "v-py-4 v-px-3 v-bg-[#1a237e] v-text-white v-flex v-items-center v-relative v-flex-row v-rounded-lg"
-}, Ot = { class: "v-flex v-justify-between v-items-center v-flex-1 v-gap-2" }, Mt = { class: "v-flex v-grow v-flex-col v-gap-[2px]" }, Rt = { class: "v-text-xs" }, It = { class: "v-flex v-gap-2" }, qt = {
-  key: 1,
+}, Lt = { class: "v-flex v-justify-between v-items-center v-flex-1 v-gap-2" }, Bt = { class: "v-flex v-grow v-flex-col v-gap-[2px]" }, At = { class: "v-text-xs" }, Ot = { class: "v-flex v-gap-2" }, Mt = {
+  key: 2,
   class: "v-py-4 v-px-3 v-bg-white v-text-slate-800 v-flex v-items-center v-relative v-flex-row v-border-b v-border-slate-200"
-}, Nt = {
+}, Rt = {
   key: 1,
   class: "v-p-2 v-rounded-lg v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center"
-}, Dt = {
-  key: 2,
-  class: "v-relative v-flex v-flex-col v-h-full v-justify-between v-bg-white"
-}, Pt = { class: "v-px-3" }, Ut = { class: "v-p-2 v-rounded-lg v-border v-border-slate-200 v-bg-white v-flex v-flex-col v-gap-[2px]" }, zt = ["onClick"], Vt = { class: "v-flex-1 v-text-sm v-text-slate-800 v-overflow-hidden v-whitespace-nowrap v-truncate" }, Qt = { class: "v-px-3 v-pb-4" }, Ft = {
+}, It = {
   key: 3,
+  class: "v-relative v-flex v-flex-col v-h-full v-justify-between v-bg-white"
+}, Nt = { class: "v-px-3" }, Dt = { class: "v-p-2 v-rounded-lg v-border v-border-slate-200 v-bg-white v-flex v-flex-col v-gap-[2px]" }, qt = ["onClick"], Ut = { class: "v-flex-1 v-text-sm v-text-slate-800 v-overflow-hidden v-whitespace-nowrap v-truncate" }, Pt = { class: "v-px-3 v-pb-4" }, zt = {
+  key: 4,
   class: "v-relative v-flex v-flex-col v-h-full v-justify-between v-bg-white v-py-2 v-px-3 v-overflow-auto",
   ref: "chatBody"
-}, Kt = { class: "v-grow" }, Ht = ["innerHTML"], Wt = {
+}, Vt = { class: "v-grow" }, Qt = ["innerHTML"], Ft = {
   key: 0,
   class: "hascowebchat-message hascowebchat-bot-message",
   style: { "font-style": "italic", opacity: "0.8" }
-}, jt = {
+}, Kt = {
   key: 0,
   class: "v-flex v-flex-col v-gap-2"
-}, Yt = ["onClick"], Jt = {
-  key: 4,
+}, Ht = ["onClick"], Wt = {
+  key: 5,
   class: "v-relative v-flex v-h-full v-overflow-hidden v-p-0 v-justify-start v-flex-col v-items-stretch"
-}, Xt = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-bg-white" }, Gt = { class: "v-flex v-items-center v-justify-between v-rounded-lg v-bg-slate-100" }, Zt = {
+}, jt = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-bg-white" }, Yt = { class: "v-flex v-items-center v-justify-between v-rounded-lg v-bg-slate-100" }, Jt = {
   key: 0,
   class: "v-relative v-flex v-flex-col v-h-full v-bg-white v-overflow-auto"
-}, $t = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200" }, es = { class: "v-text-md v-text-slate-800 v-font-semibold" }, ts = ["onClick"], ss = { class: "v-flex-1 v-flex v-flex-col v-gap-1" }, is = { class: "v-text-sm v-text-slate-800 v-font-semibold" }, ns = { class: "v-text-sm v-text-slate-800" }, rs = { class: "v-text-sm v-text-slate-600" }, os = {
+}, Xt = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200" }, Gt = { class: "v-text-md v-text-slate-800 v-font-semibold" }, Zt = ["onClick"], $t = { class: "v-flex-1 v-flex v-flex-col v-gap-1" }, es = { class: "v-text-sm v-text-slate-800 v-font-semibold" }, ts = { class: "v-text-sm v-text-slate-800" }, ss = { class: "v-text-sm v-text-slate-600" }, is = {
   key: 1,
   class: "v-bg-white v-flex v-flex-col v-grow v-overflow-auto"
-}, as = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-gap-1 v-flex v-flex-col" }, cs = { class: "v-text-sm v-text-slate-800 v-font-semibold" }, ls = { class: "v-text-sm v-text-slate-800" }, hs = { class: "v-text-sm v-text-slate-600" }, us = ["onClick"], ds = { class: "v-text-sm v-text-slate-800" }, fs = {
+}, ns = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-gap-1 v-flex v-flex-col" }, rs = { class: "v-text-sm v-text-slate-800 v-font-semibold" }, os = { class: "v-text-sm v-text-slate-800" }, as = { class: "v-text-sm v-text-slate-600" }, cs = ["onClick"], ls = { class: "v-text-sm v-text-slate-800" }, hs = {
   key: 2,
   class: "v-bg-white v-flex v-flex-col v-grow v-overflow-auto"
-}, ps = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-text-sm v-text-slate-800 v-font-semibold" }, vs = { class: "v-py-2 v-px-3 v-text-sm v-text-slate-800" }, gs = {
-  key: 5,
-  class: "v-py-2 v-px-3 v-bg-white v-border-t v-border-slate-200"
-}, ms = { class: "v-flex v-items-center v-bg-white v-rounded-full v-border v-border-slate-200" }, ys = {
+}, us = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-text-sm v-text-slate-800 v-font-semibold" }, ds = { class: "v-py-2 v-px-3 v-text-sm v-text-slate-800" }, fs = {
   key: 6,
+  class: "v-py-2 v-px-3 v-bg-white v-border-t v-border-slate-200"
+}, ps = { class: "v-flex v-items-center v-bg-white v-rounded-full v-border v-border-slate-200" }, vs = {
+  key: 7,
   class: "v-flex v-justify-around v-items-center v-gap-2 v-bg-white v-py-2 v-h-[60px] v-border-t v-border-slate-200"
-}, ws = {
+}, gs = {
   key: 0,
   viewBox: "0 0 576 512",
+  fill: "currentColor",
+  width: "20px",
+  height: "20px"
+}, ms = {
+  key: 1,
+  viewBox: "0 0 576 512",
+  fill: "currentColor",
+  width: "20px",
+  height: "20px"
+}, ys = {
+  key: 0,
+  viewBox: "0 0 512 512",
+  fill: "currentColor",
+  width: "20px",
+  height: "20px"
+}, ws = {
+  key: 1,
+  viewBox: "0 0 512 512",
   fill: "currentColor",
   width: "20px",
   height: "20px"
 }, xs = {
-  key: 1,
-  viewBox: "0 0 576 512",
-  fill: "currentColor",
-  width: "20px",
-  height: "20px"
-}, bs = {
-  key: 0,
-  viewBox: "0 0 512 512",
-  fill: "currentColor",
-  width: "20px",
-  height: "20px"
-}, ks = {
-  key: 1,
-  viewBox: "0 0 512 512",
-  fill: "currentColor",
-  width: "20px",
-  height: "20px"
-}, _s = {
   key: 0,
   viewBox: "0 0 448 512",
   fill: "currentColor",
   width: "20px",
   height: "20px"
-}, Ts = {
+}, bs = {
   key: 1,
   viewBox: "0 0 448 512",
   fill: "currentColor",
   width: "20px",
   height: "20px"
 };
-function Ss(s, e, t, i, n, r) {
-  return l(), h("div", bt, [
+function ks(s, e, t, i, n, r) {
+  return l(), h("div", wt, [
     a("div", {
-      class: "v-border v-border-slate-200 v-rounded-lg v-rounded-br-sm v-py-2 v-px-3 v-text-sm v-cursor-pointer v-w-fit v-hover:bg-slate-100 v-bg-slate-50 v-transition-colors v-duration-300",
+      class: "v-bg-[#fff] v-border v-border-slate-200 v-rounded-lg v-rounded-br-sm v-py-2 v-px-3 v-text-sm v-cursor-pointer v-w-fit v-hover:bg-slate-100 v-transition-colors v-duration-300",
       onClick: e[0] || (e[0] = (...o) => r.startConversationWithDefaultQuestion && r.startConversationWithDefaultQuestion(...o))
     }, p(t.defaultQuestion), 1),
     a("div", {
-      class: T(["v-flex v-bg-[#1a237e] v-items-center v-justify-center v-rounded-full v-h-[60px] v-w-[60px] v-z-70 no-shake v-overflow-hidden v-cursor-pointer", { "no-shake": n.hasInteracted }]),
+      class: T(["v-bg-[#fff] v-border-1 v-border-[#1a237e] v-flex v-items-center v-justify-center v-rounded-full v-h-[60px] v-w-[60px] v-z-70 no-shake v-overflow-hidden v-cursor-pointer", { "no-shake": n.hasInteracted }]),
       onClick: e[1] || (e[1] = (...o) => r.toggleChat && r.toggleChat(...o))
     }, e[20] || (e[20] = [
       a("img", {
@@ -2979,8 +2881,8 @@ function Ss(s, e, t, i, n, r) {
     O(a("div", {
       class: T(["v-fixed v-transition-all v-duration-300 v-right-[20px] v-bottom-[20px] v-rounded-md v-overflow-hidden v-z-90 v-flex v-flex-col v-shadow-[0_10px_25px_rgba(0,0,0,0.2)]", { "v-max-h-[calc(100%-104px)] v-h-[calc(100%-104px)] v-w-[688px]": n.isMaximize, "v-w-[400px] v-h-[700px] v-max-h-[min(714px,100%-30px)]": !n.isMaximize, "v-right-0 v-bottom-0 v-top-0 v-rounded-none v-h-full v-max-h-100vh v-w-full": n.isMobile }])
     }, [
-      n.currentTab === "messenger" ? (l(), h("div", kt, [
-        a("div", _t, [
+      n.currentTab === "messenger" ? (l(), h("div", xt, [
+        a("div", bt, [
           n.currentTab !== "home" ? (l(), h("div", {
             key: 0,
             class: "v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300",
@@ -3000,20 +2902,20 @@ function Ss(s, e, t, i, n, r) {
             alt: "Support Profile",
             class: "v-w-[32px] v-h-[32px]"
           }, null, -1)),
-          a("div", Tt, [
+          a("div", kt, [
             e[22] || (e[22] = a("div", { class: "v-text-sm v-font-semibold" }, "پشتیبانی هوشمند ما", -1)),
-            a("div", St, p(n.connectionStatus), 1)
+            a("div", _t, p(n.connectionStatus), 1)
           ])
         ]),
-        a("div", Ct, [
+        a("div", Tt, [
           n.isMobile ? v("", !0) : (l(), h("div", {
             key: 0,
             class: "v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300",
             onClick: e[3] || (e[3] = (o) => n.isMaximize = !n.isMaximize)
           }, [
-            n.isMaximize ? (l(), h("svg", Et, e[24] || (e[24] = [
+            n.isMaximize ? (l(), h("svg", St, e[24] || (e[24] = [
               a("path", { d: "M489 57c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-135 135L320 72c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 144c0 13.3 10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-86.1 0L489 57zM23 455c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l135-135 0 86.1c0 13.3 10.7 24 24 24s24-10.7 24-24l0-144c0-13.3-10.7-24-24-24L72 272c-13.3 0-24 10.7-24 24s10.7 24 24 24l86.1 0L23 455z" }, null, -1)
-            ]))) : (l(), h("svg", Lt, e[25] || (e[25] = [
+            ]))) : (l(), h("svg", Ct, e[25] || (e[25] = [
               a("path", { d: "M295 183c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l135-135 0 86.1c0 13.3 10.7 24 24 24s24-10.7 24-24l0-144c0-13.3-10.7-24-24-24L344 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l86.1 0L295 183zM217 329c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L48 430.1 48 344c0-13.3-10.7-24-24-24s-24 10.7-24 24L0 488c0 13.3 10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-86.1 0L217 329z" }, null, -1)
             ])))
           ])),
@@ -3032,37 +2934,35 @@ function Ss(s, e, t, i, n, r) {
           ]))
         ])
       ])) : v("", !0),
-      a("div", Bt, [
-        n.currentTab === "home" ? (l(), h("div", At, [
-          a("div", Ot, [
-            e[28] || (e[28] = a("img", {
-              src: "https://vafaai.com/widget/images/logo.svg",
-              alt: "Support Profile",
-              class: "v-w-[32px] v-h-[32px]"
-            }, null, -1)),
-            a("div", Mt, [
-              e[27] || (e[27] = a("div", { class: "v-text-sm v-font-semibold" }, "پشتیبانی هوشمند وفا", -1)),
-              a("div", Rt, p(n.connectionStatus), 1)
-            ])
-          ]),
-          a("div", It, [
-            a("div", {
-              class: "v-p-2 v-rounded-lg v-cursor-pointer v-text-white v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#22222240] v-transition-colors v-duration-300",
-              onClick: e[5] || (e[5] = (...o) => r.closeChat && r.closeChat(...o))
-            }, e[29] || (e[29] = [
-              a("svg", {
-                viewBox: "0 0 384 512",
-                fill: "currentColor",
-                width: "16px",
-                height: "16px"
-              }, [
-                a("path", { d: "M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z" })
-              ], -1)
-            ]))
+      n.currentTab === "home" ? (l(), h("div", Et, [
+        a("div", Lt, [
+          e[28] || (e[28] = a("img", {
+            src: "https://vafaai.com/widget/images/logo.svg",
+            alt: "Support Profile",
+            class: "v-w-[32px] v-h-[32px]"
+          }, null, -1)),
+          a("div", Bt, [
+            e[27] || (e[27] = a("div", { class: "v-text-sm v-font-semibold" }, "پشتیبانی هوشمند وفا", -1)),
+            a("div", At, p(n.connectionStatus), 1)
           ])
-        ])) : v("", !0)
-      ]),
-      n.currentTab === "knowledge" ? (l(), h("div", qt, [
+        ]),
+        a("div", Ot, [
+          a("div", {
+            class: "v-p-2 v-rounded-lg v-cursor-pointer v-text-white v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#22222240] v-transition-colors v-duration-300",
+            onClick: e[5] || (e[5] = (...o) => r.closeChat && r.closeChat(...o))
+          }, e[29] || (e[29] = [
+            a("svg", {
+              viewBox: "0 0 384 512",
+              fill: "currentColor",
+              width: "16px",
+              height: "16px"
+            }, [
+              a("path", { d: "M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z" })
+            ], -1)
+          ]))
+        ])
+      ])) : v("", !0),
+      n.currentTab === "knowledge" ? (l(), h("div", Mt, [
         n.knowledgeView !== "categories" ? (l(), h("div", {
           key: 0,
           class: "v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300",
@@ -3080,7 +2980,7 @@ function Ss(s, e, t, i, n, r) {
               d: "M273 239c9.4 9.4 9.4 24.6 0 33.9L113 433c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l143-143L79 113c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L273 239z"
             })
           ], -1)
-        ]))) : (l(), h("div", Nt)),
+        ]))) : (l(), h("div", Rt)),
         e[32] || (e[32] = a("div", { class: "v-text-sm v-text-center v-font-semibold v-flex-1" }, "راهنما", -1)),
         a("div", {
           class: "v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300",
@@ -3096,9 +2996,9 @@ function Ss(s, e, t, i, n, r) {
           ], -1)
         ]))
       ])) : v("", !0),
-      n.currentTab === "home" ? (l(), h("div", Dt, [
-        a("div", Pt, [
-          a("div", Ut, [
+      n.currentTab === "home" ? (l(), h("div", It, [
+        a("div", Nt, [
+          a("div", Dt, [
             a("div", {
               class: "v-flex v-items-center v-justify-between v-rounded-lg v-mb-[6px] v-bg-slate-100",
               onClick: e[10] || (e[10] = (...o) => r.focusOnSearch && r.focusOnSearch(...o))
@@ -3128,7 +3028,7 @@ function Ss(s, e, t, i, n, r) {
               class: "v-flex v-items-center v-justify-between v-py-2 v-px-3 v-bg-white v-cursor-pointer v-rounded-lg v-hover:bg-slate-100",
               onClick: (c) => r.navigateToQuestion(o.id)
             }, [
-              a("div", Vt, p(o.question), 1),
+              a("div", Ut, p(o.question), 1),
               e[34] || (e[34] = a("svg", {
                 viewBox: "0 0 320 512",
                 fill: "currentColor",
@@ -3137,20 +3037,20 @@ function Ss(s, e, t, i, n, r) {
               }, [
                 a("path", { d: "M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" })
               ], -1))
-            ], 8, zt))), 128))
+            ], 8, qt))), 128))
           ])
         ]),
-        a("div", Qt, [
+        a("div", Pt, [
           a("div", {
             class: "v-bg-[#1a237e] v-text-white v-text-md v-rounded-lg v-py-3 v-px-6 v-flex v-items-center v-justify-between v-w-full v-cursor-pointer v-transition-colors v-duration-300",
             onClick: e[11] || (e[11] = (o) => r.switchTab("messenger"))
           }, e[35] || (e[35] = [
-            xe('<svg viewBox="0 0 512 512" fill="currentColor" width="24px" height="24px" data-v-e65a4a6a><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm165.8 21.7c-7.6 8.1-20.2 8.5-28.3 .9s-8.5-20.2-.9-28.3c14.5-15.5 35.2-22.3 54.6-22.3s40.1 6.8 54.6 22.3c7.6 8.1 7.1 20.7-.9 28.3s-20.7 7.1-28.3-.9c-5.5-5.8-14.8-9.7-25.4-9.7s-19.9 3.8-25.4 9.7z" data-v-e65a4a6a></path></svg><div class="v-text-md v-font-bold" data-v-e65a4a6a>شروع گفتگو</div><svg viewBox="0 0 320 512" fill="currentColor" width="16px" height="16px" data-v-e65a4a6a><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" data-v-e65a4a6a></path></svg>', 3)
+            xe('<svg viewBox="0 0 512 512" fill="currentColor" width="24px" height="24px" data-v-bf66d5a9><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm165.8 21.7c-7.6 8.1-20.2 8.5-28.3 .9s-8.5-20.2-.9-28.3c14.5-15.5 35.2-22.3 54.6-22.3s40.1 6.8 54.6 22.3c7.6 8.1 7.1 20.7-.9 28.3s-20.7 7.1-28.3-.9c-5.5-5.8-14.8-9.7-25.4-9.7s-19.9 3.8-25.4 9.7z" data-v-bf66d5a9></path></svg><div class="v-text-md v-font-bold" data-v-bf66d5a9>شروع گفتگو</div><svg viewBox="0 0 320 512" fill="currentColor" width="16px" height="16px" data-v-bf66d5a9><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" data-v-bf66d5a9></path></svg>', 3)
           ]))
         ])
       ])) : v("", !0),
-      n.currentTab === "messenger" ? (l(), h("div", Ft, [
-        a("div", Kt, [
+      n.currentTab === "messenger" ? (l(), h("div", zt, [
+        a("div", Vt, [
           (l(!0), h(E, null, L(n.messages, (o, c) => (l(), h("div", {
             key: c,
             class: T([
@@ -3161,21 +3061,21 @@ function Ss(s, e, t, i, n, r) {
           }, [
             a("div", {
               innerHTML: o.content
-            }, null, 8, Ht)
+            }, null, 8, Qt)
           ], 2))), 128)),
-          n.isThinking ? (l(), h("div", Wt, " در حال تایپ... ")) : v("", !0)
+          n.isThinking ? (l(), h("div", Ft, " در حال تایپ... ")) : v("", !0)
         ]),
-        n.showDefaultQuestions && n.currentTab === "messenger" && n.messages.length <= 2 ? (l(), h("div", jt, [
+        n.showDefaultQuestions && n.currentTab === "messenger" && n.messages.length <= 2 ? (l(), h("div", Kt, [
           (l(!0), h(E, null, L(n.defaultQuestions, (o, c) => (l(), h("div", {
             key: c,
             class: "v-border v-border-slate-200 v-rounded-full v-py-2 v-px-3 v-text-sm v-cursor-pointer v-w-fit v-hover:bg-slate-100 v-transition-colors v-duration-300",
             onClick: (d) => r.selectDefaultQuestion(o)
-          }, p(o), 9, Yt))), 128))
+          }, p(o), 9, Ht))), 128))
         ])) : v("", !0)
       ], 512)) : v("", !0),
-      n.currentTab === "knowledge" ? (l(), h("div", Jt, [
-        a("div", Xt, [
-          a("div", Gt, [
+      n.currentTab === "knowledge" ? (l(), h("div", Wt, [
+        a("div", jt, [
+          a("div", Yt, [
             O(a("input", {
               type: "text",
               "onUpdate:modelValue": e[12] || (e[12] = (o) => n.knowledgeSearchQuery = o),
@@ -3196,19 +3096,19 @@ function Ss(s, e, t, i, n, r) {
             ], -1))
           ])
         ]),
-        n.knowledgeView === "categories" ? (l(), h("div", Zt, [
-          a("div", $t, [
-            a("div", es, p(r.filteredCategories.length) + " دسته بندی ", 1)
+        n.knowledgeView === "categories" ? (l(), h("div", Jt, [
+          a("div", Xt, [
+            a("div", Gt, p(r.filteredCategories.length) + " دسته بندی ", 1)
           ]),
           (l(!0), h(E, null, L(r.filteredCategories, (o) => (l(), h("div", {
             key: o.id,
             class: "v-flex v-items-center v-justify-between v-border-b v-border-slate-200 v-cursor-pointer v-px-3 v-py-2 v-gap-2 v-hover:bg-slate-100 v-transition-colors v-duration-300",
             onClick: (c) => r.selectCategory(o)
           }, [
-            a("div", ss, [
-              a("div", is, p(o.title), 1),
-              a("div", ns, p(o.description), 1),
-              a("div", rs, p(o.questions.length) + " پرسش ", 1)
+            a("div", $t, [
+              a("div", es, p(o.title), 1),
+              a("div", ts, p(o.description), 1),
+              a("div", ss, p(o.questions.length) + " پرسش ", 1)
             ]),
             e[37] || (e[37] = a("svg", {
               xmlns: "http://www.w3.org/2000/svg",
@@ -3219,21 +3119,21 @@ function Ss(s, e, t, i, n, r) {
             }, [
               a("path", { d: "M15 239c-9.4 9.4-9.4 24.6 0 33.9L207 465c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L65.9 256 241 81c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L15 239z" })
             ], -1))
-          ], 8, ts))), 128))
+          ], 8, Zt))), 128))
         ])) : v("", !0),
         e[39] || (e[39] = a("div", { class: "v-absolute v-pointer-events-none v-h-[36px] v-bottom-0 v-w-full v-bg-gradient-to-b v-from-transparent v-to-white" }, null, -1)),
-        n.knowledgeView === "questions" ? (l(), h("div", os, [
-          a("div", as, [
-            a("div", cs, p(n.selectedCategory.title), 1),
-            a("div", ls, p(n.selectedCategory.description), 1),
-            a("div", hs, p(r.filteredQuestions.length) + " پرسش ", 1)
+        n.knowledgeView === "questions" ? (l(), h("div", is, [
+          a("div", ns, [
+            a("div", rs, p(n.selectedCategory.title), 1),
+            a("div", os, p(n.selectedCategory.description), 1),
+            a("div", as, p(r.filteredQuestions.length) + " پرسش ", 1)
           ]),
           (l(!0), h(E, null, L(r.filteredQuestions, (o) => (l(), h("div", {
             key: o.id,
             class: "v-flex v-items-center v-justify-between v-py-3 v-px-3 v-border-b v-border-slate-200 v-cursor-pointer v-gap-2 v-hover:bg-slate-100 v-transition-colors v-duration-300",
             onClick: (c) => r.selectQuestion(o)
           }, [
-            a("div", ds, p(o.question), 1),
+            a("div", ls, p(o.question), 1),
             e[38] || (e[38] = a("svg", {
               "data-v-8cc45828": "",
               xmlns: "http://www.w3.org/2000/svg",
@@ -3247,15 +3147,15 @@ function Ss(s, e, t, i, n, r) {
                 d: "M15 239c-9.4 9.4-9.4 24.6 0 33.9L207 465c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L65.9 256 241 81c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L15 239z"
               })
             ], -1))
-          ], 8, us))), 128))
+          ], 8, cs))), 128))
         ])) : v("", !0),
-        n.knowledgeView === "answer" ? (l(), h("div", fs, [
-          a("div", ps, p(n.selectedQuestion.question), 1),
-          a("div", vs, p(n.selectedQuestion.answer), 1)
+        n.knowledgeView === "answer" ? (l(), h("div", hs, [
+          a("div", us, p(n.selectedQuestion.question), 1),
+          a("div", ds, p(n.selectedQuestion.answer), 1)
         ])) : v("", !0)
       ])) : v("", !0),
-      n.currentTab === "messenger" ? (l(), h("div", gs, [
-        a("div", ms, [
+      n.currentTab === "messenger" ? (l(), h("div", fs, [
+        a("div", ps, [
           O(a("input", {
             type: "text",
             "onUpdate:modelValue": e[14] || (e[14] = (o) => n.inputMessage = o),
@@ -3278,14 +3178,14 @@ function Ss(s, e, t, i, n, r) {
         ]),
         e[41] || (e[41] = a("div", { class: "v-text-center v-text-xs v-text-slate-600 v-pt-2" }, "ساخته شده با وفا", -1))
       ])) : v("", !0),
-      n.currentTab === "home" || n.currentTab === "knowledge" ? (l(), h("div", ys, [
+      n.currentTab === "home" || n.currentTab === "knowledge" ? (l(), h("div", vs, [
         a("div", {
           class: T(["v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2", { active: n.currentTab === "home", "v-text-[#1a237e] v-font-semibold": n.currentTab === "home", "v-text-slate-800": n.currentTab !== "home" }]),
           onClick: e[17] || (e[17] = (o) => r.switchTab("home"))
         }, [
-          n.currentTab === "home" ? (l(), h("svg", ws, e[42] || (e[42] = [
+          n.currentTab === "home" ? (l(), h("svg", gs, e[42] || (e[42] = [
             a("path", { d: "M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c.2 35.5-28.5 64.3-64 64.3H128.1c-35.3 0-64-28.7-64-64V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" }, null, -1)
-          ]))) : (l(), h("svg", xs, e[43] || (e[43] = [
+          ]))) : (l(), h("svg", ms, e[43] || (e[43] = [
             a("path", { d: "M303.5 5.7c-9-7.6-22.1-7.6-31.1 0l-264 224c-10.1 8.6-11.3 23.7-2.8 33.8s23.7 11.3 33.8 2.8L64 245.5 64 432c0 44.2 35.8 80 80 80l288 0c44.2 0 80-35.8 80-80l0-186.5 24.5 20.8c10.1 8.6 25.3 7.3 33.8-2.8s7.3-25.3-2.8-33.8l-264-224zM464 204.8L464 432c0 17.7-14.3 32-32 32l-288 0c-17.7 0-32-14.3-32-32l0-227.2L288 55.5 464 204.8z" }, null, -1)
           ]))),
           e[44] || (e[44] = a("div", { class: "v-text-xs" }, "خانه", -1))
@@ -3294,9 +3194,9 @@ function Ss(s, e, t, i, n, r) {
           class: T(["v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2", { active: n.currentTab === "messenger", "v-text-[#1a237e] v-font-semibold": n.currentTab === "messenger", "v-text-slate-800": n.currentTab !== "messenger" }]),
           onClick: e[18] || (e[18] = (o) => r.switchTab("messenger"))
         }, [
-          n.currentTab === "messenger" ? (l(), h("svg", bs, e[45] || (e[45] = [
+          n.currentTab === "messenger" ? (l(), h("svg", ys, e[45] || (e[45] = [
             a("path", { d: "M0 64C0 28.7 28.7 0 64 0L448 0c35.3 0 64 28.7 64 64l0 288c0 35.3-28.7 64-64 64l-138.7 0L185.6 508.8c-4.8 3.6-11.3 4.2-16.8 1.5s-8.8-8.2-8.8-14.3l0-80-96 0c-35.3 0-64-28.7-64-64L0 64zm152 80c-13.3 0-24 10.7-24 24s10.7 24 24 24l208 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-208 0zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24l112 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-112 0z" }, null, -1)
-          ]))) : (l(), h("svg", ks, e[46] || (e[46] = [
+          ]))) : (l(), h("svg", ws, e[46] || (e[46] = [
             a("path", { d: "M208 416c0-26.5-21.5-48-48-48l-96 0c-8.8 0-16-7.2-16-16L48 64c0-8.8 7.2-16 16-16l384 0c8.8 0 16 7.2 16 16l0 288c0 8.8-7.2 16-16 16l-138.7 0c-10.4 0-20.5 3.4-28.8 9.6L208 432l0-16zm-.2 76.2l.2-.2 101.3-76L448 416c35.3 0 64-28.7 64-64l0-288c0-35.3-28.7-64-64-64L64 0C28.7 0 0 28.7 0 64L0 352c0 35.3 28.7 64 64 64l48 0 48 0 0 48 0 4 0 .3 0 6.4 0 21.3c0 6.1 3.4 11.6 8.8 14.3s11.9 2.1 16.8-1.5L202.7 496l5.1-3.8zM152 144c-13.3 0-24 10.7-24 24s10.7 24 24 24l208 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-208 0zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24l112 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-112 0z" }, null, -1)
           ]))),
           e[47] || (e[47] = a("div", { class: "v-text-xs" }, "پیام رسان", -1))
@@ -3305,9 +3205,9 @@ function Ss(s, e, t, i, n, r) {
           class: T(["v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2", { active: n.currentTab === "knowledge", "v-text-[#1a237e] v-font-semibold": n.currentTab === "knowledge", "v-text-slate-800": n.currentTab !== "knowledge" }]),
           onClick: e[19] || (e[19] = (o) => r.switchTab("knowledge"))
         }, [
-          n.currentTab === "knowledge" ? (l(), h("svg", _s, e[48] || (e[48] = [
+          n.currentTab === "knowledge" ? (l(), h("svg", xs, e[48] || (e[48] = [
             a("path", { d: "M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm73.8 133.3c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L248 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM192 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" }, null, -1)
-          ]))) : (l(), h("svg", Ts, e[49] || (e[49] = [
+          ]))) : (l(), h("svg", bs, e[49] || (e[49] = [
             a("path", { d: "M64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80zM0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm137.8 69.3c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L248 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM192 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" }, null, -1)
           ]))),
           e[50] || (e[50] = a("div", { class: "v-text-xs" }, "راهنما", -1))
@@ -3318,8 +3218,8 @@ function Ss(s, e, t, i, n, r) {
     ])
   ]);
 }
-const we = /* @__PURE__ */ wt(xt, [["render", Ss], ["__scopeId", "data-v-e65a4a6a"]]);
-function Cs(s, e = {}) {
+const we = /* @__PURE__ */ mt(yt, [["render", ks], ["__scopeId", "data-v-bf66d5a9"]]);
+function _s(s, e = {}) {
   const t = document.querySelector(s);
   if (!t) {
     console.error(`Container with selector ${s} not found`);
@@ -3328,13 +3228,13 @@ function Cs(s, e = {}) {
   const i = _e(we, e);
   return i.mount(t), i;
 }
-const Es = {
+const Ts = {
   ChatWidget: we,
-  init: Cs
+  init: _s
 };
-typeof window < "u" && (window.VafaChatWidget = Es);
+typeof window < "u" && (window.VafaChatWidget = Ts);
 export {
   we as ChatWidget,
-  Es as default,
-  Cs as init
+  Ts as default,
+  _s as init
 };

@@ -2,9 +2,9 @@
     <div class="v-fixed v-flex v-flex-col v-gap-2 v-right-[20px] v-bottom-[20px]">
        <!-- Chat Button -->
  
-       <div class="v-border v-border-slate-200 v-rounded-lg v-rounded-br-sm v-py-2 v-px-3 v-text-sm v-cursor-pointer v-w-fit v-hover:bg-slate-100 v-bg-slate-50 v-transition-colors v-duration-300" @click="startConversationWithDefaultQuestion">{{ defaultQuestion }}</div>
+       <div class=" v-bg-[#fff] v-border v-border-slate-200 v-rounded-lg v-rounded-br-sm v-py-2 v-px-3 v-text-sm v-cursor-pointer v-w-fit v-hover:bg-slate-100 v-transition-colors v-duration-300" @click="startConversationWithDefaultQuestion">{{ defaultQuestion }}</div>
        <div
-          class="v-flex v-bg-[#1a237e] v-items-center v-justify-center v-rounded-full v-h-[60px] v-w-[60px] v-z-70 no-shake v-overflow-hidden v-cursor-pointer"
+          class=" v-bg-[#fff] v-border-1 v-border-[#1a237e]   v-flex  v-items-center v-justify-center v-rounded-full v-h-[60px] v-w-[60px] v-z-70 no-shake v-overflow-hidden v-cursor-pointer"
           @click="toggleChat"
           :class="{ 'no-shake': hasInteracted }"
        >
@@ -77,7 +77,7 @@
              </div>
           </div>
           </div>
-          <div class="v-bg-white v-pb-4 v-pt-4 v-py-3">
+    
             <div v-if="currentTab === 'home'" class="v-py-4 v-px-3 v-bg-[#1a237e] v-text-white v-flex v-items-center v-relative v-flex-row v-rounded-lg">
                <div class="v-flex v-justify-between v-items-center v-flex-1 v-gap-2">
                   <img src="https://vafaai.com/widget/images/logo.svg" alt="Support Profile" class="v-w-[32px] v-h-[32px]">
@@ -92,7 +92,7 @@
                   </div>
                </div>
             </div>
-          </div>
+         
           <div v-if="currentTab === 'knowledge'" class="v-py-4 v-px-3 v-bg-white v-text-slate-800 v-flex v-items-center v-relative v-flex-row v-border-b v-border-slate-200">
              <div
                 v-if="knowledgeView !== 'categories'"
@@ -418,8 +418,6 @@
  
  <script>
  import io from "socket.io-client";
- // Import only JSON data (non-asset imports work fine)
- import knowledgeBaseData from '@/assets/data/knowledgeBase.json';
  
  export default {
    name: "ChatWidget",
@@ -527,18 +525,7 @@
           // Knowledge Base Data
           knowledgeData: [],
           allQuestions: [], // Flat list of all questions for easier access
-          featuredQuestions: [
-             {
-                id: 101,
-                question: "برای دریافت فاکتور رسمی چه اطلاعاتی نیاز خواهد بود؟",
-             },
-             {
-                id: 303,
-                question: "وفا با کدام زبان های برنامه نویسی سازگار است؟",
-             },
-             { id: 301, question: "چطور می توانم در وفا ثبت نام کنم؟" },
-             { id: 401, question: "وفا راه حلی برای افزایش فروش" },
-          ],
+          featuredQuestions: [], // Will be loaded from API based on inHome flag
           knowledgeView: "categories", // categories, questions, answer
           knowledgeViewTitle: "راهنما",
           knowledgeSearchQuery: "",
@@ -634,25 +621,89 @@
        }
     },
     methods: {
-       // Load knowledge base data from JSON file
-       loadKnowledgeBaseData() {
+       // Load knowledge base data from API
+       async loadKnowledgeBaseData() {
           try {
-             // Import the JSON data directly using require
-             const knowledgeData = knowledgeBaseData;
-             this.knowledgeData = knowledgeData.categories;
-             // Prepare flat list of all questions for easier access
-             this.allQuestions = [];
-             this.knowledgeData.forEach((category) => {
-                category.questions.forEach((question) => {
-                   this.allQuestions.push({
-                      ...question,
-                      categoryId: category.id,
-                      categoryTitle: category.title,
+             // Only proceed if we have an assistantId
+             if (!this.assistantId) {
+                console.warn('No assistantId provided, cannot load knowledge base');
+                this.knowledgeData = [];
+                this.allQuestions = [];
+                this.featuredQuestions = [];
+                return;
+             }
+
+             // Fetch knowledge base data from API using the completely public endpoint
+             const response = await fetch(`${this.apiBaseUrl}/public/kb/${this.assistantId}`);
+             
+             if (!response.ok) {
+                throw new Error(`Failed to fetch knowledge base: ${response.status}`);
+             }
+             
+             const data = await response.json();
+             
+             if (data.success && data.data && data.data.categories) {
+                this.knowledgeData = data.data.categories;
+                
+                // Prepare flat list of all questions for easier access
+                this.allQuestions = [];
+                this.knowledgeData.forEach((category) => {
+                   category.questions.forEach((question) => {
+                      this.allQuestions.push({
+                         ...question,
+                         categoryId: category.id,
+                         categoryTitle: category.title,
+                      });
                    });
                 });
-             });
+                
+                // Load featured questions separately
+                this.loadFeaturedQuestions();
+                
+                console.log(`Loaded knowledge base with ${this.knowledgeData.length} categories and ${this.allQuestions.length} questions`);
+             } else {
+                console.warn('Knowledge base data not found or empty');
+                this.knowledgeData = [];
+                this.allQuestions = [];
+                this.featuredQuestions = [];
+             }
           } catch (error) {
              console.error("Error loading knowledge base data:", error);
+             this.knowledgeData = [];
+             this.allQuestions = [];
+             this.featuredQuestions = [];
+          }
+       },
+       
+       // Load featured questions from API (questions with inHome=true)
+       async loadFeaturedQuestions() {
+          try {
+             // Only proceed if we have an assistantId
+             if (!this.assistantId) {
+                console.warn('No assistantId provided, cannot load featured questions');
+                this.featuredQuestions = [];
+                return;
+             }
+
+             // Fetch featured questions from API using the completely public endpoint
+             const response = await fetch(`${this.apiBaseUrl}/public/kb/${this.assistantId}/featured`);
+             
+             if (!response.ok) {
+                throw new Error(`Failed to fetch featured questions: ${response.status}`);
+             }
+             
+             const data = await response.json();
+             
+             if (data.success && data.data && data.data.featuredQuestions) {
+                this.featuredQuestions = data.data.featuredQuestions;
+                console.log(`Loaded ${this.featuredQuestions.length} featured questions`);
+             } else {
+                console.warn('Featured questions not found or empty');
+                this.featuredQuestions = [];
+             }
+          } catch (error) {
+             console.error("Error loading featured questions:", error);
+             this.featuredQuestions = [];
           }
        },
        loadMessagesFromLocalStorage() {
@@ -1839,5 +1890,24 @@
     50% { opacity: 0.8; transform: scale(1.2); }
     100% { opacity: 0.3; transform: scale(0.8); }
  }
- 
+ .v-border-1 {
+    border-width: 1px;
+ }
+ .v-border-[#1a237e]   {
+    border-color: #1a237e;
+ }
+ .v-flex .v-bg-[#fff]{
+    background-color: #fff;
+ }
+
+ input:not([type="submit"]) {
+box-shadow: none;
+}
+.v-bg-[#fff] {
+    background-color: #fff !important;
+}
+
+input:not([type="submit"]):focus {
+box-shadow: none;
+}
  </style>
