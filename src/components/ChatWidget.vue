@@ -2,9 +2,9 @@
     <div class="v-fixed v-flex v-flex-col v-gap-2 v-right-[20px] v-bottom-[20px]">
        <!-- Chat Button -->
  
-       <div class=" v-bg-[#fff] v-border v-border-slate-200 v-rounded-lg v-rounded-br-sm v-py-2 v-px-3 v-text-sm v-cursor-pointer v-w-fit v-hover:bg-slate-100 v-transition-colors v-duration-300" @click="startConversationWithDefaultQuestion">{{ defaultQuestion }}</div>
+       <div class=" v-bg-white v-border v-border-slate-200 v-rounded-lg v-rounded-br-sm v-py-2 v-px-3 v-text-sm v-cursor-pointer v-w-fit v-hover:bg-slate-100 v-transition-colors v-duration-300" @click="startConversationWithDefaultQuestion" v-html="defaultQuestion"></div>
        <div
-          class=" v-bg-[#fff] v-border-1 v-border-[#1a237e]   v-flex  v-items-center v-justify-center v-rounded-full v-h-[60px] v-w-[60px] v-z-70 no-shake v-overflow-hidden v-cursor-pointer"
+          class=" v-bg-white v-border-1 v-border-bd   v-flex  v-items-center v-justify-center v-rounded-full v-h-[60px] v-w-[60px] v-z-70 no-shake v-overflow-hidden v-cursor-pointer"
           @click="toggleChat"
           :class="{ 'no-shake': hasInteracted }"
        >
@@ -78,7 +78,8 @@
           </div>
           </div>
     
-            <div v-if="currentTab === 'home'" class="v-py-4 v-px-3 v-bg-[#1a237e] v-text-white v-flex v-items-center v-relative v-flex-row v-rounded-lg">
+          <div class="v-bg-white v-py-4 v-px-3" v-if="currentTab === 'home'">
+            <div class="v-py-4 v-px-3 v-bg-[#1a237e] v-text-white v-flex v-items-center v-relative v-flex-row v-rounded-lg">
                <div class="v-flex v-justify-between v-items-center v-flex-1 v-gap-2">
                   <img src="https://vafaai.com/widget/images/logo.svg" alt="Support Profile" class="v-w-[32px] v-h-[32px]">
                   <div class="v-flex v-grow v-flex-col v-gap-[2px]">
@@ -92,7 +93,7 @@
                   </div>
                </div>
             </div>
-         
+         </div>
           <div v-if="currentTab === 'knowledge'" class="v-py-4 v-px-3 v-bg-white v-text-slate-800 v-flex v-items-center v-relative v-flex-row v-border-b v-border-slate-200">
              <div
                 v-if="knowledgeView !== 'categories'"
@@ -166,19 +167,24 @@
                       message.isUser
                          ? 'v-bg-[#1a237e] v-text-white v-rounded-br-sm v-justify-self-start'
                          : 'v-bg-slate-100 v-text-slate-800 v-rounded-bl-sm v-justify-self-end',
-                      message.isStreaming ? 'v-streaming-message' : ''
+                      message.isStreaming ? 'v-streaming-message' : '',
+                      message.isComplete ? 'v-complete-message' : ''
                    ]"
+                   v-show="message.content && (!message.isComplete || (message.isComplete && message.content))"
                 >
                    <div v-html="message.content"></div>
                 </div>
  
                 <div
                    v-if="isThinking"
-                   class="hascowebchat-message hascowebchat-bot-message"
+                   class="hascowebchat-message hascowebchat-bot-message typing-animation"
                    style="font-style: italic; opacity: 0.8"
                 >
-                   در حال تایپ...
+                   <span class="typing-dot"></span>
+                   <span class="typing-dot"></span>
+                   <span class="typing-dot"></span>
                 </div>
+           
              </div>
               <!-- Default Questions - Only show in messenger tab -->
              <div
@@ -499,6 +505,8 @@
     },
     data() {
        return {
+          justCompleted: false,
+          pendingMessage: null,
           isOpen: false,
           hasInteracted: false,
           isMaximize: false,
@@ -872,13 +880,14 @@
           this.showDefaultQuestions = false;
        },
        initSocket() {
-          try {
-             // Clean up existing socket if necessary
-             if (this.socket) {
-                console.log("Cleaning up existing socket connection");
-                this.socket.disconnect();
-                this.socket.removeAllListeners();
-             }
+           try {
+              // Clean up existing socket if necessary
+              if (this.socket) {
+                 console.log("Cleaning up existing socket connection");
+                 this.socket.disconnect();
+                 this.socket.removeAllListeners();
+                 this.socket = null; // Ensure the socket is fully reset
+              }
  
              // Use base URL without token in the URL
              this.socketUrl = this.apiBaseUrl;
@@ -1001,13 +1010,7 @@
           // Switch to messenger tab
           this.currentTab = "messenger";
           
-          // Set the input message to the default question
-          this.inputMessage = this.defaultQuestion ;
-          
-          // Use the existing sendMessage method to actually send the message
-          this.$nextTick(() => {
-             this.sendMessage();
-          });
+         
        },
  
        toggleChat() {
@@ -1155,34 +1158,80 @@
                   case 'thinking':
                      this.isThinking = true;
                      return;
-
-                  // We received a text chunk – append it instead of pushing a new msg
+                     
+                  // Store chunk but don't display yet
                   case 'chunk': {
                      const chunkText = data.message || data.content || data.text || '';
-                     if (chunkText) this.addBotMessageChunk(chunkText);
+                     // Store the text to be displayed on complete
+                     if (chunkText) {
+                        if (!this.pendingMessage) {
+                           this.pendingMessage = chunkText;
+                        } else {
+                           this.pendingMessage += chunkText;
+                        }
+                     }
                      return;
                   }
 
                   /* The stream is finished.
-                  * Mark the last streaming message as “complete” **without**
-                  * injecting another message object.              */
+                  * Display the full message at once              */
                   case 'complete': {
-                     if (this.currentStreamingMessage) {
-                        const processed = this.processMessageWithImages(
-                           this.currentStreamingMessage.content
-                        );
-
-                        Object.assign(this.currentStreamingMessage, {
-                           content:      processed,
-                           isStreaming:  false,
-                           isComplete:   true
-                        });
-
-                        this.saveMessagesToLocalStorage();
-                        this.currentStreamingMessage = null;
-                     }
-                     this.isThinking = false;
-                     return;
+                      // First, stop the thinking animation
+                      this.isThinking = false;
+                      
+                      // Use either the pending message OR the message property directly
+                      // Add a message deduplication check based on content
+                      let messageContent = this.pendingMessage || data.message || data.content || data.text || '';
+                      
+                      // Generate a unique identifier for this message to prevent duplicates
+                      const messageId = Date.now() + '-' + Math.random().toString(36).substring(2, 9);
+                      console.log(`Processing complete message with ID: ${messageId}`);
+                      
+                      // Check if we have already processed this exact message recently
+                      const isDuplicate = this.messages.some(msg => 
+                         !msg.isUser && msg.content === this.processMessageWithImages(messageContent) && 
+                         new Date().getTime() - new Date(msg.timestamp).getTime() < 2000
+                      );
+                      
+                      if (isDuplicate) {
+                         console.warn('Duplicate message detected, not adding to UI');
+                         this.pendingMessage = null;
+                         return;
+                      }
+                      
+                      // Process message for images
+                      const processedMessage = this.processMessageWithImages(messageContent);
+                      
+                      // Only add if we have content to display
+                      if (processedMessage) {
+                         console.log('Adding complete message to UI:', processedMessage);
+                         
+                         // Add the complete bot message
+                         this.messages.push({
+                            content: processedMessage,
+                            isUser: false,
+                            timestamp: new Date().toISOString(),
+                            messageId: messageId
+                         });
+                         
+                         this.saveMessagesToLocalStorage();
+                         this.$nextTick(() => {
+                            this.scrollToBottom();
+                         });
+                      } else {
+                         console.warn('No content to display for complete message');
+                      }
+                      
+                      // Reset pending message
+                      this.pendingMessage = null;
+                       
+                      // Show completion message
+                      this.justCompleted = true;
+                      // Hide completion message after 3 seconds
+                      setTimeout(() => {
+                         this.justCompleted = false;
+                      }, 3000);
+                      return;
                   }
 
                   // Server-side error
@@ -1220,57 +1269,21 @@
             this.addBotMessage(JSON.stringify(data));
          },
        addBotMessageChunk(chunk='') {
-           // Check if we need to set a streaming message
-            if (!this.currentStreamingMessage) {
-               const reverseMessages = [...this.messages].reverse();
-               const idx = reverseMessages.findIndex(
-                  (msg) => !msg.isUser && msg.isStreaming      // ✅ only unfinished bot msgs
-               );
-               if (idx >= 0) {
-         // Re-use the unfinished streaming message
-                  this.currentStreamingMessage =
-                     this.messages[this.messages.length - 1 - idx];
-               } else {
-                 // No existing non-user message found, create a new one
-                 this.currentStreamingMessage = {
-                    content: "",
-                    isUser: false,
-                    isImage: false,
-                    isStreaming: true,
-                    timestamp: new Date().toISOString(),
-                 };
-                 // Add it to the messages array only once
-                 this.messages.push(this.currentStreamingMessage);
-              }
-           }
-
-           // Just sanitize but don't process images yet - we'll do that when complete
+           // Just sanitize the chunk
            const sanitizedChunk = chunk
               .replace(/</g, "&lt;")
               .replace(/>/g, "&gt;");
 
-           // Append the new chunk to the existing message content
-           this.currentStreamingMessage.content += sanitizedChunk;
-           
-           // Save the updated message to localStorage
-           this.saveMessagesToLocalStorage();
- 
-           // Check if we have complete image markdown in the accumulated content
-           // and process it if we do
-           if (
-              this.currentStreamingMessage.content.includes("![") &&
-              this.currentStreamingMessage.content.includes("](") &&
-              this.currentStreamingMessage.content.includes(")")
-           ) {
-              const processedContent = this.processMessageWithImages(
-                 this.currentStreamingMessage.content
-              );
-              this.currentStreamingMessage.content = processedContent;
+           // Store the chunk for later display on complete
+           if (!this.pendingMessage) {
+              this.pendingMessage = sanitizedChunk;
+           } else {
+              this.pendingMessage += sanitizedChunk;
            }
- 
-           // Force update the UI to show changes immediately
-           this.$forceUpdate();
-           this.scrollToBottom();
+           
+           // We no longer add to messages or display anything until complete
+           // Just update the thinking state to indicate activity
+           this.isThinking = true;
         },
        addErrorMessage(message) {
           if (!message) return;
@@ -1890,20 +1903,70 @@
     50% { opacity: 0.8; transform: scale(1.2); }
     100% { opacity: 0.3; transform: scale(0.8); }
  }
+
+ /* Typing animation */
+ .typing-animation {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+ }
+
+ .typing-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #1a237e;
+    border-radius: 50%;
+    margin: 0 3px;
+    opacity: 0.7;
+    animation: typingDot 1.4s infinite ease-in-out both;
+ }
+
+ .typing-dot:nth-child(1) {
+    animation-delay: 0s;
+ }
+
+ .typing-dot:nth-child(2) {
+    animation-delay: 0.2s;
+ }
+
+ .typing-dot:nth-child(3) {
+    animation-delay: 0.4s;
+ }
+
+ @keyframes typingDot {
+    0%, 80%, 100% { transform: scale(0.7); opacity: 0.5; }
+    40% { transform: scale(1.2); opacity: 1; }
+ }
+
+ /* Completed message animation */
+ .completed-message {
+    animation: fadeIn 0.3s ease-in-out, fadeOut 0.5s ease-in-out 2.5s forwards;
+ }
+
+ @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+ }
+
+ @keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+ }
  .v-border-1 {
     border-width: 1px;
  }
- .v-border-[#1a237e]   {
+ .v-border-bd   {
     border-color: #1a237e;
  }
- .v-flex .v-bg-[#fff]{
+ .v-flex .v-bg-white{
     background-color: #fff;
  }
 
  input:not([type="submit"]) {
 box-shadow: none;
 }
-.v-bg-[#fff] {
+.v-bg-white {
     background-color: #fff !important;
 }
 
