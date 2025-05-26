@@ -158,7 +158,7 @@
              class="v-relative v-flex v-flex-col v-h-full v-justify-between v-bg-white v-py-2 v-px-3 v-overflow-auto"
              ref="chatBody"
           >
-             <div class="v-grow">
+             <div class="v-grow v-grid">
                 <div
                    v-for="(message, index) in messages"
                    :key="index"
@@ -328,7 +328,7 @@
           </div>
  
           <div class="v-py-2 v-px-3 v-bg-white v-border-t v-border-slate-200" v-if="currentTab === 'messenger'">
-             <div class="v-flex v-items-center v-bg-white v-rounded-full v-border v-border-slate-200">
+             <div class="v-flex v-items-center v-bg-white v-rounded-full v-border v-border-slate-200 v-w-full v-overflow-hidden">
                 <input type="text" v-model="inputMessage" @keyup.enter="sendMessage" placeholder="اینجا تایپ کنید ..." class="v-flex-1 v-border-0 v-outline-0 v-bg-transparent v-text-sm v-py-2 v-px-3 v-rounded-full">
                 <svg viewBox="0 0 512 512" fill="currentColor" width="20px" height="20px" class="v-ml-3 v-text-[#1a237e] v-rotate-180 v-cursor-pointer" @click="sendMessage"><path d="M133.9 232L65.8 95.9 383.4 232l-249.5 0zm0 48l249.5 0L65.8 416.1l68-136.1zM44.6 34.6C32.3 29.3 17.9 32.3 8.7 42S-2.6 66.3 3.4 78.3L92.2 256 3.4 433.7c-6 12-3.9 26.5 5.3 36.3s23.5 12.7 35.9 7.5l448-192c11.8-5 19.4-16.6 19.4-29.4s-7.6-24.4-19.4-29.4l-448-192z"></path></svg>
              </div>
@@ -1549,6 +1549,10 @@
  
  .v-justify-around {
     justify-content: space-around;
+ }
+
+ .v-grid {
+   display: grid;
  }
  
  .v-grow {
