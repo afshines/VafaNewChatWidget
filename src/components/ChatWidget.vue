@@ -13,6 +13,8 @@
  
        <!-- Chat Popup -->
        <div class="v-fixed v-transition-all v-duration-300 v-right-[20px] v-bottom-[20px] v-rounded-md v-overflow-hidden v-z-90 v-flex v-flex-col v-shadow-[0_10px_25px_rgba(0,0,0,0.2)]" v-show="isOpen" :class="{ 'v-max-h-\[calc\(100\%-104px\)\] v-h-\[calc\(100\%-104px\)\] v-w-\[688px\]': isMaximize, 'v-w-[400px] v-h-[700px] v-max-h-[min(714px,100%-30px)]': !isMaximize, 'v-right-0 v-bottom-0 v-top-0 v-rounded-none v-h-full v-max-h-100vh v-w-full': isMobile }">
+          
+
           <div
              v-if="currentTab === 'messenger'"
              class="v-py-4 v-px-3 v-bg-white v-text-slate-800 v-flex v-items-center v-relative v-flex-row v-border-b v-border-slate-200"
@@ -73,7 +75,12 @@
                    </svg>
              </div>
              <div class="v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300" @click="closeChat">
-                <svg viewBox="0 0 384 512" fill="currentColor" width="18px" height="18px"><path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"></path></svg>
+                <!-- Minimize icon -->
+                <svg viewBox="0 0 448 512" fill="currentColor" width="16px" height="16px"><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg>
+             </div>
+             <div class="v-p-2 v-rounded-lg v-cursor-pointer v-text-red-600 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#ff000015] v-transition-colors v-duration-300" @click="showResetConfirmation = true">
+                <!-- Reset icon (X) -->
+                <svg viewBox="0 0 384 512" fill="currentColor" width="16px" height="16px"><path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"></path></svg>
              </div>
           </div>
           </div>
@@ -116,6 +123,11 @@
              <div v-else class="v-p-2 v-rounded-lg v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center"></div>
              <div class="v-text-sm v-text-center v-font-semibold v-flex-1">راهنما</div>
              <div class="v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300" @click="closeChat">
+                <!-- Minimize icon -->
+                <svg viewBox="0 0 448 512" fill="currentColor" width="16px" height="16px"><path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg>
+             </div>
+             <div class="v-p-2 v-rounded-lg v-cursor-pointer v-text-red-600 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#ff000015] v-transition-colors v-duration-300" @click="showResetConfirmation = true">
+                <!-- Reset icon (X) -->
                 <svg viewBox="0 0 384 512" fill="currentColor" width="16px" height="16px"><path d="M345 137c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-119 119L73 103c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l119 119L39 375c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l119-119L311 409c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-119-119L345 137z"></path></svg>
              </div>
           </div>
@@ -158,7 +170,7 @@
              class="v-relative v-flex v-flex-col v-h-full v-justify-between v-bg-white v-py-2 v-px-3 v-overflow-auto"
              ref="chatBody"
           >
-             <div class="v-grow">
+             <div class="v-grow v-grid">
                 <div
                    v-for="(message, index) in messages"
                    :key="index"
@@ -332,7 +344,12 @@
                 <input type="text" v-model="inputMessage" @keyup.enter="sendMessage" placeholder="اینجا تایپ کنید ..." class="v-flex-1 v-border-0 v-outline-0 v-bg-transparent v-text-sm v-py-2 v-px-3 v-rounded-full">
                 <svg viewBox="0 0 512 512" fill="currentColor" width="20px" height="20px" class="v-ml-3 v-text-[#1a237e] v-rotate-180 v-cursor-pointer" @click="sendMessage"><path d="M133.9 232L65.8 95.9 383.4 232l-249.5 0zm0 48l249.5 0L65.8 416.1l68-136.1zM44.6 34.6C32.3 29.3 17.9 32.3 8.7 42S-2.6 66.3 3.4 78.3L92.2 256 3.4 433.7c-6 12-3.9 26.5 5.3 36.3s23.5 12.7 35.9 7.5l448-192c11.8-5 19.4-16.6 19.4-29.4s-7.6-24.4-19.4-29.4l-448-192z"></path></svg>
              </div>
-             <div class="v-text-center v-text-xs v-text-slate-600 v-pt-2">ساخته شده با وفا</div>
+             <div class="v-text-center v-text-xs v-text-slate-600 v-pt-2 v-flex v-items-center v-justify-center">
+                ساخته شده با 
+                <a href="https://vafaai.com" target="_blank" rel="noopener noreferrer" title="وفا - پلتفرم هوش مصنوعی" aria-label="وبسایت وفا">
+                  <img src="@/assets/images/vafa-logo.jpg" alt="لوگوی وفا - پلتفرم هوش مصنوعی" class="v-ml-1" style="width: 52px; height: auto; margin-right: 4px;" />
+                </a>
+             </div>
           </div>
  
           <!-- Bottom Navigation Bar - Only show on home section -->
@@ -416,6 +433,17 @@
                    ></path>
                 </svg>
                 <div class="v-text-xs">راهنما</div>
+             </div>
+          </div>
+       </div>
+       
+       <!-- Reset Chat Confirmation Popup -->
+       <div v-if="isOpen && showResetConfirmation" class="reset-confirmation-overlay-chat">
+          <div class="reset-confirmation-content-chat">
+             <div class="v-text-lg v-font-bold v-mb-4">آیا واقعا میخواهید این گفتگو را ببندید؟</div>
+             <div class="v-flex v-justify-center v-gap-6 v-mt-5">
+                <button @click="resetChat" class="v-px-5 v-py-2 v-text-white v-rounded-md v-hover:bg-red-700" style="background-color: #f44336;">بستن گفتگو</button>
+                <button @click="showResetConfirmation = false" class="v-px-5 v-py-2 v-bg-slate-200 v-text-slate-800 v-rounded-md v-hover:bg-slate-300">انصراف</button>
              </div>
           </div>
        </div>
@@ -539,7 +567,8 @@
           knowledgeSearchQuery: "",
           selectedCategory: null,
           selectedQuestion: null,
-       };
+          showResetConfirmation: false,
+        };
     },
     mounted() {
        // Initialize user ID from localStorage
@@ -1032,6 +1061,33 @@
           this.isOpen = false;
           this.isMaximize = false;
        },
+       resetChat() {
+          // Clear all messages
+          this.messages = [];
+          // Close the confirmation popup
+          this.showResetConfirmation = false;
+          // Reset current response and typing state
+          this.currentResponse = "";
+          this.isTyping = false;
+          // Reset session data
+          this.sessionData = {
+             id: null,
+             initialized: false,
+          };
+          // Clear input field
+          this.inputMessage = "";
+          // Show default questions again
+          this.showDefaultQuestions = true;
+          // Save cleared state to localStorage
+          this.saveMessagesToLocalStorage();
+          // Send user back to home tab
+          this.switchTab('home');
+       },
+       toggleResetConfirmation() {
+          // Toggle the popup visibility
+          console.log('Toggling reset confirmation popup', !this.showResetConfirmation);
+          this.showResetConfirmation = !this.showResetConfirmation;
+       },
        sendMessage() {
           if (!this.inputMessage.trim()) return;
  
@@ -1519,6 +1575,11 @@
     display: flex;
  }
  
+
+ .v-grid {
+   display: grid;
+ }
+ 
  .v-flex-1 {
     flex: 1 1 0%;
  }
@@ -1972,5 +2033,54 @@ box-shadow: none;
 
 input:not([type="submit"]):focus {
 box-shadow: none;
+}
+
+/* Reset confirmation popup styles */
+.reset-confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.reset-confirmation-content {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    max-width: 300px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Chat-specific reset confirmation popup styles */
+.reset-confirmation-overlay-chat {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    border-radius: inherit;
+}
+
+.reset-confirmation-content-chat {
+    background-color: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    max-width: 320px;
+    width: 85%;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
  </style>
