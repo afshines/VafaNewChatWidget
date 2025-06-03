@@ -1,33 +1,60 @@
 <!DOCTYPE html>
-<html lang="fa_IR" dir="rtl">
-
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-  
-  <meta charset="utf-8">
-  <title>Menu  | کافه رستوران </title>
-  <meta name="description" content="Menu  | کافه رستوران ">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="author" content="Sohrab Yazdanparast">
-
-  <!-- ================= Favicon ================== -->
-
-
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"> 
+  <title>Vafa Chat Widget Development</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .content {
+      max-width: 800px;
+      width: 100%;
+    }
+    .button {
+      display: inline-block;
+      background-color: #1a237e;
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-top: 20px;
+    }
+    #vafa-chat-container {
+      direction: rtl;
+      height: 600px;
+      width: 100%;
+      margin-top: 30px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+  </style>
+  <script type="module" crossorigin src="/assets/main-BoEYbsfk.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-DHO3Nb3w.css">
 </head>
-
 <body>
-  <noscript>
-    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
-        Please enable it to continue.</strong>
-  </noscript>
-  <div id="app"></div>
-  <!-- built files will be auto injected -->
-</body>
+  <div class="header">
+    <h1>Vafa Chat Widget Development</h1>
+    <p>This is the development environment for the Vafa Chat Widget</p>
+    <a href="public/embed-demo.html" class="button">View Embedding Demo</a>
+  </div>
 
+  <div class="content">
+    <h2>Development Preview</h2>
+    <p>Below is a preview of the chat widget with a test token. You can modify the code in the src directory to see changes reflected here.</p>
+    
+    <div id="vafa-chat-container"></div>
+  </div>
+
+</body>
 </html>

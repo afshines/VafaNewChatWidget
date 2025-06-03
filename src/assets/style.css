@@ -8,6 +8,16 @@
   font-family: sans-serif;
 }
 
+input, textarea, select, button {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input:focus, textarea:focus, select:focus, button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 /* Import the styles from the widget component */
 /* Note: The widget already has comprehensive styling in the ChatWidget.vue component */
 /* This file can be used for additional global styles */
