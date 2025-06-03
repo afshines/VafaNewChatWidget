@@ -1,4 +1,4 @@
-import { openBlock as l, createElementBlock as h, createElementVNode as a, normalizeClass as R, withDirectives as C, createCommentVNode as p, toDisplayString as v, vModelText as Q, Fragment as S, renderList as I, createStaticVNode as be, vShow as te, withKeys as ke, createTextVNode as Ae, createApp as Re } from "vue";
+import { openBlock as c, createElementBlock as h, normalizeClass as R, createElementVNode as a, normalizeStyle as be, withDirectives as C, createCommentVNode as p, toDisplayString as v, vModelText as z, Fragment as S, renderList as I, createStaticVNode as Ae, vShow as te, withKeys as ke, createTextVNode as Re, createApp as Ee } from "vue";
 const x = /* @__PURE__ */ Object.create(null);
 x.open = "0";
 x.close = "1";
@@ -7,11 +7,11 @@ x.pong = "3";
 x.message = "4";
 x.upgrade = "5";
 x.noop = "6";
-const P = /* @__PURE__ */ Object.create(null);
+const L = /* @__PURE__ */ Object.create(null);
 Object.keys(x).forEach((s) => {
-  P[x[s]] = s;
+  L[x[s]] = s;
 });
-const _ = { type: "error", data: "parser error" }, ae = typeof Blob == "function" || typeof Blob < "u" && Object.prototype.toString.call(Blob) === "[object BlobConstructor]", ce = typeof ArrayBuffer == "function", le = (s) => typeof ArrayBuffer.isView == "function" ? ArrayBuffer.isView(s) : s && s.buffer instanceof ArrayBuffer, G = ({ type: s, data: e }, t, i) => ae && e instanceof Blob ? t ? i(e) : se(e, i) : ce && (e instanceof ArrayBuffer || le(e)) ? t ? i(e) : se(new Blob([e]), i) : i(x[s] + (e || "")), se = (s, e) => {
+const _ = { type: "error", data: "parser error" }, ae = typeof Blob == "function" || typeof Blob < "u" && Object.prototype.toString.call(Blob) === "[object BlobConstructor]", le = typeof ArrayBuffer == "function", ce = (s) => typeof ArrayBuffer.isView == "function" ? ArrayBuffer.isView(s) : s && s.buffer instanceof ArrayBuffer, G = ({ type: s, data: e }, t, i) => ae && e instanceof Blob ? t ? i(e) : se(e, i) : le && (e instanceof ArrayBuffer || ce(e)) ? t ? i(e) : se(new Blob([e]), i) : i(x[s] + (e || "")), se = (s, e) => {
   const t = new FileReader();
   return t.onload = function() {
     const i = t.result.split(",")[1];
@@ -22,10 +22,10 @@ function ie(s) {
   return s instanceof Uint8Array ? s : s instanceof ArrayBuffer ? new Uint8Array(s) : new Uint8Array(s.buffer, s.byteOffset, s.byteLength);
 }
 let U;
-function Ee(s, e) {
+function Te(s, e) {
   if (ae && s.data instanceof Blob)
     return s.data.arrayBuffer().then(ie).then(e);
-  if (ce && (s.data instanceof ArrayBuffer || le(s.data)))
+  if (le && (s.data instanceof ArrayBuffer || ce(s.data)))
     return e(ie(s.data));
   G(s, !1, (t) => {
     U || (U = new TextEncoder()), e(U.encode(t));
@@ -34,14 +34,14 @@ function Ee(s, e) {
 const ne = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", B = typeof Uint8Array > "u" ? [] : new Uint8Array(256);
 for (let s = 0; s < ne.length; s++)
   B[ne.charCodeAt(s)] = s;
-const Te = (s) => {
-  let e = s.length * 0.75, t = s.length, i, n = 0, r, o, c, d;
+const Ce = (s) => {
+  let e = s.length * 0.75, t = s.length, i, n = 0, r, o, l, d;
   s[s.length - 1] === "=" && (e--, s[s.length - 2] === "=" && e--);
   const b = new ArrayBuffer(e), g = new Uint8Array(b);
   for (i = 0; i < t; i += 4)
-    r = B[s.charCodeAt(i)], o = B[s.charCodeAt(i + 1)], c = B[s.charCodeAt(i + 2)], d = B[s.charCodeAt(i + 3)], g[n++] = r << 2 | o >> 4, g[n++] = (o & 15) << 4 | c >> 2, g[n++] = (c & 3) << 6 | d & 63;
+    r = B[s.charCodeAt(i)], o = B[s.charCodeAt(i + 1)], l = B[s.charCodeAt(i + 2)], d = B[s.charCodeAt(i + 3)], g[n++] = r << 2 | o >> 4, g[n++] = (o & 15) << 4 | l >> 2, g[n++] = (l & 3) << 6 | d & 63;
   return b;
-}, Ce = typeof ArrayBuffer == "function", J = (s, e) => {
+}, Se = typeof ArrayBuffer == "function", J = (s, e) => {
   if (typeof s != "string")
     return {
       type: "message",
@@ -50,16 +50,16 @@ const Te = (s) => {
   const t = s.charAt(0);
   return t === "b" ? {
     type: "message",
-    data: Se(s.substring(1), e)
-  } : P[t] ? s.length > 1 ? {
-    type: P[t],
+    data: Ie(s.substring(1), e)
+  } : L[t] ? s.length > 1 ? {
+    type: L[t],
     data: s.substring(1)
   } : {
-    type: P[t]
+    type: L[t]
   } : _;
-}, Se = (s, e) => {
-  if (Ce) {
-    const t = Te(s);
+}, Ie = (s, e) => {
+  if (Se) {
+    const t = Ce(s);
     return he(t, e);
   } else
     return { base64: !0, data: s };
@@ -71,15 +71,15 @@ const Te = (s) => {
     default:
       return s instanceof ArrayBuffer ? s : s.buffer;
   }
-}, ue = String.fromCharCode(30), Ie = (s, e) => {
+}, ue = String.fromCharCode(30), Ve = (s, e) => {
   const t = s.length, i = new Array(t);
   let n = 0;
   s.forEach((r, o) => {
-    G(r, !1, (c) => {
-      i[o] = c, ++n === t && e(i.join(ue));
+    G(r, !1, (l) => {
+      i[o] = l, ++n === t && e(i.join(ue));
     });
   });
-}, Ve = (s, e) => {
+}, Be = (s, e) => {
   const t = s.split(ue), i = [];
   for (let n = 0; n < t.length; n++) {
     const r = J(t[n], e);
@@ -88,10 +88,10 @@ const Te = (s) => {
   }
   return i;
 };
-function Be() {
+function Pe() {
   return new TransformStream({
     transform(s, e) {
-      Ee(s, (t) => {
+      Te(s, (t) => {
         const i = t.length;
         let n;
         if (i < 126)
@@ -110,8 +110,8 @@ function Be() {
     }
   });
 }
-let D;
-function L(s) {
+let M;
+function P(s) {
   return s.reduce((e, t) => e + t.length, 0);
 }
 function O(s, e) {
@@ -123,40 +123,40 @@ function O(s, e) {
     t[n] = s[0][i++], i === s[0].length && (s.shift(), i = 0);
   return s.length && i < s[0].length && (s[0] = s[0].slice(i)), t;
 }
-function Le(s, e) {
-  D || (D = new TextDecoder());
+function Oe(s, e) {
+  M || (M = new TextDecoder());
   const t = [];
   let i = 0, n = -1, r = !1;
   return new TransformStream({
-    transform(o, c) {
+    transform(o, l) {
       for (t.push(o); ; ) {
         if (i === 0) {
-          if (L(t) < 1)
+          if (P(t) < 1)
             break;
           const d = O(t, 1);
           r = (d[0] & 128) === 128, n = d[0] & 127, n < 126 ? i = 3 : n === 126 ? i = 1 : i = 2;
         } else if (i === 1) {
-          if (L(t) < 2)
+          if (P(t) < 2)
             break;
           const d = O(t, 2);
           n = new DataView(d.buffer, d.byteOffset, d.length).getUint16(0), i = 3;
         } else if (i === 2) {
-          if (L(t) < 8)
+          if (P(t) < 8)
             break;
           const d = O(t, 8), b = new DataView(d.buffer, d.byteOffset, d.length), g = b.getUint32(0);
           if (g > Math.pow(2, 53 - 32) - 1) {
-            c.enqueue(_);
+            l.enqueue(_);
             break;
           }
           n = g * Math.pow(2, 32) + b.getUint32(4), i = 3;
         } else {
-          if (L(t) < n)
+          if (P(t) < n)
             break;
           const d = O(t, n);
-          c.enqueue(J(r ? d : D.decode(d), e)), i = 0;
+          l.enqueue(J(r ? d : M.decode(d), e)), i = 0;
         }
         if (n === 0 || n > s) {
-          c.enqueue(_);
+          l.enqueue(_);
           break;
         }
       }
@@ -166,9 +166,9 @@ function Le(s, e) {
 const de = 4;
 function f(s) {
   if (s)
-    return Oe(s);
+    return Le(s);
 }
-function Oe(s) {
+function Le(s) {
   for (var e in f.prototype)
     s[e] = f.prototype[e];
   return s;
@@ -215,17 +215,17 @@ f.prototype.listeners = function(s) {
 f.prototype.hasListeners = function(s) {
   return !!this.listeners(s).length;
 };
-const j = (() => typeof Promise == "function" && typeof Promise.resolve == "function" ? (e) => Promise.resolve().then(e) : (e, t) => t(e, 0))(), m = (() => typeof self < "u" ? self : typeof window < "u" ? window : Function("return this")())(), Pe = "arraybuffer";
+const j = (() => typeof Promise == "function" && typeof Promise.resolve == "function" ? (e) => Promise.resolve().then(e) : (e, t) => t(e, 0))(), m = (() => typeof self < "u" ? self : typeof window < "u" ? window : Function("return this")())(), qe = "arraybuffer";
 function fe(s, ...e) {
   return e.reduce((t, i) => (s.hasOwnProperty(i) && (t[i] = s[i]), t), {});
 }
-const qe = m.setTimeout, He = m.clearTimeout;
-function z(s, e) {
-  e.useNativeTimers ? (s.setTimeoutFn = qe.bind(m), s.clearTimeoutFn = He.bind(m)) : (s.setTimeoutFn = m.setTimeout.bind(m), s.clearTimeoutFn = m.clearTimeout.bind(m));
+const He = m.setTimeout, Ne = m.clearTimeout;
+function Q(s, e) {
+  e.useNativeTimers ? (s.setTimeoutFn = He.bind(m), s.clearTimeoutFn = Ne.bind(m)) : (s.setTimeoutFn = m.setTimeout.bind(m), s.clearTimeoutFn = m.clearTimeout.bind(m));
 }
-const Ne = 1.33;
-function je(s) {
-  return typeof s == "string" ? ze(s) : Math.ceil((s.byteLength || s.size) * Ne);
+const je = 1.33;
+function Qe(s) {
+  return typeof s == "string" ? ze(s) : Math.ceil((s.byteLength || s.size) * je);
 }
 function ze(s) {
   let e = 0, t = 0;
@@ -236,13 +236,13 @@ function ze(s) {
 function pe() {
   return Date.now().toString(36).substring(3) + Math.random().toString(36).substring(2, 5);
 }
-function Qe(s) {
+function Ue(s) {
   let e = "";
   for (let t in s)
     s.hasOwnProperty(t) && (e.length && (e += "&"), e += encodeURIComponent(t) + "=" + encodeURIComponent(s[t]));
   return e;
 }
-function Ue(s) {
+function Me(s) {
   let e = {}, t = s.split("&");
   for (let i = 0, n = t.length; i < n; i++) {
     let r = t[i].split("=");
@@ -263,7 +263,7 @@ class Y extends f {
    * @protected
    */
   constructor(e) {
-    super(), this.writable = !1, z(this, e), this.opts = e, this.query = e.query, this.socket = e.socket, this.supportsBinary = !e.forceBase64;
+    super(), this.writable = !1, Q(this, e), this.opts = e, this.query = e.query, this.socket = e.socket, this.supportsBinary = !e.forceBase64;
   }
   /**
    * Emits an error.
@@ -349,11 +349,11 @@ class Y extends f {
     return this.opts.port && (this.opts.secure && +(this.opts.port !== 443) || !this.opts.secure && Number(this.opts.port) !== 80) ? ":" + this.opts.port : "";
   }
   _query(e) {
-    const t = Qe(e);
+    const t = Ue(e);
     return t.length ? "?" + t : "";
   }
 }
-class Me extends Y {
+class _e extends Y {
   constructor() {
     super(...arguments), this._polling = !1;
   }
@@ -409,7 +409,7 @@ class Me extends Y {
         return this.onClose({ description: "transport closed by the server" }), !1;
       this.onPacket(i);
     };
-    Ve(e, this.socket.binaryType).forEach(t), this.readyState !== "closed" && (this._polling = !1, this.emitReserved("pollComplete"), this.readyState === "open" && this._poll());
+    Be(e, this.socket.binaryType).forEach(t), this.readyState !== "closed" && (this._polling = !1, this.emitReserved("pollComplete"), this.readyState === "open" && this._poll());
   }
   /**
    * For polling, send a close packet.
@@ -429,7 +429,7 @@ class Me extends Y {
    * @protected
    */
   write(e) {
-    this.writable = !1, Ie(e, (t) => {
+    this.writable = !1, Ve(e, (t) => {
       this.doWrite(t, () => {
         this.writable = !0, this.emitReserved("drain");
       });
@@ -450,10 +450,10 @@ try {
   ve = typeof XMLHttpRequest < "u" && "withCredentials" in new XMLHttpRequest();
 } catch {
 }
-const _e = ve;
-function Fe() {
+const Fe = ve;
+function We() {
 }
-class We extends Me {
+class Ke extends _e {
   /**
    * XHR Polling constructor.
    *
@@ -503,7 +503,7 @@ class w extends f {
    * @package
    */
   constructor(e, t, i) {
-    super(), this.createRequest = e, z(this, i), this._opts = i, this._method = i.method || "GET", this._uri = t, this._data = i.data !== void 0 ? i.data : null, this._create();
+    super(), this.createRequest = e, Q(this, i), this._opts = i, this._method = i.method || "GET", this._uri = t, this._data = i.data !== void 0 ? i.data : null, this._create();
   }
   /**
    * Creates the XHR object and sends the request.
@@ -566,7 +566,7 @@ class w extends f {
    */
   _cleanup(e) {
     if (!(typeof this._xhr > "u" || this._xhr === null)) {
-      if (this._xhr.onreadystatechange = Fe, e)
+      if (this._xhr.onreadystatechange = We, e)
         try {
           this._xhr.abort();
         } catch {
@@ -606,17 +606,17 @@ function re() {
   for (let s in w.requests)
     w.requests.hasOwnProperty(s) && w.requests[s].abort();
 }
-const Ke = function() {
+const Xe = function() {
   const s = ge({
     xdomain: !1
   });
   return s && s.responseType !== null;
 }();
-class Xe extends We {
+class Ze extends Ke {
   constructor(e) {
     super(e);
     const t = e && e.forceBase64;
-    this.supportsBinary = Ke && !t;
+    this.supportsBinary = Xe && !t;
   }
   request(e = {}) {
     return Object.assign(e, { xd: this.xd }, this.opts), new w(ge, this.uri(), e);
@@ -625,7 +625,7 @@ class Xe extends We {
 function ge(s) {
   const e = s.xdomain;
   try {
-    if (typeof XMLHttpRequest < "u" && (!e || _e))
+    if (typeof XMLHttpRequest < "u" && (!e || Fe))
       return new XMLHttpRequest();
   } catch {
   }
@@ -636,7 +636,7 @@ function ge(s) {
     }
 }
 const me = typeof navigator < "u" && typeof navigator.product == "string" && navigator.product.toLowerCase() === "reactnative";
-class Ze extends Y {
+class Ge extends Y {
   get name() {
     return "websocket";
   }
@@ -692,16 +692,16 @@ class Ze extends Y {
     return this.opts.timestampRequests && (t[this.opts.timestampParam] = pe()), this.supportsBinary || (t.b64 = 1), this.createUri(e, t);
   }
 }
-const M = m.WebSocket || m.MozWebSocket;
-class Ge extends Ze {
+const D = m.WebSocket || m.MozWebSocket;
+class Je extends Ge {
   createSocket(e, t, i) {
-    return me ? new M(e, t, i) : t ? new M(e, t) : new M(e);
+    return me ? new D(e, t, i) : t ? new D(e, t) : new D(e);
   }
   doWrite(e, t) {
     this.ws.send(t);
   }
 }
-class Je extends Y {
+class Ye extends Y {
   get name() {
     return "webtransport";
   }
@@ -717,12 +717,12 @@ class Je extends Y {
       this.onError("webtransport error", e);
     }), this._transport.ready.then(() => {
       this._transport.createBidirectionalStream().then((e) => {
-        const t = Le(Number.MAX_SAFE_INTEGER, this.socket.binaryType), i = e.readable.pipeThrough(t).getReader(), n = Be();
+        const t = Oe(Number.MAX_SAFE_INTEGER, this.socket.binaryType), i = e.readable.pipeThrough(t).getReader(), n = Pe();
         n.readable.pipeTo(e.writable), this._writer = n.writable.getWriter();
         const r = () => {
-          i.read().then(({ done: c, value: d }) => {
-            c || (this.onPacket(d), r());
-          }).catch((c) => {
+          i.read().then(({ done: l, value: d }) => {
+            l || (this.onPacket(d), r());
+          }).catch((l) => {
           });
         };
         r();
@@ -747,11 +747,11 @@ class Je extends Y {
     (e = this._transport) === null || e === void 0 || e.close();
   }
 }
-const Ye = {
-  websocket: Ge,
-  webtransport: Je,
-  polling: Xe
-}, $e = /^(?:(?![^:@\/?#]+:[^:@\/]*@)(http|https|ws|wss):\/\/)?((?:(([^:@\/?#]*)(?::([^:@\/?#]*))?)?@)?((?:[a-f0-9]{0,4}:){2,7}[a-f0-9]{0,4}|[^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/, et = [
+const $e = {
+  websocket: Je,
+  webtransport: Ye,
+  polling: Ze
+}, et = /^(?:(?![^:@\/?#]+:[^:@\/]*@)(http|https|ws|wss):\/\/)?((?:(([^:@\/?#]*)(?::([^:@\/?#]*))?)?@)?((?:[a-f0-9]{0,4}:){2,7}[a-f0-9]{0,4}|[^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/, tt = [
   "source",
   "protocol",
   "authority",
@@ -772,16 +772,16 @@ function F(s) {
     throw "URI too long";
   const e = s, t = s.indexOf("["), i = s.indexOf("]");
   t != -1 && i != -1 && (s = s.substring(0, t) + s.substring(t, i).replace(/:/g, ";") + s.substring(i, s.length));
-  let n = $e.exec(s || ""), r = {}, o = 14;
+  let n = et.exec(s || ""), r = {}, o = 14;
   for (; o--; )
-    r[et[o]] = n[o] || "";
-  return t != -1 && i != -1 && (r.source = e, r.host = r.host.substring(1, r.host.length - 1).replace(/;/g, ":"), r.authority = r.authority.replace("[", "").replace("]", "").replace(/;/g, ":"), r.ipv6uri = !0), r.pathNames = tt(r, r.path), r.queryKey = st(r, r.query), r;
+    r[tt[o]] = n[o] || "";
+  return t != -1 && i != -1 && (r.source = e, r.host = r.host.substring(1, r.host.length - 1).replace(/;/g, ":"), r.authority = r.authority.replace("[", "").replace("]", "").replace(/;/g, ":"), r.ipv6uri = !0), r.pathNames = st(r, r.path), r.queryKey = it(r, r.query), r;
 }
-function tt(s, e) {
+function st(s, e) {
   const t = /\/{2,9}/g, i = e.replace(t, "/").split("/");
   return (e.slice(0, 1) == "/" || e.length === 0) && i.splice(0, 1), e.slice(-1) == "/" && i.splice(i.length - 1, 1), i;
 }
-function st(s, e) {
+function it(s, e) {
   const t = {};
   return e.replace(/(?:^|&)([^&=]*)=?([^&]*)/g, function(i, n, r) {
     n && (t[n] = r);
@@ -791,7 +791,7 @@ const W = typeof addEventListener == "function" && typeof removeEventListener ==
 W && addEventListener("offline", () => {
   q.forEach((s) => s());
 }, !1);
-class A extends f {
+class k extends f {
   /**
    * Socket constructor.
    *
@@ -799,12 +799,12 @@ class A extends f {
    * @param {Object} opts - options
    */
   constructor(e, t) {
-    if (super(), this.binaryType = Pe, this.writeBuffer = [], this._prevBufferLen = 0, this._pingInterval = -1, this._pingTimeout = -1, this._maxPayload = -1, this._pingTimeoutTime = 1 / 0, e && typeof e == "object" && (t = e, e = null), e) {
+    if (super(), this.binaryType = qe, this.writeBuffer = [], this._prevBufferLen = 0, this._pingInterval = -1, this._pingTimeout = -1, this._maxPayload = -1, this._pingTimeoutTime = 1 / 0, e && typeof e == "object" && (t = e, e = null), e) {
       const i = F(e);
       t.hostname = i.host, t.secure = i.protocol === "https" || i.protocol === "wss", t.port = i.port, i.query && (t.query = i.query);
     } else
       t.host && (t.hostname = F(t.host).host);
-    z(this, t), this.secure = t.secure != null ? t.secure : typeof location < "u" && location.protocol === "https:", t.hostname && !t.port && (t.port = this.secure ? "443" : "80"), this.hostname = t.hostname || (typeof location < "u" ? location.hostname : "localhost"), this.port = t.port || (typeof location < "u" && location.port ? location.port : this.secure ? "443" : "80"), this.transports = [], this._transportsByName = {}, t.transports.forEach((i) => {
+    Q(this, t), this.secure = t.secure != null ? t.secure : typeof location < "u" && location.protocol === "https:", t.hostname && !t.port && (t.port = this.secure ? "443" : "80"), this.hostname = t.hostname || (typeof location < "u" ? location.hostname : "localhost"), this.port = t.port || (typeof location < "u" && location.port ? location.port : this.secure ? "443" : "80"), this.transports = [], this._transportsByName = {}, t.transports.forEach((i) => {
       const n = i.prototype.name;
       this.transports.push(n), this._transportsByName[n] = i;
     }), this.opts = Object.assign({
@@ -821,7 +821,7 @@ class A extends f {
       },
       transportOptions: {},
       closeOnBeforeunload: !1
-    }, t), this.opts.path = this.opts.path.replace(/\/$/, "") + (this.opts.addTrailingSlash ? "/" : ""), typeof this.opts.query == "string" && (this.opts.query = Ue(this.opts.query)), W && (this.opts.closeOnBeforeunload && (this._beforeunloadEventListener = () => {
+    }, t), this.opts.path = this.opts.path.replace(/\/$/, "") + (this.opts.addTrailingSlash ? "/" : ""), typeof this.opts.query == "string" && (this.opts.query = Me(this.opts.query)), W && (this.opts.closeOnBeforeunload && (this._beforeunloadEventListener = () => {
       this.transport && (this.transport.removeAllListeners(), this.transport.close());
     }, addEventListener("beforeunload", this._beforeunloadEventListener, !1)), this.hostname !== "localhost" && (this._offlineEventListener = () => {
       this._onClose("transport close", {
@@ -860,7 +860,7 @@ class A extends f {
       }, 0);
       return;
     }
-    const e = this.opts.rememberUpgrade && A.priorWebsocketSuccess && this.transports.indexOf("websocket") !== -1 ? "websocket" : this.transports[0];
+    const e = this.opts.rememberUpgrade && k.priorWebsocketSuccess && this.transports.indexOf("websocket") !== -1 ? "websocket" : this.transports[0];
     this.readyState = "opening";
     const t = this.createTransport(e);
     t.open(), this.setTransport(t);
@@ -879,7 +879,7 @@ class A extends f {
    * @private
    */
   onOpen() {
-    this.readyState = "open", A.priorWebsocketSuccess = this.transport.name === "websocket", this.emitReserved("open"), this.flush();
+    this.readyState = "open", k.priorWebsocketSuccess = this.transport.name === "websocket", this.emitReserved("open"), this.flush();
   }
   /**
    * Handles a packet.
@@ -956,7 +956,7 @@ class A extends f {
     let t = 1;
     for (let i = 0; i < this.writeBuffer.length; i++) {
       const n = this.writeBuffer[i].data;
-      if (n && (t += je(n)), i > 0 && t > this._maxPayload)
+      if (n && (t += Qe(n)), i > 0 && t > this._maxPayload)
         return this.writeBuffer.slice(0, i);
       t += 2;
     }
@@ -1043,7 +1043,7 @@ class A extends f {
    * @private
    */
   _onError(e) {
-    if (A.priorWebsocketSuccess = !1, this.opts.tryAllTransports && this.transports.length > 1 && this.readyState === "opening")
+    if (k.priorWebsocketSuccess = !1, this.opts.tryAllTransports && this.transports.length > 1 && this.readyState === "opening")
       return this.transports.shift(), this._open();
     this.emitReserved("error", e), this._onClose("transport error", e);
   }
@@ -1062,8 +1062,8 @@ class A extends f {
     }
   }
 }
-A.protocol = de;
-class it extends A {
+k.protocol = de;
+class nt extends k {
   constructor() {
     super(...arguments), this._upgrades = [];
   }
@@ -1080,14 +1080,14 @@ class it extends A {
    */
   _probe(e) {
     let t = this.createTransport(e), i = !1;
-    A.priorWebsocketSuccess = !1;
+    k.priorWebsocketSuccess = !1;
     const n = () => {
-      i || (t.send([{ type: "ping", data: "probe" }]), t.once("packet", (k) => {
+      i || (t.send([{ type: "ping", data: "probe" }]), t.once("packet", (A) => {
         if (!i)
-          if (k.type === "pong" && k.data === "probe") {
+          if (A.type === "pong" && A.data === "probe") {
             if (this.upgrading = !0, this.emitReserved("upgrading", t), !t)
               return;
-            A.priorWebsocketSuccess = t.name === "websocket", this.transport.pause(() => {
+            k.priorWebsocketSuccess = t.name === "websocket", this.transport.pause(() => {
               i || this.readyState !== "closed" && (g(), this.setTransport(t), t.send([{ type: "upgrade" }]), this.emitReserved("upgrade", t), t = null, this.upgrading = !1, this.flush());
             });
           } else {
@@ -1099,23 +1099,23 @@ class it extends A {
     function r() {
       i || (i = !0, g(), t.close(), t = null);
     }
-    const o = (k) => {
-      const T = new Error("probe error: " + k);
+    const o = (A) => {
+      const T = new Error("probe error: " + A);
       T.transport = t.name, r(), this.emitReserved("upgradeError", T);
     };
-    function c() {
+    function l() {
       o("transport closed");
     }
     function d() {
       o("socket closed");
     }
-    function b(k) {
-      t && k.name !== t.name && r();
+    function b(A) {
+      t && A.name !== t.name && r();
     }
     const g = () => {
-      t.removeListener("open", n), t.removeListener("error", o), t.removeListener("close", c), this.off("close", d), this.off("upgrading", b);
+      t.removeListener("open", n), t.removeListener("error", o), t.removeListener("close", l), this.off("close", d), this.off("upgrading", b);
     };
-    t.once("open", n), t.once("error", o), t.once("close", c), this.once("close", d), this.once("upgrading", b), this._upgrades.indexOf("webtransport") !== -1 && e !== "webtransport" ? this.setTimeoutFn(() => {
+    t.once("open", n), t.once("error", o), t.once("close", l), this.once("close", d), this.once("upgrading", b), this._upgrades.indexOf("webtransport") !== -1 && e !== "webtransport" ? this.setTimeoutFn(() => {
       i || t.open();
     }, 200) : t.open();
   }
@@ -1135,21 +1135,21 @@ class it extends A {
     return t;
   }
 }
-let nt = class extends it {
+let rt = class extends nt {
   constructor(e, t = {}) {
     const i = typeof e == "object" ? e : t;
-    (!i.transports || i.transports && typeof i.transports[0] == "string") && (i.transports = (i.transports || ["polling", "websocket", "webtransport"]).map((n) => Ye[n]).filter((n) => !!n)), super(e, i);
+    (!i.transports || i.transports && typeof i.transports[0] == "string") && (i.transports = (i.transports || ["polling", "websocket", "webtransport"]).map((n) => $e[n]).filter((n) => !!n)), super(e, i);
   }
 };
-function rt(s, e = "", t) {
+function ot(s, e = "", t) {
   let i = s;
   t = t || typeof location < "u" && location, s == null && (s = t.protocol + "//" + t.host), typeof s == "string" && (s.charAt(0) === "/" && (s.charAt(1) === "/" ? s = t.protocol + s : s = t.host + s), /^(https?|wss?):\/\//.test(s) || (typeof t < "u" ? s = t.protocol + "//" + s : s = "https://" + s), i = F(s)), i.port || (/^(http|ws)$/.test(i.protocol) ? i.port = "80" : /^(http|ws)s$/.test(i.protocol) && (i.port = "443")), i.path = i.path || "/";
   const r = i.host.indexOf(":") !== -1 ? "[" + i.host + "]" : i.host;
   return i.id = i.protocol + "://" + r + ":" + i.port + e, i.href = i.protocol + "://" + r + (t && t.port === i.port ? "" : ":" + i.port), i;
 }
-const ot = typeof ArrayBuffer == "function", at = (s) => typeof ArrayBuffer.isView == "function" ? ArrayBuffer.isView(s) : s.buffer instanceof ArrayBuffer, ye = Object.prototype.toString, ct = typeof Blob == "function" || typeof Blob < "u" && ye.call(Blob) === "[object BlobConstructor]", lt = typeof File == "function" || typeof File < "u" && ye.call(File) === "[object FileConstructor]";
+const at = typeof ArrayBuffer == "function", lt = (s) => typeof ArrayBuffer.isView == "function" ? ArrayBuffer.isView(s) : s.buffer instanceof ArrayBuffer, ye = Object.prototype.toString, ct = typeof Blob == "function" || typeof Blob < "u" && ye.call(Blob) === "[object BlobConstructor]", ht = typeof File == "function" || typeof File < "u" && ye.call(File) === "[object FileConstructor]";
 function $(s) {
-  return ot && (s instanceof ArrayBuffer || at(s)) || ct && s instanceof Blob || lt && s instanceof File;
+  return at && (s instanceof ArrayBuffer || lt(s)) || ct && s instanceof Blob || ht && s instanceof File;
 }
 function H(s, e) {
   if (!s || typeof s != "object")
@@ -1169,7 +1169,7 @@ function H(s, e) {
       return !0;
   return !1;
 }
-function ht(s) {
+function ut(s) {
   const e = [], t = s.data, i = s;
   return i.data = K(t, e), i.attachments = e.length, { packet: i, buffers: e };
 }
@@ -1192,7 +1192,7 @@ function K(s, e) {
   }
   return s;
 }
-function ut(s, e) {
+function dt(s, e) {
   return s.data = X(s.data, e), delete s.attachments, s;
 }
 function X(s, e) {
@@ -1210,7 +1210,7 @@ function X(s, e) {
       Object.prototype.hasOwnProperty.call(s, t) && (s[t] = X(s[t], e));
   return s;
 }
-const dt = [
+const ft = [
   "connect",
   "connect_error",
   "disconnect",
@@ -1218,12 +1218,12 @@ const dt = [
   "newListener",
   "removeListener"
   // used by the Node.js EventEmitter
-], ft = 5;
+], pt = 5;
 var u;
 (function(s) {
   s[s.CONNECT = 0] = "CONNECT", s[s.DISCONNECT = 1] = "DISCONNECT", s[s.EVENT = 2] = "EVENT", s[s.ACK = 3] = "ACK", s[s.CONNECT_ERROR = 4] = "CONNECT_ERROR", s[s.BINARY_EVENT = 5] = "BINARY_EVENT", s[s.BINARY_ACK = 6] = "BINARY_ACK";
 })(u || (u = {}));
-class pt {
+class vt {
   /**
    * Encoder constructor
    *
@@ -1259,7 +1259,7 @@ class pt {
    * a list of buffers.
    */
   encodeAsBinary(e) {
-    const t = ht(e), i = this.encodeAsString(t.packet), n = t.buffers;
+    const t = ut(e), i = this.encodeAsString(t.packet), n = t.buffers;
     return n.unshift(i), n;
   }
 }
@@ -1287,7 +1287,7 @@ class ee extends f {
         throw new Error("got plaintext data when reconstructing a packet");
       t = this.decodeString(e);
       const i = t.type === u.BINARY_EVENT;
-      i || t.type === u.BINARY_ACK ? (t.type = i ? u.EVENT : u.ACK, this.reconstructor = new vt(t), t.attachments === 0 && super.emitReserved("decoded", t)) : super.emitReserved("decoded", t);
+      i || t.type === u.BINARY_ACK ? (t.type = i ? u.EVENT : u.ACK, this.reconstructor = new gt(t), t.attachments === 0 && super.emitReserved("decoded", t)) : super.emitReserved("decoded", t);
     } else if ($(e) || e.base64)
       if (this.reconstructor)
         t = this.reconstructor.takeBinaryData(e), t && (this.reconstructor = null, super.emitReserved("decoded", t));
@@ -1365,7 +1365,7 @@ class ee extends f {
         return typeof t == "string" || oe(t);
       case u.EVENT:
       case u.BINARY_EVENT:
-        return Array.isArray(t) && (typeof t[0] == "number" || typeof t[0] == "string" && dt.indexOf(t[0]) === -1);
+        return Array.isArray(t) && (typeof t[0] == "number" || typeof t[0] == "string" && ft.indexOf(t[0]) === -1);
       case u.ACK:
       case u.BINARY_ACK:
         return Array.isArray(t);
@@ -1378,7 +1378,7 @@ class ee extends f {
     this.reconstructor && (this.reconstructor.finishedReconstruction(), this.reconstructor = null);
   }
 }
-class vt {
+class gt {
   constructor(e) {
     this.packet = e, this.buffers = [], this.reconPack = e;
   }
@@ -1392,7 +1392,7 @@ class vt {
    */
   takeBinaryData(e) {
     if (this.buffers.push(e), this.buffers.length === this.reconPack.attachments) {
-      const t = ut(this.reconPack, this.buffers);
+      const t = dt(this.reconPack, this.buffers);
       return this.finishedReconstruction(), t;
     }
     return null;
@@ -1404,21 +1404,21 @@ class vt {
     this.reconPack = null, this.buffers = [];
   }
 }
-const gt = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const mt = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   Decoder: ee,
-  Encoder: pt,
+  Encoder: vt,
   get PacketType() {
     return u;
   },
-  protocol: ft
+  protocol: pt
 }, Symbol.toStringTag, { value: "Module" }));
 function y(s, e, t) {
   return s.on(e, t), function() {
     s.off(e, t);
   };
 }
-const mt = Object.freeze({
+const yt = Object.freeze({
   connect: 1,
   connect_error: 1,
   disconnect: 1,
@@ -1543,7 +1543,7 @@ class we extends f {
    */
   emit(e, ...t) {
     var i, n, r;
-    if (mt.hasOwnProperty(e))
+    if (yt.hasOwnProperty(e))
       throw new Error('"' + e.toString() + '" is a reserved event name');
     if (t.unshift(e), this._opts.retries && !this.flags.fromQueue && !this.flags.volatile)
       return this._addToQueue(t), this;
@@ -1552,11 +1552,11 @@ class we extends f {
       data: t
     };
     if (o.options = {}, o.options.compress = this.flags.compress !== !1, typeof t[t.length - 1] == "function") {
-      const g = this.ids++, k = t.pop();
-      this._registerAckCallback(g, k), o.id = g;
+      const g = this.ids++, A = t.pop();
+      this._registerAckCallback(g, A), o.id = g;
     }
-    const c = (n = (i = this.io.engine) === null || i === void 0 ? void 0 : i.transport) === null || n === void 0 ? void 0 : n.writable, d = this.connected && !(!((r = this.io.engine) === null || r === void 0) && r._hasPingExpired());
-    return this.flags.volatile && !c || (d ? (this.notifyOutgoingListeners(o), this.packet(o)) : this.sendBuffer.push(o)), this.flags = {}, this;
+    const l = (n = (i = this.io.engine) === null || i === void 0 ? void 0 : i.transport) === null || n === void 0 ? void 0 : n.writable, d = this.connected && !(!((r = this.io.engine) === null || r === void 0) && r._hasPingExpired());
+    return this.flags.volatile && !l || (d ? (this.notifyOutgoingListeners(o), this.packet(o)) : this.sendBuffer.push(o)), this.flags = {}, this;
   }
   /**
    * @private
@@ -1570,11 +1570,11 @@ class we extends f {
     }
     const r = this.io.setTimeoutFn(() => {
       delete this.acks[e];
-      for (let c = 0; c < this.sendBuffer.length; c++)
-        this.sendBuffer[c].id === e && this.sendBuffer.splice(c, 1);
+      for (let l = 0; l < this.sendBuffer.length; l++)
+        this.sendBuffer[l].id === e && this.sendBuffer.splice(l, 1);
       t.call(this, new Error("operation has timed out"));
-    }, n), o = (...c) => {
-      this.io.clearTimeoutFn(r), t.apply(this, c);
+    }, n), o = (...l) => {
+      this.io.clearTimeoutFn(r), t.apply(this, l);
     };
     o.withError = !0, this.acks[e] = o;
   }
@@ -1596,7 +1596,7 @@ class we extends f {
    */
   emitWithAck(e, ...t) {
     return new Promise((i, n) => {
-      const r = (o, c) => o ? n(o) : i(c);
+      const r = (o, l) => o ? n(o) : i(l);
       r.withError = !0, t.push(r), this.emit(e, ...t);
     });
   }
@@ -2045,12 +2045,12 @@ E.prototype.setJitter = function(s) {
 class Z extends f {
   constructor(e, t) {
     var i;
-    super(), this.nsps = {}, this.subs = [], e && typeof e == "object" && (t = e, e = void 0), t = t || {}, t.path = t.path || "/socket.io", this.opts = t, z(this, t), this.reconnection(t.reconnection !== !1), this.reconnectionAttempts(t.reconnectionAttempts || 1 / 0), this.reconnectionDelay(t.reconnectionDelay || 1e3), this.reconnectionDelayMax(t.reconnectionDelayMax || 5e3), this.randomizationFactor((i = t.randomizationFactor) !== null && i !== void 0 ? i : 0.5), this.backoff = new E({
+    super(), this.nsps = {}, this.subs = [], e && typeof e == "object" && (t = e, e = void 0), t = t || {}, t.path = t.path || "/socket.io", this.opts = t, Q(this, t), this.reconnection(t.reconnection !== !1), this.reconnectionAttempts(t.reconnectionAttempts || 1 / 0), this.reconnectionDelay(t.reconnectionDelay || 1e3), this.reconnectionDelayMax(t.reconnectionDelayMax || 5e3), this.randomizationFactor((i = t.randomizationFactor) !== null && i !== void 0 ? i : 0.5), this.backoff = new E({
       min: this.reconnectionDelay(),
       max: this.reconnectionDelayMax(),
       jitter: this.randomizationFactor()
     }), this.timeout(t.timeout == null ? 2e4 : t.timeout), this._readyState = "closed", this.uri = e;
-    const n = t.parser || gt;
+    const n = t.parser || mt;
     this.encoder = new n.Encoder(), this.decoder = new n.Decoder(), this._autoConnect = t.autoConnect !== !1, this._autoConnect && this.open();
   }
   reconnection(e) {
@@ -2093,18 +2093,18 @@ class Z extends f {
   open(e) {
     if (~this._readyState.indexOf("open"))
       return this;
-    this.engine = new nt(this.uri, this.opts);
+    this.engine = new rt(this.uri, this.opts);
     const t = this.engine, i = this;
     this._readyState = "opening", this.skipReconnect = !1;
     const n = y(t, "open", function() {
       i.onopen(), e && e();
-    }), r = (c) => {
-      this.cleanup(), this._readyState = "closed", this.emitReserved("error", c), e ? e(c) : this.maybeReconnectOnOpen();
+    }), r = (l) => {
+      this.cleanup(), this._readyState = "closed", this.emitReserved("error", l), e ? e(l) : this.maybeReconnectOnOpen();
     }, o = y(t, "error", r);
     if (this._timeout !== !1) {
-      const c = this._timeout, d = this.setTimeoutFn(() => {
+      const l = this._timeout, d = this.setTimeoutFn(() => {
         n(), r(new Error("timeout")), t.close();
-      }, c);
+      }, l);
       this.opts.autoUnref && d.unref(), this.subs.push(() => {
         this.clearTimeoutFn(d);
       });
@@ -2283,9 +2283,9 @@ class Z extends f {
 const V = {};
 function N(s, e) {
   typeof s == "object" && (e = s, s = void 0), e = e || {};
-  const t = rt(s, e.path || "/socket.io"), i = t.source, n = t.id, r = t.path, o = V[n] && r in V[n].nsps, c = e.forceNew || e["force new connection"] || e.multiplex === !1 || o;
+  const t = ot(s, e.path || "/socket.io"), i = t.source, n = t.id, r = t.path, o = V[n] && r in V[n].nsps, l = e.forceNew || e["force new connection"] || e.multiplex === !1 || o;
   let d;
-  return c ? d = new Z(i, e) : (V[n] || (V[n] = new Z(i, e)), d = V[n]), t.query && !e.query && (e.query = t.queryKey), d.socket(t.path, e);
+  return l ? d = new Z(i, e) : (V[n] || (V[n] = new Z(i, e)), d = V[n]), t.query && !e.query && (e.query = t.queryKey), d.socket(t.path, e);
 }
 Object.assign(N, {
   Manager: Z,
@@ -2293,13 +2293,13 @@ Object.assign(N, {
   io: N,
   connect: N
 });
-const yt = "data:image/jpeg;base64,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";
-const wt = (s, e) => {
+const wt = "data:image/jpeg;base64,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";
+const xt = (s, e) => {
   const t = s.__vccOpts || s;
   for (const [i, n] of e)
     t[i] = n;
   return t;
-}, xt = {
+}, bt = {
   name: "ChatWidget",
   props: {
     token: {
@@ -2313,46 +2313,82 @@ const wt = (s, e) => {
     },
     welcomeTitle: {
       type: String,
-      default: "  خوش آمدید"
+      default: null
     },
     initialMessage: {
       type: String,
-      default: "سلام  ما خوش آمدی "
+      default: null
     },
     defaultQuestion: {
       type: String,
-      default: ""
+      default: null
     },
     suggestedQuestions: {
       type: Array,
-      default: () => [
-        ""
-      ]
+      default() {
+        return [];
+      }
+    },
+    primaryColor: {
+      type: String,
+      default: null
+    },
+    position: {
+      type: String,
+      default: "bottom-left"
     },
     apiBaseUrl: {
       type: String,
       default: "https://api.vafaai.com"
     }
   },
+  created() {
+    if (console.log("Chat widget created, initializing with configuration..."), !this.assistantId && this.token && (this.assistantId = this.token, console.log("Using token as assistantId:", this.assistantId)), !this.userId) {
+      const s = localStorage.getItem("vafachat_user_id");
+      s ? this.userId = s : (this.userId = "user_" + Math.random().toString(36).substring(2, 15), localStorage.setItem("vafachat_user_id", this.userId)), console.log("Using userId:", this.userId);
+    }
+    this.$nextTick(() => {
+      this.loadKnowledgeBaseData();
+    }), console.log("Initial configuration:", {
+      assistantId: this.assistantId,
+      token: this.token,
+      welcomeTitle: this.welcomeTitle,
+      initialMessage: this.initialMessage,
+      defaultQuestion: this.defaultQuestion,
+      primaryColor: this.primaryColor,
+      position: this.position,
+      apiBaseUrl: this.apiBaseUrl
+    });
+  },
   computed: {
+    // Widget positioning CSS class based on config
+    widgetPosition() {
+      return console.log("Computing widgetPosition with position:", this.position), (typeof this.position == "string" ? this.position.trim().toLowerCase() : "bottom-left") === "bottom-left" ? "v-left-[20px] v-bottom-[20px]" : "v-right-[20px] v-bottom-[20px]";
+    },
+    // Chat popup positioning CSS class based on config
+    chatPosition() {
+      return console.log("Computing chatPosition with position:", this.position), (typeof this.position == "string" ? this.position.trim().toLowerCase() : "bottom-left") === "bottom-left" ? "v-left-[20px] v-bottom-[20px]" : "v-right-[20px] v-bottom-[20px]";
+    },
     // Filter categories based on search query
     filteredCategories() {
-      if (!this.knowledgeSearchQuery.trim())
+      var e;
+      if (!((e = this.knowledgeSearchQuery) != null && e.trim()))
         return this.knowledgeData;
       const s = this.knowledgeSearchQuery.trim().toLowerCase();
-      return this.knowledgeData.filter((e) => e.title.toLowerCase().includes(s) || e.description.toLowerCase().includes(s) ? !0 : e.questions.some(
-        (t) => t.question.toLowerCase().includes(s) || t.answer.toLowerCase().includes(s)
+      return this.knowledgeData.filter((t) => t.title.toLowerCase().includes(s) || t.description.toLowerCase().includes(s) ? !0 : t.questions.some(
+        (i) => i.question.toLowerCase().includes(s) || i.answer.toLowerCase().includes(s)
       ));
     },
     // Filter questions based on search query
     filteredQuestions() {
+      var e;
       if (!this.selectedCategory)
         return [];
-      if (!this.knowledgeSearchQuery.trim())
+      if (!((e = this.knowledgeSearchQuery) != null && e.trim()))
         return this.selectedCategory.questions;
       const s = this.knowledgeSearchQuery.trim().toLowerCase();
       return this.selectedCategory.questions.filter(
-        (e) => e.question.toLowerCase().includes(s) || e.answer.toLowerCase().includes(s)
+        (t) => t.question.toLowerCase().includes(s) || t.answer.toLowerCase().includes(s)
       );
     }
   },
@@ -2366,22 +2402,21 @@ const wt = (s, e) => {
       isMobile: !1,
       inputMessage: "",
       messages: [],
+      messageCount: 0,
       socket: null,
-      connectionStatus: "آنلاین",
-      connectionColor: "green",
-      sessionData: {
-        id: null,
-        initialized: !1
-      },
-      isThinking: !1,
-      currentStreamingMessage: null,
-      messageTimeout: null,
-      // For detecting timeouts
-      socketUrl: null,
+      socketConnected: !1,
+      connectionStatus: "آفلاین",
+      connectionError: !1,
+      showResetConfirmation: !1,
+      // Widget configuration values with defaults
+      welcomeTitle: this.welcomeTitle || "به سایت ما خوش آمدید",
+      initialMessage: this.initialMessage || "سلام چطور میتونم کمکتون کنم؟",
+      defaultQuestion: this.defaultQuestion || "کمک میخوام",
+      primaryColor: this.primaryColor || "#1a237e",
+      position: this.position || "bottom-right",
       // Use the suggestedQuestions from props instead of hardcoding them
-      defaultQuestions: this.suggestedQuestions,
+      defaultQuestions: this.suggestedQuestions || [],
       showDefaultQuestions: !0,
-      initialMessage: "سلام  خوش آمدی",
       userId: null,
       currentTab: "home",
       // Knowledge Base Data
@@ -2396,69 +2431,56 @@ const wt = (s, e) => {
       knowledgeSearchQuery: "",
       selectedCategory: null,
       selectedQuestion: null,
-      showResetConfirmation: !1
+      shakeTimer: null,
+      isThinking: !1,
+      currentStreamingMessage: null,
+      messageTimeout: null,
+      // For detecting timeouts
+      socketUrl: null
     };
-  },
-  mounted() {
-    this.userId = localStorage.getItem("hascowebchat_user_id"), this.userId || (this.userId = "user_" + Math.random().toString(36).substr(2, 9), localStorage.setItem("hascowebchat_user_id", this.userId)), this.loadKnowledgeBaseData(), this.loadMessagesFromLocalStorage(), console.log("ChatWidget mounted with userId:", this.userId);
-    const s = localStorage.getItem("lastSessionId");
-    s && (console.log("Found existing session ID:", s), this.sessionData.id = s), this.messages.length === 0 && (this.messages.push({
-      content: this.initialMessage,
-      isUser: !1,
-      timestamp: (/* @__PURE__ */ new Date()).toISOString()
-    }), this.saveMessagesToLocalStorage()), this.hasInteracted = localStorage.getItem("hascowebchat_interacted") === "true", this.socketUrl = `${this.apiBaseUrl}?token=${this.token}`, console.log("Socket URL set to:", this.socketUrl), setTimeout(() => {
-      this.initSocket();
-    }, 500), this.setShakeTimer(), document.addEventListener("click", this.resetShakeTimer), document.addEventListener("mousemove", this.resetShakeTimer), document.addEventListener("keypress", this.resetShakeTimer), document.addEventListener("scroll", this.resetShakeTimer);
-    const e = document.getElementById("hascowebchat-button");
-    e && e.addEventListener("animationend", () => {
-      this.hasInteracted = !0;
-    });
-  },
-  created() {
-    this.checkMobile(), window.addEventListener("resize", this.checkMobile);
-  },
-  beforeUnmount() {
-    document.removeEventListener("click", this.resetShakeTimer), document.removeEventListener("mousemove", this.resetShakeTimer), document.removeEventListener("keypress", this.resetShakeTimer), document.removeEventListener("scroll", this.resetShakeTimer), window.removeEventListener("resize", this.checkMobile), this.socket && (this.socket.disconnect(), this.socket.removeAllListeners()), this.shakeTimer && clearTimeout(this.shakeTimer), this.messageTimeout && clearTimeout(this.messageTimeout);
   },
   methods: {
     // Load knowledge base data from API
     async loadKnowledgeBaseData() {
       try {
         if (!this.assistantId) {
-          console.warn("No assistantId provided, cannot load knowledge base"), this.knowledgeData = [], this.allQuestions = [], this.featuredQuestions = [];
+          console.warn("No assistant ID provided, skipping knowledge base data loading"), this.knowledgeData = [], this.allQuestions = [], this.featuredQuestions = [];
           return;
         }
         const s = await fetch(`${this.apiBaseUrl}/public/kb/${this.assistantId}`);
         if (!s.ok)
           throw new Error(`Failed to fetch knowledge base: ${s.status}`);
         const e = await s.json();
-        e.success && e.data && e.data.categories ? (this.knowledgeData = e.data.categories, this.allQuestions = [], this.knowledgeData.forEach((t) => {
-          t.questions.forEach((i) => {
-            this.allQuestions.push({
-              ...i,
-              categoryId: t.id,
-              categoryTitle: t.title
+        if (console.log("Loaded data from server:", e), e.success && e.data) {
+          if (e.data.categories && (this.knowledgeData = e.data.categories, this.allQuestions = [], this.featuredQuestions = [], this.knowledgeData.forEach((t) => {
+            t.questions.forEach((i) => {
+              this.allQuestions.push({
+                ...i,
+                categoryId: t.id,
+                categoryTitle: t.title
+              }), i.inHome && this.featuredQuestions.push({
+                ...i,
+                categoryId: t.id,
+                categoryTitle: t.title
+              });
             });
-          });
-        }), this.loadFeaturedQuestions(), console.log(`Loaded knowledge base with ${this.knowledgeData.length} categories and ${this.allQuestions.length} questions`)) : (console.warn("Knowledge base data not found or empty"), this.knowledgeData = [], this.allQuestions = [], this.featuredQuestions = []);
+          }), console.log(`Loaded knowledge base with ${this.knowledgeData.length} categories and ${this.allQuestions.length} questions`)), e.data.config) {
+            const t = e.data.config;
+            console.log("Raw config from server:", t), this.welcomeTitle = t.welcomeTitle !== void 0 ? t.welcomeTitle : this.welcomeTitle, this.defaultQuestion = t.defaultQuestion !== void 0 ? t.defaultQuestion : this.defaultQuestion, this.primaryColor = t.primaryColor !== void 0 ? t.primaryColor : this.primaryColor, t.initialMessage ? (console.log("Server provided initialMessage:", t.initialMessage), this.initialMessage = t.initialMessage) : (this.initialMessage || (this.initialMessage = "سلام چطور میتونم کمکتون کنم؟"), console.log("Using fallback initialMessage:", this.initialMessage)), t.position !== void 0 && t.position !== null ? (console.log("Setting position from server config:", t.position), this.position = t.position) : (console.log("Using default position: bottom-left"), this.position = "bottom-left"), t.suggestedQuestions && (this.defaultQuestions = [...t.suggestedQuestions]), console.log("Applied widget configuration:", {
+              welcomeTitle: this.welcomeTitle,
+              initialMessage: this.initialMessage,
+              defaultQuestion: this.defaultQuestion,
+              primaryColor: this.primaryColor,
+              position: this.position,
+              defaultQuestions: this.defaultQuestions
+            }), this.$nextTick(() => {
+              console.log("Configuration applied and UI updated");
+            });
+          }
+        } else
+          console.warn("Knowledge base data not found or empty"), this.knowledgeData = [], this.allQuestions = [], this.featuredQuestions = [];
       } catch (s) {
         console.error("Error loading knowledge base data:", s), this.knowledgeData = [], this.allQuestions = [], this.featuredQuestions = [];
-      }
-    },
-    // Load featured questions from API (questions with inHome=true)
-    async loadFeaturedQuestions() {
-      try {
-        if (!this.assistantId) {
-          console.warn("No assistantId provided, cannot load featured questions"), this.featuredQuestions = [];
-          return;
-        }
-        const s = await fetch(`${this.apiBaseUrl}/public/kb/${this.assistantId}/featured`);
-        if (!s.ok)
-          throw new Error(`Failed to fetch featured questions: ${s.status}`);
-        const e = await s.json();
-        e.success && e.data && e.data.featuredQuestions ? (this.featuredQuestions = e.data.featuredQuestions, console.log(`Loaded ${this.featuredQuestions.length} featured questions`)) : (console.warn("Featured questions not found or empty"), this.featuredQuestions = []);
-      } catch (s) {
-        console.error("Error loading featured questions:", s), this.featuredQuestions = [];
       }
     },
     loadMessagesFromLocalStorage() {
@@ -2740,14 +2762,14 @@ const wt = (s, e) => {
           console.log(
             `Found image: ${o} with alt text: ${r}`
           );
-          const c = `__IMAGE_PLACEHOLDER_${Math.random().toString(36).substring(2, 15)}__`;
+          const l = `__IMAGE_PLACEHOLDER_${Math.random().toString(36).substring(2, 15)}__`;
           e = e.replace(
             n,
-            c
+            l
           );
           const d = `<div class="message-image-container"><img src="${o}" alt="${r}" class="message-image" style="max-width:100%;height:auto;display:block;margin:10px auto;"></div>`;
           e = e.replace(
-            c,
+            l,
             d
           );
         }
@@ -2770,7 +2792,7 @@ const wt = (s, e) => {
       this.setShakeTimer();
     }
   }
-}, bt = { class: "v-fixed v-flex v-flex-col v-gap-2 v-right-[20px] v-bottom-[20px]" }, kt = ["innerHTML"], At = {
+}, At = ["innerHTML"], kt = {
   key: 0,
   class: "v-py-4 v-px-3 v-bg-white v-text-slate-800 v-flex v-items-center v-relative v-flex-row v-border-b v-border-slate-200"
 }, Rt = { class: "v-flex v-justify-between v-items-center v-flex-1 v-gap-2" }, Et = { class: "v-flex v-grow v-flex-col v-gap-[2px]" }, Tt = { class: "v-text-xs" }, Ct = { class: "v-flex v-gap-2" }, St = {
@@ -2788,7 +2810,7 @@ const wt = (s, e) => {
 }, Vt = {
   key: 1,
   class: "v-bg-white v-py-4 v-px-3"
-}, Bt = { class: "v-py-4 v-px-3 v-bg-[#1a237e] v-text-white v-flex v-items-center v-relative v-flex-row v-rounded-lg" }, Lt = { class: "v-flex v-justify-between v-items-center v-flex-1 v-gap-2" }, Ot = { class: "v-flex v-grow v-flex-col v-gap-[2px]" }, Pt = { class: "v-text-xs" }, qt = { class: "v-flex v-gap-2" }, Ht = {
+}, Bt = { class: "v-py-4 v-px-3 v-bg-[#1a237e] v-text-white v-flex v-items-center v-relative v-flex-row v-rounded-lg" }, Pt = { class: "v-flex v-justify-between v-items-center v-flex-1 v-gap-2" }, Ot = { class: "v-flex v-grow v-flex-col v-gap-[2px]" }, Lt = { class: "v-text-xs" }, qt = { class: "v-flex v-gap-2" }, Ht = {
   key: 2,
   class: "v-py-4 v-px-3 v-bg-white v-text-slate-800 v-flex v-items-center v-relative v-flex-row v-border-b v-border-slate-200"
 }, Nt = {
@@ -2797,42 +2819,45 @@ const wt = (s, e) => {
 }, jt = {
   key: 3,
   class: "v-relative v-flex v-flex-col v-h-full v-justify-between v-bg-white"
-}, zt = { class: "v-px-3" }, Qt = { class: "v-p-2 v-rounded-lg v-border v-border-slate-200 v-bg-white v-flex v-flex-col v-gap-[2px]" }, Ut = ["onClick"], Dt = { class: "v-flex-1 v-text-sm v-text-slate-800 v-overflow-hidden v-whitespace-nowrap v-truncate" }, Mt = { class: "v-px-3 v-pb-4" }, _t = {
+}, Qt = { class: "v-px-3" }, zt = { class: "v-p-2 v-rounded-lg v-border v-border-slate-200 v-bg-white v-flex v-flex-col v-gap-[2px]" }, Ut = ["onClick"], Mt = { class: "v-flex-1 v-text-sm v-text-slate-800 v-overflow-hidden v-whitespace-nowrap v-truncate" }, Dt = { class: "v-px-3 v-pb-4" }, _t = {
   key: 4,
   class: "v-relative v-flex v-flex-col v-h-full v-justify-between v-bg-white v-py-2 v-px-3 v-overflow-auto",
   ref: "chatBody"
-}, Ft = { class: "v-grow v-grid" }, Wt = ["innerHTML"], Kt = {
+}, Ft = { class: "v-grid" }, Wt = {
   key: 0,
+  class: "v-max-w-[80%] v-rounded-xl v-mb-2 v-text-sm v-py-2 v-px-3 v-bg-slate-100 v-text-slate-800 v-rounded-bl-sm v-justify-self-end"
+}, Kt = ["innerHTML"], Xt = {
+  key: 1,
   class: "hascowebchat-message hascowebchat-bot-message typing-animation",
   style: { "font-style": "italic", opacity: "0.8" }
-}, Xt = {
+}, Zt = {
   key: 0,
   class: "v-flex v-flex-col v-gap-2"
-}, Zt = ["onClick"], Gt = {
+}, Gt = ["onClick"], Jt = {
   key: 5,
   class: "v-relative v-flex v-h-full v-overflow-hidden v-p-0 v-justify-start v-flex-col v-items-stretch"
-}, Jt = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-bg-white" }, Yt = { class: "v-flex v-items-center v-justify-between v-rounded-lg v-bg-slate-100" }, $t = {
+}, Yt = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-bg-white" }, $t = { class: "v-flex v-items-center v-justify-between v-rounded-lg v-bg-slate-100" }, es = {
   key: 0,
   class: "v-relative v-flex v-flex-col v-h-full v-bg-white v-overflow-auto"
-}, es = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200" }, ts = { class: "v-text-md v-text-slate-800 v-font-semibold" }, ss = ["onClick"], is = { class: "v-flex-1 v-flex v-flex-col v-gap-1" }, ns = { class: "v-text-sm v-text-slate-800 v-font-semibold" }, rs = { class: "v-text-sm v-text-slate-800" }, os = { class: "v-text-sm v-text-slate-600" }, as = {
+}, ts = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200" }, ss = { class: "v-text-md v-text-slate-800 v-font-semibold" }, is = ["onClick"], ns = { class: "v-flex-1 v-flex v-flex-col v-gap-1" }, rs = { class: "v-text-sm v-text-slate-800 v-font-semibold" }, os = { class: "v-text-sm v-text-slate-800" }, as = { class: "v-text-sm v-text-slate-600" }, ls = {
   key: 1,
   class: "v-bg-white v-flex v-flex-col v-grow v-overflow-auto"
-}, cs = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-gap-1 v-flex v-flex-col" }, ls = { class: "v-text-sm v-text-slate-800 v-font-semibold" }, hs = { class: "v-text-sm v-text-slate-800" }, us = { class: "v-text-sm v-text-slate-600" }, ds = ["onClick"], fs = { class: "v-text-sm v-text-slate-800" }, ps = {
+}, cs = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-gap-1 v-flex v-flex-col" }, hs = { class: "v-text-sm v-text-slate-800 v-font-semibold" }, us = { class: "v-text-sm v-text-slate-800" }, ds = { class: "v-text-sm v-text-slate-600" }, fs = ["onClick"], ps = { class: "v-text-sm v-text-slate-800" }, vs = {
   key: 2,
   class: "v-bg-white v-flex v-flex-col v-grow v-overflow-auto"
-}, vs = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-text-sm v-text-slate-800 v-font-semibold" }, gs = { class: "v-py-2 v-px-3 v-text-sm v-text-slate-800" }, ms = {
+}, gs = { class: "v-py-2 v-px-3 v-border-b v-border-slate-200 v-text-sm v-text-slate-800 v-font-semibold" }, ms = { class: "v-py-2 v-px-3 v-text-sm v-text-slate-800" }, ys = {
   key: 6,
   class: "v-py-2 v-px-3 v-bg-white v-border-t v-border-slate-200"
-}, ys = { class: "v-flex v-items-center v-bg-white v-rounded-full v-border v-border-slate-200" }, ws = {
+}, ws = { class: "v-flex v-items-center v-bg-white v-rounded-full v-border v-border-slate-200" }, xs = {
   key: 7,
   class: "v-flex v-justify-around v-items-center v-gap-2 v-bg-white v-py-2 v-h-[60px] v-border-t v-border-slate-200"
-}, xs = {
+}, bs = {
   key: 0,
   viewBox: "0 0 576 512",
   fill: "currentColor",
   width: "20px",
   height: "20px"
-}, bs = {
+}, As = {
   key: 1,
   viewBox: "0 0 576 512",
   fill: "currentColor",
@@ -2844,37 +2869,43 @@ const wt = (s, e) => {
   fill: "currentColor",
   width: "20px",
   height: "20px"
-}, As = {
+}, Rs = {
   key: 1,
   viewBox: "0 0 512 512",
   fill: "currentColor",
   width: "20px",
   height: "20px"
-}, Rs = {
-  key: 0,
-  viewBox: "0 0 448 512",
-  fill: "currentColor",
-  width: "20px",
-  height: "20px"
 }, Es = {
-  key: 1,
+  key: 0,
   viewBox: "0 0 448 512",
   fill: "currentColor",
   width: "20px",
   height: "20px"
 }, Ts = {
+  key: 1,
+  viewBox: "0 0 448 512",
+  fill: "currentColor",
+  width: "20px",
+  height: "20px"
+}, Cs = {
   key: 0,
-  class: "reset-confirmation-overlay-chat"
-}, Cs = { class: "reset-confirmation-content-chat" }, Ss = { class: "v-flex v-justify-center v-gap-6 v-mt-5" };
-function Is(s, e, t, i, n, r) {
-  return l(), h("div", bt, [
+  class: ""
+}, Ss = {
+  class: "reset-confirmation-content-chat v-absolute v-top-1/2 v-left-1/2",
+  style: { transform: "translate(-52%, -74%)" }
+}, Is = { class: "v-flex gap-6 v-justify-center v-gap-6 v-mt-5" };
+function Vs(s, e, t, i, n, r) {
+  return c(), h("div", {
+    class: R(["v-fixed v-flex v-flex-col v-gap-2", [r.widgetPosition]])
+  }, [
     a("div", {
       class: "v-bg-white v-border v-border-slate-200 v-rounded-lg v-rounded-br-sm v-py-2 v-px-3 v-text-sm v-cursor-pointer v-w-fit v-hover:bg-slate-100 v-transition-colors v-duration-300",
       onClick: e[0] || (e[0] = (...o) => r.startConversationWithDefaultQuestion && r.startConversationWithDefaultQuestion(...o)),
-      innerHTML: t.defaultQuestion
-    }, null, 8, kt),
+      innerHTML: n.defaultQuestion
+    }, null, 8, At),
     a("div", {
-      class: R(["v-bg-white v-border-1 v-border-bd v-flex v-items-center v-justify-center v-rounded-full v-h-[60px] v-w-[60px] v-z-70 no-shake v-overflow-hidden v-cursor-pointer", { "no-shake": n.hasInteracted }]),
+      style: be({ backgroundColor: n.primaryColor }),
+      class: R(["v-border-1 v-flex v-items-center v-justify-center v-rounded-full v-h-[60px] v-w-[60px] v-z-70 no-shake v-overflow-hidden v-cursor-pointer", { "no-shake": n.hasInteracted }]),
       onClick: e[1] || (e[1] = (...o) => r.toggleChat && r.toggleChat(...o))
     }, e[24] || (e[24] = [
       a("img", {
@@ -2882,13 +2913,13 @@ function Is(s, e, t, i, n, r) {
         alt: "Chat",
         class: "v-h-[32px]"
       }, null, -1)
-    ]), 2),
+    ]), 6),
     C(a("div", {
-      class: R(["v-fixed v-transition-all v-duration-300 v-right-[20px] v-bottom-[20px] v-rounded-md v-overflow-hidden v-z-90 v-flex v-flex-col v-shadow-[0_10px_25px_rgba(0,0,0,0.2)]", { "v-max-h-[calc(100%-104px)] v-h-[calc(100%-104px)] v-w-[688px]": n.isMaximize, "v-w-[400px] v-h-[700px] v-max-h-[min(714px,100%-30px)]": !n.isMaximize, "v-right-0 v-bottom-0 v-top-0 v-rounded-none v-h-full v-max-h-100vh v-w-full": n.isMobile }])
+      class: R(["v-fixed v-transition-all v-duration-300 v-rounded-md v-overflow-hidden v-z-90 v-flex v-flex-col v-shadow-[0_10px_25px_rgba(0,0,0,0.2)]", [r.chatPosition, { "v-max-h-[calc(100%-104px)] v-h-[calc(100%-104px)] v-w-[688px]": n.isMaximize, "v-w-[400px] v-h-[700px] v-max-h-[min(714px,100%-30px)]": !n.isMaximize, "v-right-0 v-bottom-0 v-top-0 v-rounded-none v-h-full v-max-h-100vh v-w-full": n.isMobile }]])
     }, [
-      n.currentTab === "messenger" ? (l(), h("div", At, [
+      n.currentTab === "messenger" ? (c(), h("div", kt, [
         a("div", Rt, [
-          n.currentTab !== "home" ? (l(), h("div", {
+          n.currentTab !== "home" ? (c(), h("div", {
             key: 0,
             class: "v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300",
             onClick: e[2] || (e[2] = (o) => r.switchTab("home"))
@@ -2913,14 +2944,14 @@ function Is(s, e, t, i, n, r) {
           ])
         ]),
         a("div", Ct, [
-          n.isMobile ? p("", !0) : (l(), h("div", {
+          n.isMobile ? p("", !0) : (c(), h("div", {
             key: 0,
             class: "v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300",
             onClick: e[3] || (e[3] = (o) => n.isMaximize = !n.isMaximize)
           }, [
-            n.isMaximize ? (l(), h("svg", St, e[28] || (e[28] = [
+            n.isMaximize ? (c(), h("svg", St, e[28] || (e[28] = [
               a("path", { d: "M489 57c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-135 135L320 72c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 144c0 13.3 10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-86.1 0L489 57zM23 455c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l135-135 0 86.1c0 13.3 10.7 24 24 24s24-10.7 24-24l0-144c0-13.3-10.7-24-24-24L72 272c-13.3 0-24 10.7-24 24s10.7 24 24 24l86.1 0L23 455z" }, null, -1)
-            ]))) : (l(), h("svg", It, e[29] || (e[29] = [
+            ]))) : (c(), h("svg", It, e[29] || (e[29] = [
               a("path", { d: "M295 183c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l135-135 0 86.1c0 13.3 10.7 24 24 24s24-10.7 24-24l0-144c0-13.3-10.7-24-24-24L344 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l86.1 0L295 183zM217 329c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L48 430.1 48 344c0-13.3-10.7-24-24-24s-24 10.7-24 24L0 488c0 13.3 10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-86.1 0L217 329z" }, null, -1)
             ])))
           ])),
@@ -2952,9 +2983,9 @@ function Is(s, e, t, i, n, r) {
           ]))
         ])
       ])) : p("", !0),
-      n.currentTab === "home" ? (l(), h("div", Vt, [
+      n.currentTab === "home" ? (c(), h("div", Vt, [
         a("div", Bt, [
-          a("div", Lt, [
+          a("div", Pt, [
             e[33] || (e[33] = a("img", {
               src: "https://vafaai.com/widget/images/logo.svg",
               alt: "Support Profile",
@@ -2962,7 +2993,7 @@ function Is(s, e, t, i, n, r) {
             }, null, -1)),
             a("div", Ot, [
               e[32] || (e[32] = a("div", { class: "v-text-sm v-font-semibold" }, "پشتیبانی هوشمند وفا", -1)),
-              a("div", Pt, v(n.connectionStatus), 1)
+              a("div", Lt, v(n.connectionStatus), 1)
             ])
           ]),
           a("div", qt, [
@@ -2982,8 +3013,8 @@ function Is(s, e, t, i, n, r) {
           ])
         ])
       ])) : p("", !0),
-      n.currentTab === "knowledge" ? (l(), h("div", Ht, [
-        n.knowledgeView !== "categories" ? (l(), h("div", {
+      n.currentTab === "knowledge" ? (c(), h("div", Ht, [
+        n.knowledgeView !== "categories" ? (c(), h("div", {
           key: 0,
           class: "v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300",
           onClick: e[7] || (e[7] = (...o) => r.goBackKnowledge && r.goBackKnowledge(...o))
@@ -3000,7 +3031,7 @@ function Is(s, e, t, i, n, r) {
               d: "M273 239c9.4 9.4 9.4 24.6 0 33.9L113 433c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l143-143L79 113c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0L273 239z"
             })
           ], -1)
-        ]))) : (l(), h("div", Nt)),
+        ]))) : (c(), h("div", Nt)),
         e[38] || (e[38] = a("div", { class: "v-text-sm v-text-center v-font-semibold v-flex-1" }, "راهنما", -1)),
         a("div", {
           class: "v-p-2 v-rounded-lg v-cursor-pointer v-text-slate-800 v-w-[36px] v-h-[36px] v-flex v-justify-center v-items-center v-hover:bg-[#2222220f] v-transition-colors v-duration-300",
@@ -3029,9 +3060,9 @@ function Is(s, e, t, i, n, r) {
           ], -1)
         ]))
       ])) : p("", !0),
-      n.currentTab === "home" ? (l(), h("div", jt, [
-        a("div", zt, [
-          a("div", Qt, [
+      n.currentTab === "home" ? (c(), h("div", jt, [
+        a("div", Qt, [
+          a("div", zt, [
             a("div", {
               class: "v-flex v-items-center v-justify-between v-rounded-lg v-mb-[6px] v-bg-slate-100",
               onClick: e[12] || (e[12] = (...o) => r.focusOnSearch && r.focusOnSearch(...o))
@@ -3044,7 +3075,7 @@ function Is(s, e, t, i, n, r) {
                 placeholder: "جست و جو کنید",
                 class: "v-flex-1 v-border-0 v-outline-0 v-bg-transparent v-text-sm v-py-2 v-px-3"
               }, null, 544), [
-                [Q, n.knowledgeSearchQuery]
+                [z, n.knowledgeSearchQuery]
               ]),
               e[39] || (e[39] = a("svg", {
                 viewBox: "0 0 512 512",
@@ -3056,12 +3087,12 @@ function Is(s, e, t, i, n, r) {
                 a("path", { d: "M368 208A160 160 0 1 0 48 208a160 160 0 1 0 320 0zM337.1 371.1C301.7 399.2 256.8 416 208 416C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208c0 48.8-16.8 93.7-44.9 129.1L505 471c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0L337.1 371.1z" })
               ], -1))
             ]),
-            (l(!0), h(S, null, I(n.featuredQuestions, (o) => (l(), h("div", {
+            (c(!0), h(S, null, I(n.featuredQuestions, (o) => (c(), h("div", {
               key: o.id,
               class: "v-flex v-items-center v-justify-between v-py-2 v-px-3 v-bg-white v-cursor-pointer v-rounded-lg v-hover:bg-slate-100",
-              onClick: (c) => r.navigateToQuestion(o.id)
+              onClick: (l) => r.navigateToQuestion(o.id)
             }, [
-              a("div", Dt, v(o.question), 1),
+              a("div", Mt, v(o.question), 1),
               e[40] || (e[40] = a("svg", {
                 viewBox: "0 0 320 512",
                 fill: "currentColor",
@@ -3073,19 +3104,22 @@ function Is(s, e, t, i, n, r) {
             ], 8, Ut))), 128))
           ])
         ]),
-        a("div", Mt, [
+        a("div", Dt, [
           a("div", {
             class: "v-bg-[#1a237e] v-text-white v-text-md v-rounded-lg v-py-3 v-px-6 v-flex v-items-center v-justify-between v-w-full v-cursor-pointer v-transition-colors v-duration-300",
             onClick: e[13] || (e[13] = (o) => r.switchTab("messenger"))
           }, e[41] || (e[41] = [
-            be('<svg viewBox="0 0 512 512" fill="currentColor" width="24px" height="24px" data-v-7c7ddab4><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm165.8 21.7c-7.6 8.1-20.2 8.5-28.3 .9s-8.5-20.2-.9-28.3c14.5-15.5 35.2-22.3 54.6-22.3s40.1 6.8 54.6 22.3c7.6 8.1 7.1 20.7-.9 28.3s-20.7 7.1-28.3-.9c-5.5-5.8-14.8-9.7-25.4-9.7s-19.9 3.8-25.4 9.7z" data-v-7c7ddab4></path></svg><div class="v-text-md v-font-bold" data-v-7c7ddab4>شروع گفتگو</div><svg viewBox="0 0 320 512" fill="currentColor" width="16px" height="16px" data-v-7c7ddab4><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" data-v-7c7ddab4></path></svg>', 3)
+            Ae('<svg viewBox="0 0 512 512" fill="currentColor" width="24px" height="24px" data-v-28e98139><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm177.6 62.1C192.8 334.5 218.8 352 256 352s63.2-17.5 78.4-33.9c9-9.7 24.2-10.4 33.9-1.4s10.4 24.2 1.4 33.9c-22 23.8-60 49.4-113.6 49.4s-91.7-25.5-113.6-49.4c-9-9.7-8.4-24.9 1.4-33.9s24.9-8.4 33.9 1.4zM144.4 208a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zm165.8 21.7c-7.6 8.1-20.2 8.5-28.3 .9s-8.5-20.2-.9-28.3c14.5-15.5 35.2-22.3 54.6-22.3s40.1 6.8 54.6 22.3c7.6 8.1 7.1 20.7-.9 28.3s-20.7 7.1-28.3-.9c-5.5-5.8-14.8-9.7-25.4-9.7s-19.9 3.8-25.4 9.7z" data-v-28e98139></path></svg><div class="v-text-md v-font-bold" data-v-28e98139>شروع گفتگو</div><svg viewBox="0 0 320 512" fill="currentColor" width="16px" height="16px" data-v-28e98139><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" data-v-28e98139></path></svg>', 3)
           ]))
         ])
       ])) : p("", !0),
-      n.currentTab === "messenger" ? (l(), h("div", _t, [
+      n.currentTab === "messenger" ? (c(), h("div", _t, [
         a("div", Ft, [
-          (l(!0), h(S, null, I(n.messages, (o, c) => C((l(), h("div", {
-            key: c,
+          n.messages.length === 0 ? (c(), h("div", Wt, [
+            a("div", null, v(n.initialMessage || "سلام چطور میتونم کمکتون کنم؟"), 1)
+          ])) : p("", !0),
+          (c(!0), h(S, null, I(n.messages, (o, l) => C((c(), h("div", {
+            key: l,
             class: R([
               "v-max-w-[80%] v-rounded-xl v-mb-2 v-text-sm v-py-2 v-px-3",
               o.isUser ? "v-bg-[#1a237e] v-text-white v-rounded-br-sm v-justify-self-start" : "v-bg-slate-100 v-text-slate-800 v-rounded-bl-sm v-justify-self-end",
@@ -3095,27 +3129,27 @@ function Is(s, e, t, i, n, r) {
           }, [
             a("div", {
               innerHTML: o.content
-            }, null, 8, Wt)
+            }, null, 8, Kt)
           ], 2)), [
             [te, o.content && (!o.isComplete || o.isComplete && o.content)]
           ])), 128)),
-          n.isThinking ? (l(), h("div", Kt, e[42] || (e[42] = [
+          n.isThinking ? (c(), h("div", Xt, e[42] || (e[42] = [
             a("span", { class: "typing-dot" }, null, -1),
             a("span", { class: "typing-dot" }, null, -1),
             a("span", { class: "typing-dot" }, null, -1)
           ]))) : p("", !0)
         ]),
-        n.showDefaultQuestions && n.currentTab === "messenger" && n.messages.length <= 2 ? (l(), h("div", Xt, [
-          (l(!0), h(S, null, I(n.defaultQuestions, (o, c) => (l(), h("div", {
-            key: c,
+        n.showDefaultQuestions && n.currentTab === "messenger" && n.messages.length <= 2 ? (c(), h("div", Zt, [
+          (c(!0), h(S, null, I(n.defaultQuestions, (o, l) => (c(), h("div", {
+            key: l,
             class: "v-border v-border-slate-200 v-rounded-full v-py-2 v-px-3 v-text-sm v-cursor-pointer v-w-fit v-hover:bg-slate-100 v-transition-colors v-duration-300",
             onClick: (d) => r.selectDefaultQuestion(o)
-          }, v(o), 9, Zt))), 128))
+          }, v(o), 9, Gt))), 128))
         ])) : p("", !0)
       ], 512)) : p("", !0),
-      n.currentTab === "knowledge" ? (l(), h("div", Gt, [
-        a("div", Jt, [
-          a("div", Yt, [
+      n.currentTab === "knowledge" ? (c(), h("div", Jt, [
+        a("div", Yt, [
+          a("div", $t, [
             C(a("input", {
               type: "text",
               "onUpdate:modelValue": e[14] || (e[14] = (o) => n.knowledgeSearchQuery = o),
@@ -3123,7 +3157,7 @@ function Is(s, e, t, i, n, r) {
               placeholder: "جست و جو کنید",
               class: "v-flex-1 v-border-0 v-outline-0 v-bg-transparent v-text-sm v-py-2 v-px-3"
             }, null, 544), [
-              [Q, n.knowledgeSearchQuery]
+              [z, n.knowledgeSearchQuery]
             ]),
             e[43] || (e[43] = a("svg", {
               viewBox: "0 0 512 512",
@@ -3136,19 +3170,19 @@ function Is(s, e, t, i, n, r) {
             ], -1))
           ])
         ]),
-        n.knowledgeView === "categories" ? (l(), h("div", $t, [
-          a("div", es, [
-            a("div", ts, v(r.filteredCategories.length) + " دسته بندی ", 1)
+        n.knowledgeView === "categories" ? (c(), h("div", es, [
+          a("div", ts, [
+            a("div", ss, v(r.filteredCategories.length) + " دسته بندی ", 1)
           ]),
-          (l(!0), h(S, null, I(r.filteredCategories, (o) => (l(), h("div", {
+          (c(!0), h(S, null, I(r.filteredCategories, (o) => (c(), h("div", {
             key: o.id,
             class: "v-flex v-items-center v-justify-between v-border-b v-border-slate-200 v-cursor-pointer v-px-3 v-py-2 v-gap-2 v-hover:bg-slate-100 v-transition-colors v-duration-300",
-            onClick: (c) => r.selectCategory(o)
+            onClick: (l) => r.selectCategory(o)
           }, [
-            a("div", is, [
-              a("div", ns, v(o.title), 1),
-              a("div", rs, v(o.description), 1),
-              a("div", os, v(o.questions.length) + " پرسش ", 1)
+            a("div", ns, [
+              a("div", rs, v(o.title), 1),
+              a("div", os, v(o.description), 1),
+              a("div", as, v(o.questions.length) + " پرسش ", 1)
             ]),
             e[44] || (e[44] = a("svg", {
               xmlns: "http://www.w3.org/2000/svg",
@@ -3159,21 +3193,21 @@ function Is(s, e, t, i, n, r) {
             }, [
               a("path", { d: "M15 239c-9.4 9.4-9.4 24.6 0 33.9L207 465c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L65.9 256 241 81c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L15 239z" })
             ], -1))
-          ], 8, ss))), 128))
+          ], 8, is))), 128))
         ])) : p("", !0),
         e[46] || (e[46] = a("div", { class: "v-absolute v-pointer-events-none v-h-[36px] v-bottom-0 v-w-full v-bg-gradient-to-b v-from-transparent v-to-white" }, null, -1)),
-        n.knowledgeView === "questions" ? (l(), h("div", as, [
+        n.knowledgeView === "questions" ? (c(), h("div", ls, [
           a("div", cs, [
-            a("div", ls, v(n.selectedCategory.title), 1),
-            a("div", hs, v(n.selectedCategory.description), 1),
-            a("div", us, v(r.filteredQuestions.length) + " پرسش ", 1)
+            a("div", hs, v(n.selectedCategory.title), 1),
+            a("div", us, v(n.selectedCategory.description), 1),
+            a("div", ds, v(r.filteredQuestions.length) + " پرسش ", 1)
           ]),
-          (l(!0), h(S, null, I(r.filteredQuestions, (o) => (l(), h("div", {
+          (c(!0), h(S, null, I(r.filteredQuestions, (o) => (c(), h("div", {
             key: o.id,
             class: "v-flex v-items-center v-justify-between v-py-3 v-px-3 v-border-b v-border-slate-200 v-cursor-pointer v-gap-2 v-hover:bg-slate-100 v-transition-colors v-duration-300",
-            onClick: (c) => r.selectQuestion(o)
+            onClick: (l) => r.selectQuestion(o)
           }, [
-            a("div", fs, v(o.question), 1),
+            a("div", ps, v(o.question), 1),
             e[45] || (e[45] = a("svg", {
               "data-v-8cc45828": "",
               xmlns: "http://www.w3.org/2000/svg",
@@ -3187,15 +3221,15 @@ function Is(s, e, t, i, n, r) {
                 d: "M15 239c-9.4 9.4-9.4 24.6 0 33.9L207 465c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9L65.9 256 241 81c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0L15 239z"
               })
             ], -1))
-          ], 8, ds))), 128))
+          ], 8, fs))), 128))
         ])) : p("", !0),
-        n.knowledgeView === "answer" ? (l(), h("div", ps, [
-          a("div", vs, v(n.selectedQuestion.question), 1),
-          a("div", gs, v(n.selectedQuestion.answer), 1)
+        n.knowledgeView === "answer" ? (c(), h("div", vs, [
+          a("div", gs, v(n.selectedQuestion.question), 1),
+          a("div", ms, v(n.selectedQuestion.answer), 1)
         ])) : p("", !0)
       ])) : p("", !0),
-      n.currentTab === "messenger" ? (l(), h("div", ms, [
-        a("div", ys, [
+      n.currentTab === "messenger" ? (c(), h("div", ys, [
+        a("div", ws, [
           C(a("input", {
             type: "text",
             "onUpdate:modelValue": e[16] || (e[16] = (o) => n.inputMessage = o),
@@ -3203,9 +3237,9 @@ function Is(s, e, t, i, n, r) {
             placeholder: "اینجا تایپ کنید ...",
             class: "v-flex-1 v-border-0 v-outline-0 v-bg-transparent v-text-sm v-py-2 v-px-3 v-rounded-full"
           }, null, 544), [
-            [Q, n.inputMessage]
+            [z, n.inputMessage]
           ]),
-          (l(), h("svg", {
+          (c(), h("svg", {
             viewBox: "0 0 512 512",
             fill: "currentColor",
             width: "20px",
@@ -3217,7 +3251,7 @@ function Is(s, e, t, i, n, r) {
           ])))
         ]),
         e[48] || (e[48] = a("div", { class: "v-text-center v-text-xs v-text-slate-600 v-pt-2 v-flex v-items-center v-justify-center" }, [
-          Ae(" ساخته شده با "),
+          Re(" ساخته شده با "),
           a("a", {
             href: "https://vafaai.com",
             target: "_blank",
@@ -3226,7 +3260,7 @@ function Is(s, e, t, i, n, r) {
             "aria-label": "وبسایت وفا"
           }, [
             a("img", {
-              src: yt,
+              src: wt,
               alt: "لوگوی وفا - پلتفرم هوش مصنوعی",
               class: "v-ml-1",
               style: { width: "52px", height: "auto", "margin-right": "4px" }
@@ -3234,14 +3268,14 @@ function Is(s, e, t, i, n, r) {
           ])
         ], -1))
       ])) : p("", !0),
-      n.currentTab === "home" || n.currentTab === "knowledge" ? (l(), h("div", ws, [
+      n.currentTab === "home" || n.currentTab === "knowledge" ? (c(), h("div", xs, [
         a("div", {
           class: R(["v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2", { active: n.currentTab === "home", "v-text-[#1a237e] v-font-semibold": n.currentTab === "home", "v-text-slate-800": n.currentTab !== "home" }]),
           onClick: e[19] || (e[19] = (o) => r.switchTab("home"))
         }, [
-          n.currentTab === "home" ? (l(), h("svg", xs, e[49] || (e[49] = [
+          n.currentTab === "home" ? (c(), h("svg", bs, e[49] || (e[49] = [
             a("path", { d: "M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c.2 35.5-28.5 64.3-64 64.3H128.1c-35.3 0-64-28.7-64-64V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" }, null, -1)
-          ]))) : (l(), h("svg", bs, e[50] || (e[50] = [
+          ]))) : (c(), h("svg", As, e[50] || (e[50] = [
             a("path", { d: "M303.5 5.7c-9-7.6-22.1-7.6-31.1 0l-264 224c-10.1 8.6-11.3 23.7-2.8 33.8s23.7 11.3 33.8 2.8L64 245.5 64 432c0 44.2 35.8 80 80 80l288 0c44.2 0 80-35.8 80-80l0-186.5 24.5 20.8c10.1 8.6 25.3 7.3 33.8-2.8s7.3-25.3-2.8-33.8l-264-224zM464 204.8L464 432c0 17.7-14.3 32-32 32l-288 0c-17.7 0-32-14.3-32-32l0-227.2L288 55.5 464 204.8z" }, null, -1)
           ]))),
           e[51] || (e[51] = a("div", { class: "v-text-xs" }, "خانه", -1))
@@ -3250,9 +3284,9 @@ function Is(s, e, t, i, n, r) {
           class: R(["v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2", { active: n.currentTab === "messenger", "v-text-[#1a237e] v-font-semibold": n.currentTab === "messenger", "v-text-slate-800": n.currentTab !== "messenger" }]),
           onClick: e[20] || (e[20] = (o) => r.switchTab("messenger"))
         }, [
-          n.currentTab === "messenger" ? (l(), h("svg", ks, e[52] || (e[52] = [
+          n.currentTab === "messenger" ? (c(), h("svg", ks, e[52] || (e[52] = [
             a("path", { d: "M0 64C0 28.7 28.7 0 64 0L448 0c35.3 0 64 28.7 64 64l0 288c0 35.3-28.7 64-64 64l-138.7 0L185.6 508.8c-4.8 3.6-11.3 4.2-16.8 1.5s-8.8-8.2-8.8-14.3l0-80-96 0c-35.3 0-64-28.7-64-64L0 64zm152 80c-13.3 0-24 10.7-24 24s10.7 24 24 24l208 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-208 0zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24l112 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-112 0z" }, null, -1)
-          ]))) : (l(), h("svg", As, e[53] || (e[53] = [
+          ]))) : (c(), h("svg", Rs, e[53] || (e[53] = [
             a("path", { d: "M208 416c0-26.5-21.5-48-48-48l-96 0c-8.8 0-16-7.2-16-16L48 64c0-8.8 7.2-16 16-16l384 0c8.8 0 16 7.2 16 16l0 288c0 8.8-7.2 16-16 16l-138.7 0c-10.4 0-20.5 3.4-28.8 9.6L208 432l0-16zm-.2 76.2l.2-.2 101.3-76L448 416c35.3 0 64-28.7 64-64l0-288c0-35.3-28.7-64-64-64L64 0C28.7 0 0 28.7 0 64L0 352c0 35.3 28.7 64 64 64l48 0 48 0 0 48 0 4 0 .3 0 6.4 0 21.3c0 6.1 3.4 11.6 8.8 14.3s11.9 2.1 16.8-1.5L202.7 496l5.1-3.8zM152 144c-13.3 0-24 10.7-24 24s10.7 24 24 24l208 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-208 0zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24l112 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-112 0z" }, null, -1)
           ]))),
           e[54] || (e[54] = a("div", { class: "v-text-xs" }, "پیام رسان", -1))
@@ -3261,9 +3295,9 @@ function Is(s, e, t, i, n, r) {
           class: R(["v-flex v-flex-col v-flex-1 v-items-center v-justify-center v-cursor-pointer v-gap-2", { active: n.currentTab === "knowledge", "v-text-[#1a237e] v-font-semibold": n.currentTab === "knowledge", "v-text-slate-800": n.currentTab !== "knowledge" }]),
           onClick: e[21] || (e[21] = (o) => r.switchTab("knowledge"))
         }, [
-          n.currentTab === "knowledge" ? (l(), h("svg", Rs, e[55] || (e[55] = [
+          n.currentTab === "knowledge" ? (c(), h("svg", Es, e[55] || (e[55] = [
             a("path", { d: "M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm73.8 133.3c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L248 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM192 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" }, null, -1)
-          ]))) : (l(), h("svg", Es, e[56] || (e[56] = [
+          ]))) : (c(), h("svg", Ts, e[56] || (e[56] = [
             a("path", { d: "M64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80zM0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm137.8 69.3c7.9-22.3 29.1-37.3 52.8-37.3l58.3 0c34.9 0 63.1 28.3 63.1 63.1c0 22.6-12.1 43.5-31.7 54.8L248 264.4c-.2 13-10.9 23.6-24 23.6c-13.3 0-24-10.7-24-24l0-13.5c0-8.6 4.6-16.5 12.1-20.8l44.3-25.4c4.7-2.7 7.6-7.7 7.6-13.1c0-8.4-6.8-15.1-15.1-15.1l-58.3 0c-3.4 0-6.4 2.1-7.5 5.3l-.4 1.2c-4.4 12.5-18.2 19-30.6 14.6s-19-18.2-14.6-30.6l.4-1.2zM192 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z" }, null, -1)
           ]))),
           e[57] || (e[57] = a("div", { class: "v-text-xs" }, "راهنما", -1))
@@ -3272,10 +3306,10 @@ function Is(s, e, t, i, n, r) {
     ], 2), [
       [te, n.isOpen]
     ]),
-    n.isOpen && n.showResetConfirmation ? (l(), h("div", Ts, [
-      a("div", Cs, [
+    n.isOpen && n.showResetConfirmation ? (c(), h("div", Cs, [
+      a("div", Ss, [
         e[58] || (e[58] = a("div", { class: "v-text-lg v-font-bold v-mb-4" }, "آیا واقعا میخواهید این گفتگو را ببندید؟", -1)),
-        a("div", Ss, [
+        a("div", Is, [
           a("button", {
             onClick: e[22] || (e[22] = (...o) => r.resetChat && r.resetChat(...o)),
             class: "v-px-5 v-py-2 v-text-white v-rounded-md v-hover:bg-red-700",
@@ -3288,25 +3322,25 @@ function Is(s, e, t, i, n, r) {
         ])
       ])
     ])) : p("", !0)
-  ]);
+  ], 2);
 }
-const xe = /* @__PURE__ */ wt(xt, [["render", Is], ["__scopeId", "data-v-7c7ddab4"]]);
-function Vs(s, e = {}) {
+const xe = /* @__PURE__ */ xt(bt, [["render", Vs], ["__scopeId", "data-v-28e98139"]]);
+function Bs(s, e = {}) {
   const t = document.querySelector(s);
   if (!t) {
     console.error(`Container with selector ${s} not found`);
     return;
   }
-  const i = Re(xe, e);
+  const i = Ee(xe, e);
   return i.mount(t), i;
 }
-const Bs = {
+const Ps = {
   ChatWidget: xe,
-  init: Vs
+  init: Bs
 };
-typeof window < "u" && (window.VafaChatWidget = Bs);
+typeof window < "u" && (window.VafaChatWidget = Ps);
 export {
   xe as ChatWidget,
-  Bs as default,
-  Vs as init
+  Ps as default,
+  Bs as init
 };

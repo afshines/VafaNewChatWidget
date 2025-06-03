@@ -80,13 +80,11 @@ export default {
   
   <!-- Include Vafa Chat Widget from your server -->
   <script>
-    // Determine if we're in the dist folder or the public folder
-    const isProduction = window.location.pathname.includes('/');
-    const basePath = isProduction ? '' : '../';
+    // Direct references to the built files
     
     // Dynamically create script element
     const script = document.createElement('script');
-    script.src = basePath + 'vafa-chat-widget.umd.js';
+    script.src = '/vafa-chat-widget.umd.js'; // Reference from root path
     script.onload = function() {
       // Initialize after script is loaded
       initChatWidget();
@@ -96,7 +94,7 @@ export default {
     // Dynamically create CSS link
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = basePath + 'style.css';
+    link.href = '/style.css'; // Reference from root path
     document.head.appendChild(link);
   </script>
   
@@ -104,7 +102,7 @@ export default {
     // Define the initialization function that will be called after script loads
     function initChatWidget() {
       // The container is already in the HTML above, so we don't need to create it
-      const token = 'asst_1uXRHU9HBoXYSBXPKK7wIChh';
+      const token = 'asst_6jtIk3YuNOqQa2CK2V4bT8Gx';
       
       // Check if widget is loaded and initialize it
       if (window.VafaChatWidget) {
@@ -114,18 +112,9 @@ export default {
           token: token,
           // Required OpenAI Assistant ID
           assistantId: token,
-          // Custom text configurations
-          welcomeTitle: 'به سایت ما خوش آمدید',
-          initialMessage: 'سلام چطور میتونم کمکتون کنم؟',
-          defaultQuestion: 'کمک میخوام',
-          // Suggested questions that appear at the start of conversation
-          suggestedQuestions: [
-            'در هاسکووب چیکار میکنید؟',
-            'مشاوره حرفه ای میخوام.',
-            'راه اندازی و بهبود کسب و کارها در فضای آنلاین'
-          ],
-          // API configuration
-          apiBaseUrl: 'https://api.vafaai.com'
+
+          // API configuration - Using local server for testing
+          apiBaseUrl: 'http://localhost:56346'
         });
       } else {
         console.error('VafaChatWidget not loaded properly');

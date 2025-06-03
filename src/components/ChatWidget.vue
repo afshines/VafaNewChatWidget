@@ -1,10 +1,11 @@
 <template>
-    <div class="v-fixed v-flex v-flex-col v-gap-2 v-right-[20px] v-bottom-[20px]">
+    <div class="v-fixed v-flex v-flex-col v-gap-2" :class="[widgetPosition]">
        <!-- Chat Button -->
  
        <div class=" v-bg-white v-border v-border-slate-200 v-rounded-lg v-rounded-br-sm v-py-2 v-px-3 v-text-sm v-cursor-pointer v-w-fit v-hover:bg-slate-100 v-transition-colors v-duration-300" @click="startConversationWithDefaultQuestion" v-html="defaultQuestion"></div>
        <div
-          class=" v-bg-white v-border-1 v-border-bd   v-flex  v-items-center v-justify-center v-rounded-full v-h-[60px] v-w-[60px] v-z-70 no-shake v-overflow-hidden v-cursor-pointer"
+          :style="{ backgroundColor: primaryColor }"
+          class=" v-border-1 v-flex v-items-center v-justify-center v-rounded-full v-h-[60px] v-w-[60px] v-z-70 no-shake v-overflow-hidden v-cursor-pointer"
           @click="toggleChat"
           :class="{ 'no-shake': hasInteracted }"
        >
@@ -12,7 +13,7 @@
        </div>
  
        <!-- Chat Popup -->
-       <div class="v-fixed v-transition-all v-duration-300 v-right-[20px] v-bottom-[20px] v-rounded-md v-overflow-hidden v-z-90 v-flex v-flex-col v-shadow-[0_10px_25px_rgba(0,0,0,0.2)]" v-show="isOpen" :class="{ 'v-max-h-\[calc\(100\%-104px\)\] v-h-\[calc\(100\%-104px\)\] v-w-\[688px\]': isMaximize, 'v-w-[400px] v-h-[700px] v-max-h-[min(714px,100%-30px)]': !isMaximize, 'v-right-0 v-bottom-0 v-top-0 v-rounded-none v-h-full v-max-h-100vh v-w-full': isMobile }">
+       <div class="v-fixed v-transition-all v-duration-300 v-rounded-md v-overflow-hidden v-z-90 v-flex v-flex-col v-shadow-[0_10px_25px_rgba(0,0,0,0.2)]" v-show="isOpen" :class="[chatPosition, { 'v-max-h-\[calc\(100\%-104px\)\] v-h-\[calc\(100\%-104px\)\] v-w-\[688px\]': isMaximize, 'v-w-[400px] v-h-[700px] v-max-h-[min(714px,100%-30px)]': !isMaximize, 'v-right-0 v-bottom-0 v-top-0 v-rounded-none v-h-full v-max-h-100vh v-w-full': isMobile }]">
           
 
           <div
@@ -170,7 +171,16 @@
              class="v-relative v-flex v-flex-col v-h-full v-justify-between v-bg-white v-py-2 v-px-3 v-overflow-auto"
              ref="chatBody"
           >
-             <div class="v-grow v-grid">
+             <div class=" v-grid">
+                <!-- Static Initial Bot Message -->
+                <div
+                   v-if="messages.length === 0"
+                   class="v-max-w-[80%] v-rounded-xl v-mb-2 v-text-sm v-py-2 v-px-3 v-bg-slate-100 v-text-slate-800 v-rounded-bl-sm v-justify-self-end"
+                >
+                   <div>{{ initialMessage || 'سلام چطور میتونم کمکتون کنم؟' }}</div>
+                </div>
+                
+                <!-- Regular Messages -->
                 <div
                    v-for="(message, index) in messages"
                    :key="index"
@@ -438,10 +448,10 @@
        </div>
        
        <!-- Reset Chat Confirmation Popup -->
-       <div v-if="isOpen && showResetConfirmation" class="reset-confirmation-overlay-chat">
-          <div class="reset-confirmation-content-chat">
+       <div v-if="isOpen && showResetConfirmation" class="">
+          <div class="reset-confirmation-content-chat v-absolute v-top-1/2 v-left-1/2" style="transform: translate(-52%, -74%);">
              <div class="v-text-lg v-font-bold v-mb-4">آیا واقعا میخواهید این گفتگو را ببندید؟</div>
-             <div class="v-flex v-justify-center v-gap-6 v-mt-5">
+             <div class="v-flex gap-6 v-justify-center v-gap-6 v-mt-5">
                 <button @click="resetChat" class="v-px-5 v-py-2 v-text-white v-rounded-md v-hover:bg-red-700" style="background-color: #f44336;">بستن گفتگو</button>
                 <button @click="showResetConfirmation = false" class="v-px-5 v-py-2 v-bg-slate-200 v-text-slate-800 v-rounded-md v-hover:bg-slate-300">انصراف</button>
              </div>
@@ -467,283 +477,296 @@
      },
      welcomeTitle: {
        type: String,
-       default: '  خوش آمدید'
+       default: null 
      },
      initialMessage: {
        type: String,
-       default: 'سلام  ما خوش آمدی '
+       default: null 
      },
      defaultQuestion: {
        type: String,
-       default: ''
+       default: null 
      },
      suggestedQuestions: {
        type: Array,
-       default: () => [
-         '',
-         
-       ]
+       default() {
+         return [] 
+       }
+     },
+     primaryColor: {
+       type: String,
+       default: null 
+     },
+     position: {
+       type: String,
+       default: 'bottom-left' 
      },
      apiBaseUrl: {
        type: String,
        default: 'https://api.vafaai.com'
      }
    },
-   computed: {
-     // Filter categories based on search query
-     filteredCategories() {
-       if (!this.knowledgeSearchQuery.trim()) {
-         return this.knowledgeData;
-          }
- 
-          const query = this.knowledgeSearchQuery.trim().toLowerCase();
-          return this.knowledgeData.filter((category) => {
-             // Check if category title or description matches
-             if (
-                category.title.toLowerCase().includes(query) ||
-                category.description.toLowerCase().includes(query)
-             ) {
-                return true;
-             }
- 
-             // Check if any question or answer in the category matches
-             return category.questions.some(
-                (question) =>
-                   question.question.toLowerCase().includes(query) ||
-                   question.answer.toLowerCase().includes(query)
-             );
-          });
-       },
- 
-       // Filter questions based on search query
-       filteredQuestions() {
-          if (!this.selectedCategory) return [];
- 
-          if (!this.knowledgeSearchQuery.trim()) {
-             return this.selectedCategory.questions;
-          }
- 
-          const query = this.knowledgeSearchQuery.trim().toLowerCase();
-          return this.selectedCategory.questions.filter(
-             (question) =>
-                question.question.toLowerCase().includes(query) ||
-                question.answer.toLowerCase().includes(query)
-          );
-       },
+  created() {
+    console.log('Chat widget created, initializing with configuration...');
+    // If assistantId is missing but token exists, use token as assistantId
+    if (!this.assistantId && this.token) {
+      this.assistantId = this.token;
+      console.log('Using token as assistantId:', this.assistantId);
+    }
+    
+    // Initialize userId if needed
+    if (!this.userId) {
+      // Generate a random user ID if not already set
+      const storedUserId = localStorage.getItem('vafachat_user_id');
+      if (storedUserId) {
+        this.userId = storedUserId;
+      } else {
+        this.userId = 'user_' + Math.random().toString(36).substring(2, 15);
+        localStorage.setItem('vafachat_user_id', this.userId);
+      }
+      console.log('Using userId:', this.userId);
+    }
+    
+    // Load knowledge base data (which also loads widget configuration) immediately
+    this.$nextTick(() => {
+      this.loadKnowledgeBaseData();
+    });
+    
+    // Log all initial configuration values for debugging
+    console.log('Initial configuration:', {
+      assistantId: this.assistantId,
+      token: this.token,
+      welcomeTitle: this.welcomeTitle,
+      initialMessage: this.initialMessage,
+      defaultQuestion: this.defaultQuestion,
+      primaryColor: this.primaryColor,
+      position: this.position,
+      apiBaseUrl: this.apiBaseUrl
+    });
+  },
+  computed: {
+    // Widget positioning CSS class based on config
+    widgetPosition() {
+      console.log('Computing widgetPosition with position:', this.position);
+      // Make comparison case-insensitive and trim any whitespace
+      const pos = typeof this.position === 'string' ? this.position.trim().toLowerCase() : 'bottom-left';
+      return pos === 'bottom-left' ? 'v-left-[20px] v-bottom-[20px]' : 'v-right-[20px] v-bottom-[20px]';
     },
-    data() {
-       return {
-          justCompleted: false,
-          pendingMessage: null,
-          isOpen: false,
-          hasInteracted: false,
-          isMaximize: false,
-          isMobile: false,
-          inputMessage: "",
-          messages: [],
-          socket: null,
-          connectionStatus: "آنلاین",
-          connectionColor: "green",
-          sessionData: {
-             id: null,
-             initialized: false,
-          },
-          isThinking: false,
-          currentStreamingMessage: null,
-          messageTimeout: null, // For detecting timeouts
-          socketUrl: null,
-          // Use the suggestedQuestions from props instead of hardcoding them
-          defaultQuestions: this.suggestedQuestions,
-          showDefaultQuestions: true,
-          initialMessage: "سلام  خوش آمدی",
-          userId: null,
-          currentTab: "home",
-          // Knowledge Base Data
-          knowledgeData: [],
-          allQuestions: [], // Flat list of all questions for easier access
-          featuredQuestions: [], // Will be loaded from API based on inHome flag
-          knowledgeView: "categories", // categories, questions, answer
-          knowledgeViewTitle: "راهنما",
-          knowledgeSearchQuery: "",
-          selectedCategory: null,
-          selectedQuestion: null,
-          showResetConfirmation: false,
-        };
+    
+    // Chat popup positioning CSS class based on config
+    chatPosition() {
+      console.log('Computing chatPosition with position:', this.position);
+      // Make comparison case-insensitive and trim any whitespace
+      const pos = typeof this.position === 'string' ? this.position.trim().toLowerCase() : 'bottom-left';
+      return pos === 'bottom-left' ? 'v-left-[20px] v-bottom-[20px]' : 'v-right-[20px] v-bottom-[20px]';
     },
-    mounted() {
-       // Initialize user ID from localStorage
-       this.userId = localStorage.getItem("hascowebchat_user_id");
-       if (!this.userId) {
-          this.userId = "user_" + Math.random().toString(36).substr(2, 9);
-          localStorage.setItem("hascowebchat_user_id", this.userId);
-       }
- 
-       // Load knowledge base data
-       this.loadKnowledgeBaseData();
-        
-       // Load saved messages from localStorage
-       this.loadMessagesFromLocalStorage();
- 
-       console.log("ChatWidget mounted with userId:", this.userId);
- 
-       // Check for existing session
-       const lastSessionId = localStorage.getItem("lastSessionId");
-       if (lastSessionId) {
-          console.log("Found existing session ID:", lastSessionId);
-          this.sessionData.id = lastSessionId;
-       }
- 
-       // Add initial welcome message only if there are no messages yet
-       if (this.messages.length === 0) {
-          this.messages.push({
-             content: this.initialMessage,
-             isUser: false,
-             timestamp: new Date().toISOString(),
-          });
-          this.saveMessagesToLocalStorage();
-       }
- 
-       // Check if user has interacted with chat before
-       this.hasInteracted =
-          localStorage.getItem("hascowebchat_interacted") === "true";
- 
-       // Set the socket URL using the props with proper token format
-       this.socketUrl = `${this.apiBaseUrl}?token=${this.token}`;
-       console.log("Socket URL set to:", this.socketUrl);
- 
-       // Initialize socket connection with slight delay
-       setTimeout(() => {
-          this.initSocket();
-       }, 500);
- 
-       // Set up periodic attention animation
-       this.setShakeTimer();
- 
-       document.addEventListener("click", this.resetShakeTimer);
-       document.addEventListener("mousemove", this.resetShakeTimer);
-       document.addEventListener("keypress", this.resetShakeTimer);
-       document.addEventListener("scroll", this.resetShakeTimer);
- 
-       const chatButton = document.getElementById("hascowebchat-button");
-       if (chatButton) {
-          chatButton.addEventListener("animationend", () => {
-             this.hasInteracted = true;
-          });
-       }
-    },
-    created() {
-     this.checkMobile();
-     window.addEventListener('resize', this.checkMobile); // Add event listener for resize
-   },
-    beforeUnmount() {
-       document.removeEventListener("click", this.resetShakeTimer);
-       document.removeEventListener("mousemove", this.resetShakeTimer);
-       document.removeEventListener("keypress", this.resetShakeTimer);
-       document.removeEventListener("scroll", this.resetShakeTimer);
-       window.removeEventListener('resize', this.checkMobile); // Clean up event listener
- 
-       // Disconnect socket
-       if (this.socket) {
-          this.socket.disconnect();
-          this.socket.removeAllListeners();
-       }
- 
-       // Clear timer
-       if (this.shakeTimer) {
-          clearTimeout(this.shakeTimer);
-       }
- 
-       if (this.messageTimeout) {
-          clearTimeout(this.messageTimeout);
-       }
-    },
-    methods: {
-       // Load knowledge base data from API
-       async loadKnowledgeBaseData() {
-          try {
-             // Only proceed if we have an assistantId
-             if (!this.assistantId) {
-                console.warn('No assistantId provided, cannot load knowledge base');
-                this.knowledgeData = [];
-                this.allQuestions = [];
-                this.featuredQuestions = [];
-                return;
-             }
+    
+    // Filter categories based on search query
+    filteredCategories() {
+      if (!this.knowledgeSearchQuery?.trim()) {
+        return this.knowledgeData;
+      }
 
-             // Fetch knowledge base data from API using the completely public endpoint
-             const response = await fetch(`${this.apiBaseUrl}/public/kb/${this.assistantId}`);
+      const query = this.knowledgeSearchQuery.trim().toLowerCase();
+      return this.knowledgeData.filter((category) => {
+        // Check if category title or description matches
+        if (
+          category.title.toLowerCase().includes(query) ||
+          category.description.toLowerCase().includes(query)
+        ) {
+          return true;
+        }
+
+        // Check if any question or answer in the category matches
+        return category.questions.some(
+          (question) =>
+            question.question.toLowerCase().includes(query) ||
+            question.answer.toLowerCase().includes(query)
+        );
+      });
+    },
+
+    // Filter questions based on search query
+    filteredQuestions() {
+      if (!this.selectedCategory) return [];
+
+      if (!this.knowledgeSearchQuery?.trim()) {
+        return this.selectedCategory.questions;
+      }
+
+      const query = this.knowledgeSearchQuery.trim().toLowerCase();
+      return this.selectedCategory.questions.filter(
+        (question) =>
+          question.question.toLowerCase().includes(query) ||
+          question.answer.toLowerCase().includes(query)
+      );
+    }
+  },
+  data() {
+    return {
+      justCompleted: false,
+      pendingMessage: null,
+      isOpen: false,
+      hasInteracted: false,
+      isMaximize: false,
+      isMobile: false,
+      inputMessage: "",
+      messages: [],
+      messageCount: 0,
+      socket: null,
+      socketConnected: false,
+      connectionStatus: "آفلاین",
+      connectionError: false,
+      showResetConfirmation: false,
+      // Widget configuration values with defaults
+      welcomeTitle: this.welcomeTitle || 'به سایت ما خوش آمدید',
+      initialMessage: this.initialMessage || 'سلام چطور میتونم کمکتون کنم؟',
+      defaultQuestion: this.defaultQuestion || 'کمک میخوام',
+      primaryColor: this.primaryColor || '#1a237e',
+      position: this.position || 'bottom-right',
+      // Use the suggestedQuestions from props instead of hardcoding them
+      defaultQuestions: this.suggestedQuestions || [],
+      showDefaultQuestions: true,
+      userId: null,
+      currentTab: "home",
+      // Knowledge Base Data
+      knowledgeData: [],
+      allQuestions: [], // Flat list of all questions for easier access
+      featuredQuestions: [], // Will be loaded from API based on inHome flag
+      knowledgeView: "categories", // categories, questions, answer
+      knowledgeViewTitle: "راهنما",
+      knowledgeSearchQuery: "",
+      selectedCategory: null,
+      selectedQuestion: null,
+      shakeTimer: null,
+      isThinking: false,
+      currentStreamingMessage: null,
+      messageTimeout: null, // For detecting timeouts
+      socketUrl: null
+    }
+  },
+  methods: {
+    // Load knowledge base data from API
+    async loadKnowledgeBaseData() {
+      try {
+         if (!this.assistantId) {
+            console.warn('No assistant ID provided, skipping knowledge base data loading');
+            this.knowledgeData = [];
+            this.allQuestions = [];
+            this.featuredQuestions = [];
+            return;
+         }
+
+         // Fetch knowledge base data from API using the completely public endpoint
+         const response = await fetch(`${this.apiBaseUrl}/public/kb/${this.assistantId}`);
+         
+         if (!response.ok) {
+            throw new Error(`Failed to fetch knowledge base: ${response.status}`);
+         }
+         
+         const data = await response.json();
+         console.log('Loaded data from server:', data);
+    
+           
+         if (data.success && data.data) {
+            // Load knowledge base categories
+            if (data.data.categories) {
+               this.knowledgeData = data.data.categories;
+               
+               // Prepare flat list of all questions for easier access
+               this.allQuestions = [];
+               this.featuredQuestions = [];
+               
+               this.knowledgeData.forEach((category) => {
+                  category.questions.forEach((question) => {
+                     this.allQuestions.push({
+                        ...question,
+                        categoryId: category.id,
+                        categoryTitle: category.title,
+                     });
+                     
+                     // Add to featured questions if marked as inHome
+                     if (question.inHome) {
+                        this.featuredQuestions.push({
+                           ...question,
+                           categoryId: category.id,
+                           categoryTitle: category.title,
+                        });
+                     }
+                  });
+               });
              
-             if (!response.ok) {
-                throw new Error(`Failed to fetch knowledge base: ${response.status}`);
-             }
-             
-             const data = await response.json();
-             
-             if (data.success && data.data && data.data.categories) {
-                this.knowledgeData = data.data.categories;
+               
+               console.log(`Loaded knowledge base with ${this.knowledgeData.length} categories and ${this.allQuestions.length} questions`);
+            }
+
+      
+            // Load widget configuration
+            if (data.data.config) {
+                const config = data.data.config;
+                console.log('Raw config from server:', config);
                 
-                // Prepare flat list of all questions for easier access
-                this.allQuestions = [];
-                this.knowledgeData.forEach((category) => {
-                   category.questions.forEach((question) => {
-                      this.allQuestions.push({
-                         ...question,
-                         categoryId: category.id,
-                         categoryTitle: category.title,
-                      });
-                   });
+                // Force override local values with server config, don't use || operator
+                // which will keep the local value if server value exists but is falsy
+                this.welcomeTitle = config.welcomeTitle !== undefined ? config.welcomeTitle : this.welcomeTitle;
+                this.defaultQuestion = config.defaultQuestion !== undefined ? config.defaultQuestion : this.defaultQuestion;
+                this.primaryColor = config.primaryColor !== undefined ? config.primaryColor : this.primaryColor;
+                
+                // Special handling for initialMessage - ensure we have a value
+                if (config.initialMessage) {
+                   console.log('Server provided initialMessage:', config.initialMessage);
+                   this.initialMessage = config.initialMessage;
+                } else {
+                   // Fallback to default message if server doesn't provide one
+                   if (!this.initialMessage) {
+                      this.initialMessage = 'سلام چطور میتونم کمکتون کنم؟';
+                   }
+                   console.log('Using fallback initialMessage:', this.initialMessage);
+                }
+                
+                // Always use 'bottom-left' if position is null or undefined
+                if (config.position !== undefined && config.position !== null) {
+                   console.log('Setting position from server config:', config.position);
+                   this.position = config.position;
+                } else {
+                   console.log('Using default position: bottom-left');
+                   this.position = 'bottom-left'; // Enforce default position
+                }
+                
+                // Always update suggested questions from config
+                if (config.suggestedQuestions) {
+                   this.defaultQuestions = [...config.suggestedQuestions]; // Create new array to force reactivity
+                }
+                
+                console.log('Applied widget configuration:', {
+                   welcomeTitle: this.welcomeTitle,
+                   initialMessage: this.initialMessage,
+                   defaultQuestion: this.defaultQuestion,
+                   primaryColor: this.primaryColor,
+                   position: this.position,
+                   defaultQuestions: this.defaultQuestions
                 });
                 
-                // Load featured questions separately
-                this.loadFeaturedQuestions();
-                
-                console.log(`Loaded knowledge base with ${this.knowledgeData.length} categories and ${this.allQuestions.length} questions`);
-             } else {
-                console.warn('Knowledge base data not found or empty');
-                this.knowledgeData = [];
-                this.allQuestions = [];
-                this.featuredQuestions = [];
-             }
-          } catch (error) {
-             console.error("Error loading knowledge base data:", error);
-             this.knowledgeData = [];
-             this.allQuestions = [];
-             this.featuredQuestions = [];
-          }
-       },
-       
-       // Load featured questions from API (questions with inHome=true)
-       async loadFeaturedQuestions() {
-          try {
-             // Only proceed if we have an assistantId
-             if (!this.assistantId) {
-                console.warn('No assistantId provided, cannot load featured questions');
-                this.featuredQuestions = [];
-                return;
-             }
-
-             // Fetch featured questions from API using the completely public endpoint
-             const response = await fetch(`${this.apiBaseUrl}/public/kb/${this.assistantId}/featured`);
-             
-             if (!response.ok) {
-                throw new Error(`Failed to fetch featured questions: ${response.status}`);
-             }
-             
-             const data = await response.json();
-             
-             if (data.success && data.data && data.data.featuredQuestions) {
-                this.featuredQuestions = data.data.featuredQuestions;
-                console.log(`Loaded ${this.featuredQuestions.length} featured questions`);
-             } else {
-                console.warn('Featured questions not found or empty');
-                this.featuredQuestions = [];
-             }
-          } catch (error) {
-             console.error("Error loading featured questions:", error);
-             this.featuredQuestions = [];
-          }
-       },
-       loadMessagesFromLocalStorage() {
+               
+                // Use nextTick instead of forceUpdate to ensure reactivity
+                this.$nextTick(() => {
+                   console.log('Configuration applied and UI updated');
+                });
+            }
+         } else {
+            console.warn('Knowledge base data not found or empty');
+            this.knowledgeData = [];
+            this.allQuestions = [];
+            this.featuredQuestions = [];
+         }
+      } catch (error) {
+         console.error("Error loading knowledge base data:", error);
+         this.knowledgeData = [];
+         this.allQuestions = [];
+         this.featuredQuestions = [];
+      }
+    },
+    loadMessagesFromLocalStorage() {
            if (this.userId) {
              try {
                // Use assistant_id as part of the key if available
@@ -1046,8 +1069,11 @@
           this.isOpen = !this.isOpen;
           this.hasInteracted = true;
           localStorage.setItem("hascowebchat_interacted", "true");
- 
+
           if (this.isOpen) {
+             
+             
+             // Focus on input field
              this.$nextTick(() => {
                 const inputElement =
                    document.getElementById("hascowebchat-input");
@@ -2075,12 +2101,14 @@ box-shadow: none;
 }
 
 .reset-confirmation-content-chat {
-    background-color: white;
-    border-radius: 0.75rem;
+    background-color: #fff;
+    border-radius: .75rem;
     padding: 1.5rem;
-    max-width: 320px;
-    width: 85%;
+    width: 287px;
     text-align: center;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 16px #00000026;
+    margin: 0 auto;
+    top: -38%;
+    z-index: 9999;
 }
  </style>
