@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": false,
   "type": "module",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/vafa-chat-widget.umd.js",
   "module": "./dist/vafa-chat-widget.es.js",
   "exports": {
@@ -25,10 +27,10 @@
     "vue": "^3.2.45"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.2.3",
+    "@vitejs/plugin-vue": "^5.2.4",
     "eslint": "^8.42.0",
     "eslint-plugin-vue": "^9.14.1",
-    "vite": "^4.4.0"
+    "vite": "^6.3.5"
   },
   "eslintConfig": {
     "root": true,

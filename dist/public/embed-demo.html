@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vafa Chat Widget Embedding Example</title>
+  <link rel="stylesheet" crossorigin href="/assets/embedDemo-DaSlRPyh.css">
+</head>
+<body>
+  <div class="header">
+    <h1>Vafa Chat Widget Embedding Guide</h1>
+    <p>This document explains how to embed the Vafa Chat Widget in your website.</p>
+  </div>
+
+  <h2>Option 1: Quick Script Tag (Recommended)</h2>
+  <p>Add the following code to your HTML file before the closing body tag:</p>
+  <pre><code>&lt;!-- Vafa Chat Widget --&gt;
+&lt;script src="https://your-hosting-url/vafa-chat-widget.umd.js"&gt;&lt;/script&gt;
+&lt;link rel="stylesheet" href="https://your-hosting-url/style.css"&gt;
+&lt;script&gt;
+  document.addEventListener('DOMContentLoaded', function() {
+    // Create a container for the chat widget
+    const chatContainer = document.createElement('div');
+    chatContainer.id = 'vafa-chat-container';
+    document.body.appendChild(chatContainer);
+    
+    // Initialize the widget with assistant token
+    VafaChatWidget.init('#vafa-chat-container', {
+      // Add your assistant token here for authentication
+      token: 'YOUR_ASSISTANT_TOKEN_HERE'
+    });
+  });
+&lt;/script&gt;</code></pre>
+
+  <h2>Option 2: Using ES Modules</h2>
+  <p>If you're using a modern JavaScript framework, you can import the component:</p>
+  <pre><code>// In your JavaScript file
+import { ChatWidget } from 'vafa-chat-widget';
+
+// Then use it in your component with token prop
+export default {
+  components: {
+    ChatWidget
+  },
+  template: `
+    &lt;div&gt;
+      &lt;ChatWidget :token="'YOUR_ASSISTANT_TOKEN_HERE'" /&gt;
+    &lt;/div&gt;
+  `
+}</code></pre>
+
+  <h2>Configuration Options</h2>
+  <p>You can customize the chat widget by passing props:</p>
+  <pre><code>&lt;script&gt;
+  document.addEventListener('DOMContentLoaded', function() {
+    const chatContainer = document.createElement('div');
+    chatContainer.id = 'vafa-chat-container';
+    document.body.appendChild(chatContainer);
+    
+    // Initialize with custom options
+    VafaChatWidget.init('#vafa-chat-container', {
+      // Authentication token (required)
+      token: 'YOUR_ASSISTANT_TOKEN_HERE',
+      // Custom text configurations
+      welcomeTitle: 'به هاسکووب خوش آمدید',
+      initialMessage: 'سلام! چطور میتونم کمکتون کنم؟',
+      defaultQuestion: 'هاسکووب چیست؟',
+      // API configuration
+      apiBaseUrl: 'https://api.vafaai.com'
+    });
+  });
+&lt;/script&gt;</code></pre>
+
+  <h2>Testing the Widget</h2>
+  <p>You can also pass the token as a URL parameter: <code>?token=YOUR_ASSISTANT_TOKEN_HERE</code></p>
+  <div id="vafa-chat-container"></div>
+
+  <!-- Include Vue 3 first (required dependency) -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  
+  <!-- Include Vafa Chat Widget from your server -->
+  <script>
+    // Determine if we're in the dist folder or the public folder
+    const isProduction = window.location.pathname.includes('/');
+    const basePath = isProduction ? '' : '../';
+    
+    // Dynamically create script element
+    const script = document.createElement('script');
+    script.src = basePath + 'vafa-chat-widget.umd.js';
+    script.onload = function() {
+      // Initialize after script is loaded
+      initChatWidget();
+    };
+    document.head.appendChild(script);
+    
+    // Dynamically create CSS link
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = basePath + 'style.css';
+    document.head.appendChild(link);
+  </script>
+  
+  <script>
+    // Define the initialization function that will be called after script loads
+    function initChatWidget() {
+      // The container is already in the HTML above, so we don't need to create it
+      const token = 'asst_1uXRHU9HBoXYSBXPKK7wIChh';
+      
+      // Check if widget is loaded and initialize it
+      if (window.VafaChatWidget) {
+        console.log('Initializing Vafa Chat Widget...');
+        // Use the initialization method with configuration options
+        VafaChatWidget.init('#vafa-chat-container', {
+          token: token,
+          // Required OpenAI Assistant ID
+          assistantId: token,
+          // Custom text configurations
+          welcomeTitle: 'به سایت ما خوش آمدید',
+          initialMessage: 'سلام چطور میتونم کمکتون کنم؟',
+          defaultQuestion: 'کمک میخوام',
+          // Suggested questions that appear at the start of conversation
+          suggestedQuestions: [
+            'در هاسکووب چیکار میکنید؟',
+            'مشاوره حرفه ای میخوام.',
+            'راه اندازی و بهبود کسب و کارها در فضای آنلاین'
+          ],
+          // API configuration
+          apiBaseUrl: 'https://api.vafaai.com'
+        });
+      } else {
+        console.error('VafaChatWidget not loaded properly');
+      }
+    }
+    
+    // Also handle the case when DOM is already loaded
+    if (document.readyState === 'complete') {
+      // If script is already loaded, initialize directly
+      if (window.VafaChatWidget) {
+        initChatWidget();
+      }
+    }
+  </script>
+</body>
+</html>
